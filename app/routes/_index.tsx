@@ -66,7 +66,7 @@ export default function Index() {
                   Total Users
                 </div>
                 <div className="font-dmsans text-2xl font-bold text-[#FFD700]">
-                  60,000+
+                  140,000+
                 </div>
               </div>
               <div className="flex flex-col">
@@ -74,7 +74,7 @@ export default function Index() {
                   Published Resources
                 </div>
                 <div className="font-dmsans text-2xl font-bold text-[#FFD700]">
-                  40+
+                  62+
                 </div>
               </div>
             </div>
