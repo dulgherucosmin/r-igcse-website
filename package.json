@@ -11,7 +11,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@remix-run/node": "^2.16.8",
+    "@remix-run/node": "^2.17.4",
     "@remix-run/react": "^2.16.8",
     "@remix-run/serve": "^2.16.8",
     "@remixicon/react": "^4.6.0",
