@@ -22,16 +22,21 @@ export const navItems: NavItem[] = [
   },
   {
     id: 4,
+    name: "Partners",
+    href: "/partners",
+  },
+  {
+    id: 5,
     name: "Certificates",
     href: "/certificates",
   },
   {
-    id: 5,
+    id: 6,
     name: "Socials",
     href: "/socials",
   },
   {
-    id: 6,
+    id: 7,
     name: "Contact us",
     href: "/contact",
   },
