@@ -54,9 +54,9 @@ const goals = [
     body: "Give students around the world free access to quality revision material, wherever they study and whatever their budget.",
   },
   {
-    title: "Quality You Can Trust",
+    title: "Peer to Peer Mentorship",
     accent: "border-[#60A5FA]",
-    body: "Keep our published resources accurate and up to date, with mistakes corrected quickly when the community spots them.",
+    body: "We have a wide range of volunteer subject helpers that are active every day in our Discord community helping other students by answering doubts, explaining how examinations take place, giving advice, and more.",
   },
   {
     title: "Support Through Community",
