@@ -42,10 +42,6 @@ export default function Header() {
             <Navbar selectedHref={selectedHref} />
           </nav>
 
-          <Link className={styles.login} href="/login">
-            Log in
-          </Link>
-
           <button
             className={styles.menuButton}
             type="button"

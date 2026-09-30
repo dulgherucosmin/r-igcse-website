@@ -68,9 +68,12 @@ body {
   font-family: var(--font-sans);
 }
 
-button,
-a {
+button {
   font: inherit;
+}
+
+a {
+  font-family: inherit;
 }
 
 button:focus-visible,
