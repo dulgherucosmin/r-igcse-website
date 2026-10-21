@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Countdown from "@/components/Countdown";
+import CountUpStat from "@/components/StatsAnimation";
 import { countdownEvent } from "@/data/events";
+import StatsAnimation from "@/components/StatsAnimation";
 
 const introduction =
   "The largest student-run community for CAIE/Edexcel IGCSE, O Level, and AS/A Level examinations! The place to go for subject help, advice, and tips. Home of the r/IGCSE subreddit.";
@@ -13,13 +15,14 @@ const stats = [
 
 const aboutCards = [
   {
-    title: "Who We Are",
+    title: "How We Started",
     icon: "/r.igcse_logo.png",
     accent: "border-[#FF5729]",
     body: (
       <>
-        r/IGCSE caters to students around the globe, providing IGCSE and AS/A
-        Level notes, subject guides, study sessions, and more. Our{" "}
+        Beginning in 2019, the r/IGCSE Community caters to students around the globe,
+        providing IGCSE and AS/A Level notes, subject guides, study sessions,
+        and more. Our{" "}
         <a
           href="https://discord.gg/igcse"
           target="_blank"
@@ -46,36 +49,53 @@ const aboutCards = [
     ),
   },
 ];
- 
-const goals = [
+
+const why = [
   {
-    title: "Accessible to Everyone",
-    accent: "border-[#FBBF24]",
-    body: "Give students around the world free access to quality revision material, wherever they study and whatever their budget.",
+    title: "Student-Made Resources",
+    accent: "border-[#A78BFA]",
+    body: "Our resources are created by volunteer alumni students who have studied for and taken these exams. We aim to keep resources free for all students, always.",
+  },
+  {
+    title: "Student Well-being",
+    accent: "border-[#ffac5e]",
+    body: "We value student welfare and aim to foster a nurturing environment by understanding and uplifting one another, ensuring that no student feels alone when navigating their academic journey, and that every student has access to support from a like-minded and welcoming community.",
   },
   {
     title: "Peer to Peer Mentorship",
-    accent: "border-[#60A5FA]",
-    body: "We have a wide range of volunteer subject helpers that are active every day in our Discord community helping other students by answering doubts, explaining how examinations take place, giving advice, and more.",
+    accent: "border-[#d1ff91]",
+    body: "We have a wide range of volunteer subject helpers that are active every day in our Discord community helping other students by answering doubts, giving advice, etc.",
   },
   {
-    title: "Support Through Community",
-    accent: "border-[#A78BFA]",
-    body: "Connect students with Subject Helpers and study sessions so nobody has to prepare for their exams alone.",
+    title: "Discord Partner Community ",
+    accent: "border-[#5865F2]",
+    body: (
+      <>
+        Since 2021, r/IGCSE has been officially recognised as a {" "}
+        <a
+          href="https://support.discord.com/hc/en-us/articles/360047236171-Partnered-vs-Verified-Servers"
+          target="_blank"
+          rel="noreferrer"
+          className="text-blue-300"
+        >
+          Discord Partner
+        </a>,{" "} giving our server access to high quality voice channels and recognition from Discord itself.
+      </>
+      ),
   },
 ];
- 
+
 function SectionHeading({ id, children }: { id: string; children: string }) {
   return (
     <h2
       id={id}
-      className="text-center text-4xl font-bold underline decoration-red-500 decoration-2 underline-offset-8"
+      className="text-center text-4xl font-bold underline decoration-red-500 decoration-3 underline-offset-8"
     >
       {children}
     </h2>
   );
 }
- 
+
 export default function Home() {
   return (
     <main className="bg-[#121010] text-white">
@@ -101,7 +121,7 @@ export default function Home() {
             <p className="mt-6 max-w-lg text-base leading-relaxed text-zinc-200 md:text-lg">
               {introduction}
             </p>
- 
+
             <dl
               className="mt-8 flex flex-wrap gap-x-12 gap-y-6"
               aria-label="Repository statistics"
@@ -115,7 +135,7 @@ export default function Home() {
                     {stat.label}
                   </dt>
                   <dd className="text-2xl font-extrabold text-[#fefb88] md:text-4xl">
-                    {stat.value}
+                    <StatsAnimation value={stat.value} />
                   </dd>
                 </div>
               ))}
@@ -130,7 +150,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
- 
+
           <div
             role="img"
             aria-label="A collection of r/IGCSE study resource covers"
@@ -155,10 +175,10 @@ export default function Home() {
           </div>
         </div>
       </section>
- 
+
       {/* Countdown */}
       <Countdown event={countdownEvent} />
- 
+
       {/* About Us */}
       <section
         aria-labelledby="about-us-title"
@@ -166,7 +186,7 @@ export default function Home() {
       >
         <div className="mx-auto max-w-6xl">
           <SectionHeading id="about-us-title">About Us</SectionHeading>
- 
+
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             {aboutCards.map((card) => (
               <article
@@ -191,41 +211,31 @@ export default function Home() {
           </div>
         </div>
       </section>
- 
-      {/* Our Goal */}
+
       <section
-        aria-labelledby="our-goal-title"
+        aria-labelledby="why-title"
         className="border-t border-zinc-800 px-6 py-16 md:px-16"
       >
         <div className="mx-auto max-w-6xl">
-          <SectionHeading id="our-goal-title">Our Goal</SectionHeading>
-          <p className="mx-auto mt-6 max-w-2xl text-center leading-relaxed text-zinc-300">
+          <SectionHeading id="why-title">Why r/IGCSE?</SectionHeading>
+          <p className="mx-auto mt-4 max-w-2xl text-center leading-relaxed text-zinc-300">
             We want every IGCSE and A Level student to have the resources and
             support they need to do their best in their exams.
           </p>
- 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {goals.map((goal) => (
+
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {why.map((reason) => (
               <article
-                key={goal.title}
-                className={`rounded-lg border-t-4 bg-[#141417] p-6 ${goal.accent}`}
+                key={reason.title}
+                className={`rounded-lg border-t-4 bg-[#141417] p-6 ${reason.accent}`}
               >
-                <h3 className="text-xl font-bold">{goal.title}</h3>
+                <h3 className="text-xl font-bold">{reason.title}</h3>
                 <p className="mt-3 leading-relaxed text-zinc-300">
-                  {goal.body}
+                  {reason.body}
                 </p>
               </article>
             ))}
           </div>
- 
-          <p className="mt-10 text-center">
-            <Link
-              href="/resources"
-              className="inline-block rounded-md bg-primary-500 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-primary-600"
-            >
-              Browse Resources
-            </Link>
-          </p>
         </div>
       </section>
     </main>
