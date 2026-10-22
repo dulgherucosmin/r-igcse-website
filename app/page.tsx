@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Countdown from "@/components/Countdown";
-import CountUpStat from "@/components/StatsAnimation";
-import { countdownEvent } from "@/data/events";
 import StatsAnimation from "@/components/StatsAnimation";
+import { countdownEvent } from "@/data/events";
 
 const introduction =
   "The largest student-run community for CAIE/Edexcel IGCSE, O Level, and AS/A Level examinations! The place to go for subject help, advice, and tips. Home of the r/IGCSE subreddit.";
