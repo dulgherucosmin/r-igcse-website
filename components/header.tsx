@@ -126,7 +126,7 @@ export default function Header() {
 
         <NavigationMenu
           aria-label="Primary navigation"
-          className="max-[1250px]:hidden"
+          className="max-lg:hidden"
         >
           <Suspense fallback={<DesktopNavLinks />}>
             <CurrentDesktopNavLinks />
@@ -148,7 +148,7 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="min-[1251px]:hidden"
+                  className="lg:hidden"
                   aria-label="Open navigation"
                 />
               }
