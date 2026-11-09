@@ -63,35 +63,31 @@ export function SubjectDetails({
 
   return (
     <>
-      <header className="flex flex-col gap-6 sm:flex-row sm:items-center">
-        <div
-          className={cn(
-            "grid size-20 shrink-0 place-items-center rounded-2xl",
-            SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)],
-          )}
-        >
-          <CategoryIcon category={subject.category} size={40} />
-        </div>
-        <div className="min-w-0">
-          {title}
-          <div className="mt-3 flex flex-wrap gap-2">
-            <Badge variant="secondary">
-              {metadata?.code ?? subject.codes.join(" / ")}
-            </Badge>
-            <Badge variant="secondary">{subject.board}</Badge>
-            <Badge variant="outline">
-              {resources.length}{" "}
-              {resources.length === 1 ? "resource" : "resources"}
-            </Badge>
+      <header className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex min-w-0 flex-col gap-6 sm:flex-row sm:items-center">
+          <div
+            className={cn(
+              "grid size-20 shrink-0 place-items-center rounded-2xl",
+              SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)],
+            )}
+          >
+            <CategoryIcon category={subject.category} size={40} />
+          </div>
+          <div className="min-w-0">
+            {title}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Badge variant="secondary">
+                {metadata?.code ?? subject.codes.join(" / ")}
+              </Badge>
+              <Badge variant="secondary">{subject.board}</Badge>
+              <Badge variant="outline">
+                {resources.length}{" "}
+                {resources.length === 1 ? "resource" : "resources"}
+              </Badge>
+            </div>
           </div>
         </div>
-      </header>
-
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-muted-foreground">
-          Every resource is written by volunteer students who sat the exam.
-        </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2 lg:mt-3.5">
           <Link href="/opportunities" className={buttonVariants()}>
             Contribute a resource
           </Link>
@@ -103,7 +99,11 @@ export function SubjectDetails({
             Report a mistake
           </a>
         </div>
-      </div>
+      </header>
+
+      <p className="mt-8 text-muted-foreground">
+        Every resource is written by volunteer students who sat the exam.
+      </p>
 
       <Separator className="my-10" />
 
