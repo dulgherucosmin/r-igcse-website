@@ -23,8 +23,6 @@ export const footerColumns: FooterColumn[] = [
       { name: "About", href: "/about" },
       { name: "Team", href: "/team" },
       { name: "Opportunities", href: "/opportunities" },
-      { name: "Certificates", href: "/certificates" },
-      { name: "Partners", href: "/partners" },
     ],
   },
 ];

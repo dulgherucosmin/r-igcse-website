@@ -4,8 +4,9 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 import { useQuery } from "@tanstack/react-query";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { useQueryState, useQueryStates } from "nuqs";
 import { useEffect, useMemo } from "react";
+import { matchesFilters, ResourceFilters } from "@/components/resource-filters";
 import {
   BackgroundArt,
   EmptyState,
@@ -31,7 +32,7 @@ import {
   subjectColorOf,
 } from "@/lib/categories";
 import { subjectsQueryOptions } from "@/lib/queries";
-import { searchQueryParser } from "@/lib/search-params";
+import { filterParsers, searchQueryParser } from "@/lib/search-params";
 
 const LEGACY_SUBJECT_HASH = "#/subject/";
 const match = (value: string, query: string) =>
@@ -49,17 +50,31 @@ export default function ResourcesDisplay() {
   } = useQuery(subjectsQueryOptions);
   const error = queryError?.message ?? "";
   const [query, setQuery] = useQueryState("q", searchQueryParser);
+  const [filters, setFilters] = useQueryStates(filterParsers, {
+    clearOnDefault: true,
+  });
   const router = useRouter();
 
+  const searchedSubjects = useMemo(
+    () =>
+      subjects.filter((subject) =>
+        match(`${subject.name} ${subject.board}`, query),
+      ),
+    [query, subjects],
+  );
   const visibleSubjects = useMemo(
     () =>
       subjects
-        .filter((subject) => match(`${subject.name} ${subject.board}`, query))
+        .filter(
+          (subject) =>
+            match(`${subject.name} ${subject.board}`, query) &&
+            matchesFilters(subject, filters),
+        )
         .sort(
           (a, b) =>
             a.name.localeCompare(b.name) || a.board.localeCompare(b.board),
         ),
-    [query, subjects],
+    [query, filters, subjects],
   );
   useEffect(() => {
     if (subjects.length === 0) return;
@@ -81,7 +96,7 @@ export default function ResourcesDisplay() {
         </h1>
       </div>
 
-      <InputGroup className="mx-auto mb-7 h-11 max-w-[660px]">
+      <InputGroup className="mx-auto mb-5 h-11 max-w-[660px]">
         <InputGroupAddon>
           <MagnifyingGlassIcon className="size-[19px]" />
         </InputGroupAddon>
@@ -93,6 +108,13 @@ export default function ResourcesDisplay() {
           onChange={(event) => setQuery(event.target.value)}
         />
       </InputGroup>
+
+      <ResourceFilters
+        allSubjects={subjects}
+        subjects={searchedSubjects}
+        filters={filters}
+        onChange={setFilters}
+      />
 
       {loading && (
         <div
@@ -163,7 +185,7 @@ export default function ResourcesDisplay() {
 
       {!loading && !error && visibleSubjects.length === 0 && (
         <EmptyState title="No subjects match your search.">
-          Try a different subject name or exam board.
+          Try a different subject name or clear some filters.
         </EmptyState>
       )}
     </main>
