@@ -6,6 +6,7 @@ import {
   WarningCircleIcon,
 } from "@phosphor-icons/react/ssr";
 import NextLink from "next/link";
+import { useQueryState } from "nuqs";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { TextLink } from "@/components/text-link";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -57,6 +58,7 @@ import type {
   DriveSubject,
   SubjectLevel,
 } from "@/lib/drive";
+import { searchQueryParser } from "@/lib/search-params";
 import { GLOBAL_LINKS, type Link, SUBJECT_META } from "@/lib/subject-meta";
 import { cn } from "@/lib/utils";
 
@@ -293,7 +295,7 @@ export default function ResourcesDisplay() {
   const [subjects, setSubjects] = useState<DriveSubject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useQueryState("q", searchQueryParser);
   const [subjectId, setSubjectId] = useState("");
 
   useEffect(() => {
