@@ -6,6 +6,7 @@ import { teamRoles } from "@/data/team";
 import { timeline } from "@/data/timeline";
 import { SITE_URL } from "@/lib/config";
 import { formatSessionDate } from "@/lib/exam-sessions";
+import { formatTimelineDate, sortTimeline } from "@/lib/timeline";
 
 type SitePage = {
   path: string;
@@ -112,7 +113,12 @@ If you find any mistakes within official r/IGCSE published resources, please con
 
 ## Timeline
 
-${timeline.map((event) => `- **${event.date}: ${event.title}.** ${event.body}`).join("\n")}
+${sortTimeline(timeline)
+  .map(
+    (event) =>
+      `- **${formatTimelineDate(event.date)}: ${event.title}${/[.!?]$/.test(event.title) ? "" : "."}** ${event.body}${event.link ? ` [${event.link.label}](${event.link.href})` : ""}`,
+  )
+  .join("\n")}
 `,
   },
   {

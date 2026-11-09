@@ -1,6 +1,5 @@
 "use client";
 
-import { HandshakeIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr";
 import {
   motion,
   useMotionValueEvent,
@@ -10,6 +9,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { TextLink } from "@/components/text-link";
 import { Badge } from "@/components/ui/badge";
 import {
   Item,
@@ -18,17 +18,10 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item";
-import { Discord } from "@/components/ui/svgs/discord";
-import { Reddit } from "@/components/ui/svgs/reddit";
 import type { TimelineEvent } from "@/data/timeline";
+import { formatTimelineDate, sortTimeline } from "@/lib/timeline";
+import { timelineIcons } from "@/lib/timeline-icons";
 import { cn } from "@/lib/utils";
-
-const ICONS = {
-  reddit: Reddit,
-  discord: Discord,
-  handshake: HandshakeIcon,
-  users: UsersThreeIcon,
-};
 
 const HEAD_LENGTH = 14;
 
@@ -41,7 +34,7 @@ function TimelineItem({
   event: TimelineEvent;
   shown: boolean;
 }) {
-  const Icon = ICONS[event.icon];
+  const Icon = timelineIcons[event.icon];
 
   return (
     <li className="relative z-10">
@@ -69,13 +62,22 @@ function TimelineItem({
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <ItemContent>
-            <Badge variant="secondary">{event.date}</Badge>
+            <Badge variant="secondary">
+              <time dateTime={event.date}>
+                {formatTimelineDate(event.date)}
+              </time>
+            </Badge>
             <ItemTitle className="mt-1 text-lg font-semibold">
               {event.title}
             </ItemTitle>
             <ItemDescription className="line-clamp-none text-base">
               {event.body}
             </ItemDescription>
+            {event.link && (
+              <TextLink href={event.link.href} className="mt-1 text-sm">
+                {event.link.label}
+              </TextLink>
+            )}
           </ItemContent>
         </motion.div>
       </Item>
@@ -202,7 +204,7 @@ export default function Timeline({ events }: { events: TimelineEvent[] }) {
           />
         </g>
       </svg>
-      {events.map((event, index) => (
+      {sortTimeline(events).map((event, index) => (
         <TimelineItem
           key={event.title}
           event={event}
