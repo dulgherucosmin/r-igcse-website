@@ -84,8 +84,9 @@ export default function About() {
           </p>
           <p>
             We are completely student-run, and every resource is written by
-            other IGCSE and AS/A Level students. r/IGCSE is free and will always
-            stay free.
+            other IGCSE and AS/A Level students.{" "}
+            <TextLink href={socials.reddit}>r/IGCSE</TextLink> is free and will
+            always stay free.
           </p>
         </Row>
 

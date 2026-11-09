@@ -102,7 +102,7 @@ ${featuredResources()}
 
 r/IGCSE caters to students around the globe, providing both IGCSE & AS/A Level notes, subject guides, study sessions, and more. Our [Discord Server](${socials.discord}) is focused on providing subject-specific channels in which you or other students may ask our verified Subject Helpers for assistance.
 
-We are completely student-run, and all resources displayed have been created by other IGCSE & AS/A Level students. r/IGCSE is free and will always remain free.
+We are completely student-run, and all resources displayed have been created by other IGCSE & AS/A Level students. [r/IGCSE](${socials.reddit}) is free and will always remain free.
 
 ## Resource repository
 

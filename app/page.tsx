@@ -21,6 +21,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Separator } from "@/components/ui/separator";
+import { socials } from "@/data/footer";
 import { introduction, stats } from "@/data/home";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
@@ -36,7 +37,7 @@ const aboutCards = [
         Beginning in 2019, the r/IGCSE Community caters to students around the
         globe, providing IGCSE and AS/A Level notes, subject guides, study
         sessions, and more. Our{" "}
-        <TextLink href="https://discord.gg/igcse">Discord Server</TextLink> has
+        <TextLink href={socials.discord}>Discord Server</TextLink> has
         subject-specific channels where you can ask our verified Subject Helpers
         for assistance.
       </>
@@ -48,7 +49,8 @@ const aboutCards = [
     body: (
       <>
         We are completely student-run, and all resources displayed have been
-        created by other IGCSE and AS/A Level students. r/IGCSE is free and will
+        created by other IGCSE and AS/A Level students.{" "}
+        <TextLink href={socials.reddit}>r/IGCSE</TextLink> is free and will
         always remain free.
       </>
     ),
