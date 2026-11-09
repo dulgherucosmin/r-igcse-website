@@ -74,7 +74,8 @@ const why = [
     title: "Discord Partner Community ",
     body: (
       <>
-        Since 2021, r/IGCSE has been officially recognised as a{" "}
+        Since 2021, <TextLink href={socials.reddit}>r/IGCSE</TextLink> has been
+        officially recognised as a{" "}
         <TextLink href="https://support.discord.com/hc/en-us/articles/360047236171-Partnered-vs-Verified-Servers">
           Discord Partner
         </TextLink>
