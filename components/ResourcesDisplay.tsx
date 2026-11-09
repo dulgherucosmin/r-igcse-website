@@ -127,10 +127,7 @@ export default function ResourcesDisplay() {
     <main className={pageClassName}>
       <BackgroundArt />
       <header className="mb-10 max-w-3xl">
-        <p className="text-sm font-semibold tracking-wide text-brand uppercase">
-          Resource repository
-        </p>
-        <h1 className="mt-2 text-4xl leading-tight font-black tracking-tight md:text-6xl">
+        <h1 className="text-4xl leading-tight font-black tracking-tight md:text-6xl">
           Resources
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground">

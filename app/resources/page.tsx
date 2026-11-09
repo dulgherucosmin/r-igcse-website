@@ -17,7 +17,6 @@ export const metadata: Metadata = pageMetadata("/resources");
 function ResourcesFallback() {
   return (
     <main className="page-container py-8 sm:py-12 lg:py-16">
-      <Skeleton className="mb-3 h-4 w-40" />
       <Skeleton className="mb-4 h-14 w-64" />
       <Skeleton className="mb-10 h-6 max-w-xl" />
       <div className="grid gap-8 md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-12">
