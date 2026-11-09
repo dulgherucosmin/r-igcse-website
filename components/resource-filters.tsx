@@ -1,6 +1,5 @@
 "use client";
 
-import { XIcon } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { CATEGORIES } from "@/lib/categories";
@@ -41,6 +40,33 @@ const TRACK_LABELS: Record<(typeof TRACK_FILTERS)[number], string> = {
   Advanced: "AS & A Level",
 };
 
+const ROW_CLASS =
+  "h-9 w-full justify-between rounded-md border-0 bg-transparent px-2 text-xs font-medium tracking-wider text-muted-foreground uppercase hover:bg-muted/60 hover:text-foreground disabled:opacity-35 aria-pressed:bg-transparent aria-pressed:text-foreground [&[aria-pressed=true]>span:last-child]:text-brand";
+
+function FilterRow({
+  label,
+  count,
+  active,
+  onClick,
+}: {
+  label: string;
+  count: number;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Button
+      variant="ghost"
+      aria-pressed={active}
+      onClick={onClick}
+      className={ROW_CLASS}
+    >
+      <span>{label}</span>
+      <span className="tabular-nums">{count}</span>
+    </Button>
+  );
+}
+
 function FilterGroup<T extends string>({
   label,
   options,
@@ -59,28 +85,27 @@ function FilterGroup<T extends string>({
   if (options.length < 2) return null;
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2">
-      <span className="text-sm font-medium text-muted-foreground">{label}</span>
+    <div>
+      <p className="mb-1 px-2 text-[11px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
+        {label}
+      </p>
       <ToggleGroup
         multiple
-        variant="outline"
-        size="sm"
+        orientation="vertical"
         aria-label={`Filter by ${label.toLowerCase()}`}
         value={value}
         onValueChange={(next) => onChange(next as T[])}
-        className="flex-wrap justify-center"
+        className="w-full gap-0.5"
       >
         {options.map((option) => (
           <ToggleGroupItem
             key={option}
             value={option}
             disabled={!counts[option] && !value.includes(option)}
-            className="aria-pressed:border-primary aria-pressed:bg-primary/15 aria-pressed:text-foreground"
+            className={ROW_CLASS}
           >
-            {getLabel(option)}
-            <span className="text-xs text-muted-foreground tabular-nums">
-              {counts[option] ?? 0}
-            </span>
+            <span className="truncate">{getLabel(option)}</span>
+            <span className="tabular-nums">{counts[option] ?? 0}</span>
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
@@ -121,18 +146,20 @@ export function ResourceFilters({
     filters.level.length + filters.board.length + filters.category.length > 0;
 
   return (
-    <div
-      role="toolbar"
-      aria-label="Filter subjects"
-      className="mb-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
-    >
+    <nav aria-label="Filter subjects" className="space-y-6">
+      <FilterRow
+        label="All subjects"
+        count={subjects.length}
+        active={!active}
+        onClick={() => onChange(null)}
+      />
       <FilterGroup
         label="Level"
         options={tracks}
         value={filters.level}
         onChange={(level) => onChange({ level })}
-        counts={countsFor("level")}
         getLabel={(track) => TRACK_LABELS[track]}
+        counts={countsFor("level")}
       />
       <FilterGroup
         label="Board"
@@ -148,12 +175,6 @@ export function ResourceFilters({
         onChange={(category) => onChange({ category })}
         counts={countsFor("category")}
       />
-      {active && (
-        <Button variant="ghost" size="sm" onClick={() => onChange(null)}>
-          <XIcon />
-          Clear filters
-        </Button>
-      )}
-    </div>
+    </nav>
   );
 }
