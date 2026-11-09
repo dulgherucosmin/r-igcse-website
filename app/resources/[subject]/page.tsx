@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import {
@@ -7,29 +6,12 @@ import {
   pageClassName,
   StatusAlert,
 } from "@/components/resources-shared";
-import SubjectResources from "@/components/SubjectResources";
+import SubjectResources, { subjectTitle } from "@/components/SubjectResources";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  DriveApiError,
-  type DriveSubject,
-  getSubjectResources,
-} from "@/lib/drive";
+import { DriveApiError } from "@/lib/drive";
+import { loadSubject } from "@/lib/subject-data";
 
 type Props = { params: Promise<{ subject: string }> };
-
-async function loadSubject(id: string) {
-  "use cache";
-  cacheLife("hours");
-  return getSubjectResources(id);
-}
-
-const LEVEL_NAMES: Record<string, string> = {
-  AS: "AS Level",
-  AL: "A Level",
-};
-
-const subjectTitle = (subject: DriveSubject) =>
-  `${subject.levels.map((level) => LEVEL_NAMES[level] ?? level).join(" / ")} ${subject.name}`;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { subject: id } = await params;
