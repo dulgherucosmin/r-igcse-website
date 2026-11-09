@@ -1,10 +1,11 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
+import { useQuery } from "@tanstack/react-query";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import {
   BackgroundArt,
   EmptyState,
@@ -29,7 +30,7 @@ import {
   SUBJECT_COLOR_CLASSES,
   subjectColorOf,
 } from "@/lib/categories";
-import type { DriveSubject } from "@/lib/drive";
+import { subjectsQueryOptions } from "@/lib/queries";
 import { searchQueryParser } from "@/lib/search-params";
 
 const LEGACY_SUBJECT_HASH = "#/subject/";
@@ -41,42 +42,14 @@ const SUBJECT_SKELETONS = Array.from(
 );
 
 export default function ResourcesDisplay() {
-  const [subjects, setSubjects] = useState<DriveSubject[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {
+    data: subjects = [],
+    isPending: loading,
+    error: queryError,
+  } = useQuery(subjectsQueryOptions);
+  const error = queryError?.message ?? "";
   const [query, setQuery] = useQueryState("q", searchQueryParser);
   const router = useRouter();
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchSubjects() {
-      try {
-        const response = await fetch("/api/subjects", {
-          signal: controller.signal,
-        });
-        const data: { subjects?: DriveSubject[]; error?: string } =
-          await response.json();
-        if (!response.ok) {
-          throw new Error(data.error ?? "Unable to load subjects.");
-        }
-        setSubjects(data.subjects ?? []);
-      } catch (fetchError) {
-        if (!controller.signal.aborted) {
-          setError(
-            fetchError instanceof Error
-              ? fetchError.message
-              : "Unable to load subjects.",
-          );
-        }
-      } finally {
-        if (!controller.signal.aborted) setLoading(false);
-      }
-    }
-
-    void fetchSubjects();
-    return () => controller.abort();
-  }, []);
 
   const visibleSubjects = useMemo(
     () =>

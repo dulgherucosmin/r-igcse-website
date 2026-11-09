@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import Providers from "@/components/providers";
 import { SITE_URL } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import "./globals.css";
@@ -46,11 +46,11 @@ export default function RootLayout({
       className={cn("dark h-full font-sans antialiased", dmSans.variable)}
     >
       <body className="flex min-h-full flex-col">
-        <NuqsAdapter>
+        <Providers>
           <Header />
           <div className="flex-1">{children}</div>
           <Footer />
-        </NuqsAdapter>
+        </Providers>
       </body>
     </html>
   );

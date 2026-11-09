@@ -1,8 +1,16 @@
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import { Suspense } from "react";
 import ResourcesDisplay from "@/components/ResourcesDisplay";
 import { Skeleton } from "@/components/ui/skeleton";
+import { listSubjects } from "@/lib/drive";
 import { pageMetadata } from "@/lib/metadata";
+import { subjectsQueryKey } from "@/lib/queries";
 
 export const metadata: Metadata = pageMetadata("/resources");
 
@@ -16,10 +24,29 @@ function ResourcesFallback() {
   );
 }
 
+async function prefetchedSubjects() {
+  "use cache";
+  cacheLife("hours");
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: subjectsQueryKey,
+    queryFn: listSubjects,
+  });
+  return dehydrate(queryClient);
+}
+
+async function PrefetchedResources() {
+  return (
+    <HydrationBoundary state={await prefetchedSubjects()}>
+      <ResourcesDisplay />
+    </HydrationBoundary>
+  );
+}
+
 export default function ResourcesPage() {
   return (
     <Suspense fallback={<ResourcesFallback />}>
-      <ResourcesDisplay />
+      <PrefetchedResources />
     </Suspense>
   );
 }
