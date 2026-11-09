@@ -152,7 +152,7 @@ export default function Team() {
 
       <section
         aria-labelledby="join-heading"
-        className="mt-16 flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between"
+        className="mt-16 flex flex-col items-center gap-6 py-6 text-center"
       >
         <div className="max-w-xl">
           <h2 id="join-heading" className="text-2xl font-bold tracking-tight">
@@ -163,7 +163,7 @@ export default function Team() {
             resource writers.
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/opportunities"
             className={cn(buttonVariants({ size: "lg" }), "font-bold")}

@@ -121,7 +121,7 @@ export default function About() {
 
       <section
         aria-labelledby="involved-heading"
-        className="mt-16 flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between"
+        className="mt-16 flex flex-col items-center gap-6 py-6 text-center"
       >
         <div className="max-w-xl">
           <h2
@@ -135,7 +135,7 @@ export default function About() {
             here is made by volunteers like you.
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/resources"
             className={cn(
