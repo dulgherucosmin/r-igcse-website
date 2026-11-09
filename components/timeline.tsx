@@ -3,13 +3,13 @@
 import { HandshakeIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr";
 import {
   motion,
-  useInView,
+  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
 } from "motion/react";
-import { useId, useRef } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Item,
@@ -32,20 +32,19 @@ const ICONS = {
 
 const HEAD_LENGTH = 14;
 
+const LINE_INSET = 16;
+
 function TimelineItem({
   event,
-  reduceMotion,
+  shown,
 }: {
   event: TimelineEvent;
-  reduceMotion: boolean;
+  shown: boolean;
 }) {
-  const ref = useRef<HTMLLIElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -40% 0px" });
-  const shown = reduceMotion || inView;
   const Icon = ICONS[event.icon];
 
   return (
-    <li ref={ref} className="relative z-10">
+    <li className="relative z-10">
       <Item className="items-start px-2">
         <ItemMedia
           variant="icon"
@@ -104,6 +103,44 @@ export default function Timeline({ events }: { events: TimelineEvent[] }) {
     reduceMotion || value <= 0 || value >= 100 ? 0 : 1,
   );
 
+  const [thresholds, setThresholds] = useState<number[]>([]);
+  const [litCount, setLitCount] = useState(0);
+
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const measure = () => {
+      const listTop = list.getBoundingClientRect().top;
+      const lineLength = list.offsetHeight - LINE_INSET * 2;
+      const icons = list.querySelectorAll<HTMLElement>(
+        "[data-slot=item-media]",
+      );
+      setThresholds(
+        Array.from(icons, (icon) => {
+          const box = icon.getBoundingClientRect();
+          const center = box.top + box.height / 2 - listTop - LINE_INSET;
+          return (center / lineLength) * 100;
+        }),
+      );
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, []);
+
+  const countLit = (fill: number) =>
+    fill <= 0 ? 0 : thresholds.filter((threshold) => fill >= threshold).length;
+
+  useMotionValueEvent(fillHeight, "change", (fill) => {
+    const next = countLit(fill);
+    setLitCount((current) => (current === next ? current : next));
+  });
+
+  useEffect(() => {
+    setLitCount(countLit(fillHeight.get()));
+  });
+
   return (
     <ol ref={listRef} className="relative max-w-2xl space-y-2">
       <svg
@@ -160,11 +197,11 @@ export default function Timeline({ events }: { events: TimelineEvent[] }) {
           />
         </g>
       </svg>
-      {events.map((event) => (
+      {events.map((event, index) => (
         <TimelineItem
           key={event.title}
           event={event}
-          reduceMotion={reduceMotion}
+          shown={reduceMotion || index < litCount}
         />
       ))}
     </ol>
