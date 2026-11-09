@@ -61,8 +61,16 @@ const dayFormat = new Intl.DateTimeFormat("en-GB", {
   timeZone: "UTC",
 });
 
-export function formatSessionDate(session: ExamSession) {
-  const day = parseDate(session.date);
-  if (!day) return session.date;
+function formatDay(date: string) {
+  const day = parseDate(date);
+  if (!day) return date;
   return dayFormat.format(new Date(Date.UTC(day.year, day.month - 1, day.day)));
 }
+
+export const formatSessionDate = (session: ExamSession) =>
+  formatDay(session.date);
+
+export const formatSessionEndDate = (session: ExamSession) =>
+  formatDay(session.endDate);
+
+export const isoDay = (date: string) => date.split("/").reverse().join("-");
