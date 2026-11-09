@@ -4,7 +4,7 @@ import { BooksIcon, ListIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Fragment, useState } from "react";
+import { Fragment, Suspense, useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -38,13 +38,76 @@ function navLink(
   );
 }
 
+const isActive = (pathname: string | undefined, href: string) =>
+  pathname === href || Boolean(pathname?.startsWith(`${href}/`));
+
+function DesktopNavLinks({ pathname }: { pathname?: string }) {
+  return (
+    <NavigationMenuList className="gap-1">
+      {navItems.map((item) => {
+        const active = isActive(pathname, item.href);
+        return (
+          <NavigationMenuItem key={item.id}>
+            <NavigationMenuLink
+              active={active}
+              className={cn("px-3 text-base", active && "text-brand")}
+              render={navLink(item)}
+            />
+          </NavigationMenuItem>
+        );
+      })}
+    </NavigationMenuList>
+  );
+}
+
+function MobileNavLinks({
+  pathname,
+  onNavigate,
+}: {
+  pathname?: string;
+  onNavigate: () => void;
+}) {
+  return navItems.map((item) => {
+    const active = isActive(pathname, item.href);
+    return (
+      <Fragment key={item.id}>
+        {navLink(item, {
+          "aria-current": active ? "page" : undefined,
+          onClick: onNavigate,
+          className: cn(
+            buttonVariants({
+              variant: active ? "secondary" : "ghost",
+              size: "lg",
+            }),
+            "justify-start text-base",
+          ),
+        })}
+      </Fragment>
+    );
+  });
+}
+
+function CurrentDesktopNavLinks() {
+  return <DesktopNavLinks pathname={usePathname()} />;
+}
+
+function CurrentMobileNavLinks({ onNavigate }: { onNavigate: () => void }) {
+  return <MobileNavLinks pathname={usePathname()} onNavigate={onNavigate} />;
+}
+
+function PathTracker() {
+  trackPath(usePathname());
+  return null;
+}
+
 export default function Header() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  trackPath(pathname);
 
   return (
     <header className="sticky top-0 z-50 h-(--site-header-height) border-b border-border/60 bg-background/95 backdrop-blur">
+      <Suspense fallback={null}>
+        <PathTracker />
+      </Suspense>
       <div className="page-container grid h-full grid-cols-[1fr_auto_1fr] items-center gap-6">
         <Link
           href="/"
@@ -68,20 +131,9 @@ export default function Header() {
           aria-label="Primary navigation"
           className="max-[1250px]:hidden"
         >
-          <NavigationMenuList className="gap-1">
-            {navItems.map((item) => {
-              const active = pathname === item.href;
-              return (
-                <NavigationMenuItem key={item.id}>
-                  <NavigationMenuLink
-                    active={active}
-                    className={cn("px-3 text-base", active && "text-brand")}
-                    render={navLink(item)}
-                  />
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
+          <Suspense fallback={<DesktopNavLinks />}>
+            <CurrentDesktopNavLinks />
+          </Suspense>
         </NavigationMenu>
 
         <div className="col-start-3 flex items-center gap-2 justify-self-end">
@@ -111,24 +163,13 @@ export default function Header() {
                 <SheetTitle>Navigation</SheetTitle>
               </SheetHeader>
               <nav aria-label="Mobile navigation" className="grid gap-1 px-2">
-                {navItems.map((item) => {
-                  const active = pathname === item.href;
-                  return (
-                    <Fragment key={item.id}>
-                      {navLink(item, {
-                        "aria-current": active ? "page" : undefined,
-                        onClick: () => setOpen(false),
-                        className: cn(
-                          buttonVariants({
-                            variant: active ? "secondary" : "ghost",
-                            size: "lg",
-                          }),
-                          "justify-start text-base",
-                        ),
-                      })}
-                    </Fragment>
-                  );
-                })}
+                <Suspense
+                  fallback={
+                    <MobileNavLinks onNavigate={() => setOpen(false)} />
+                  }
+                >
+                  <CurrentMobileNavLinks onNavigate={() => setOpen(false)} />
+                </Suspense>
               </nav>
             </SheetContent>
           </Sheet>

@@ -42,5 +42,9 @@ export function normalizeSubjectName(name: string): string {
 }
 
 export function subjectId(name: string): string {
-  return normalizeSubjectName(name);
+  return name
+    .toLowerCase()
+    .replaceAll("&", "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
