@@ -24,10 +24,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: latest(entries.map((entry) => entry.modifiedTime)),
       priority: 0.7,
     })),
-    ...resources.map((resource) => ({
-      url: `${SITE_URL}/resources/${resource.subjectId}/${resource.id}`,
-      lastModified: resource.modifiedTime,
-      priority: 0.5,
-    })),
   ];
 }

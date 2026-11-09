@@ -12,9 +12,3 @@ export async function loadAllResources() {
   cacheLife("hours");
   return listDriveResources();
 }
-
-export async function loadResource(subjectId: string, resourceId: string) {
-  const data = await loadSubject(subjectId);
-  const resource = data?.resources.find((entry) => entry.id === resourceId);
-  return data && resource ? { subject: data.subject, resource } : null;
-}
