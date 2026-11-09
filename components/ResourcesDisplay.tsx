@@ -144,11 +144,13 @@ export default function ResourcesDisplay() {
                           ? "IGCSE"
                           : subject.levels.join(" · ")}
                       </span>
-                      <ItemTitle className="block truncate text-base leading-tight font-bold">
+                      <ItemTitle className="line-clamp-2 w-full text-base leading-tight font-bold [overflow-wrap:anywhere]">
                         {subject.codes.join(" / ")} {subject.name}
                       </ItemTitle>
                       <ItemDescription className="text-xs">
-                        {subject.resourceCount} resources available
+                        {subject.resourceCount}{" "}
+                        {subject.resourceCount === 1 ? "resource" : "resources"}{" "}
+                        available
                       </ItemDescription>
                     </ItemContent>
                   </Item>
