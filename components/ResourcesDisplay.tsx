@@ -101,7 +101,34 @@ function ResourceViewer({
   onSelectResource: (resourceId: string) => void;
 }) {
   return (
-    <div className="grid items-start gap-4 md:grid-cols-[minmax(220px,0.42fr)_minmax(0,0.58fr)]">
+    <div className="grid items-start gap-4 md:grid-cols-[minmax(0,0.58fr)_minmax(220px,0.42fr)]">
+      <article className="min-w-0 overflow-hidden rounded-sm border border-zinc-800 bg-[#19191c] font-sans">
+        {selectedResource ? (
+          <>
+            <p className="m-0 border-b border-zinc-800 px-4 py-3 text-base font-semibold text-zinc-200">
+              {selectedResource.resourceName}
+              {selectedResource.author && (
+                <span className="mt-1 block text-sm font-normal text-zinc-500">
+                  {selectedResource.author}
+                </span>
+              )}
+            </p>
+            <iframe
+              key={selectedResource.id}
+              src={`https://drive.google.com/file/d/${selectedResource.id}/preview`}
+              title={selectedResource.fileName}
+              loading="lazy"
+              allow="autoplay"
+              className="block h-[min(84svh,900px)] min-h-[560px] w-full border-0 bg-zinc-950"
+            />
+          </>
+        ) : (
+          <p className="m-0 grid min-h-[560px] place-items-center p-6 text-center text-zinc-500">
+            Select a resource to preview it.
+          </p>
+        )}
+      </article>
+
       <aside className="min-w-0 font-sans">
         <h2 className="mb-2 text-base font-semibold text-zinc-300">
           Published Resources
@@ -139,33 +166,6 @@ function ResourceViewer({
           ))}
         </div>
       </aside>
-
-      <article className="min-w-0 overflow-hidden rounded-sm border border-zinc-800 bg-[#19191c] font-sans">
-        {selectedResource ? (
-          <>
-            <p className="m-0 border-b border-zinc-800 px-4 py-3 text-base font-semibold text-zinc-200">
-              {selectedResource.resourceName}
-              {selectedResource.author && (
-                <span className="mt-1 block text-sm font-normal text-zinc-500">
-                  {selectedResource.author}
-                </span>
-              )}
-            </p>
-            <iframe
-              key={selectedResource.id}
-              src={`https://drive.google.com/file/d/${selectedResource.id}/preview`}
-              title={selectedResource.fileName}
-              loading="lazy"
-              allow="autoplay"
-              className="block h-[min(84svh,900px)] min-h-[560px] w-full border-0 bg-zinc-950"
-            />
-          </>
-        ) : (
-          <p className="m-0 grid min-h-[560px] place-items-center p-6 text-center text-zinc-500">
-            Select a resource to preview it.
-          </p>
-        )}
-      </article>
     </div>
   );
 }
@@ -359,8 +359,8 @@ export default function ResourcesDisplay() {
       <div className="space-y-8">
         {(
           [
-            { label: "IGCSE", track: "IGCSE" },
-            { label: "A Levels", track: "Advanced" },
+            { label: "IGCSE/O Level Resources", track: "IGCSE" },
+            { label: "AS & A Level Resources", track: "Advanced" },
           ] as const
         ).map(({ label, track }) => {
           const group = visibleSubjects.filter(
@@ -376,7 +376,7 @@ export default function ResourcesDisplay() {
               <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,255px),1fr))] gap-3.5">
                 {group.map((subject) => (
                   <button
-                    className="flex min-h-[76px] min-w-0 cursor-pointer items-center gap-3 rounded-[0.55rem] border border-[#35353b] bg-[#19191c] p-2.5 text-left text-white transition-colors hover:border-[#4b4b54] hover:bg-[#202024]"
+                    className="flex min-h-[76px] min-w-0 cursor-pointer items-center gap-3 rounded-[0.55rem] bg-[#141417] p-2.5 text-left text-white transition-colors hover:border-[#4b4b54] hover:bg-[#202024]"
                     key={subject.id}
                     onClick={() => {
                       window.location.hash = `${SUBJECT_HASH}${subject.id}`;
@@ -466,6 +466,15 @@ function SubjectResources({
     resources?.find((resource) => resource.id === selectedResourceId) ??
     resources?.[0];
   const links = [...(metadata?.links ?? []), ...GLOBAL_LINKS];
+  const levels = subject.levels
+    .map((level) => {
+      if (level === "AS") return "AS Level";
+      if (level === "AL") return "A Level";
+      if (level === "IAS") return "IAS";
+      if (level === "IAL") return "IAL";
+      return level;
+    })
+    .join(" / ");
 
   return (
     <main className={pageClassName}>
@@ -478,21 +487,27 @@ function SubjectResources({
         <span aria-hidden="true">←</span> Back to all subjects
       </button>
 
-      <header className="mx-auto mb-8 max-w-3xl text-center">
-        <div className="mb-3 flex justify-center">
+      <header className="mb-8">
+        <div className="flex items-center gap-4 text-left">
           <span
-            className={`inline-flex size-12 items-center justify-center ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
+            className={`inline-flex size-[68px] shrink-0 items-center justify-center rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
           >
-            <CategoryIcon category={subject.category} size={32} />
+            <CategoryIcon category={subject.category} size={46} />
           </span>
+          <div className="min-w-0">
+            <h1 className="m-0 text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl">
+              {levels} {subject.name}
+            </h1>
+            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 text-base font-semibold text-zinc-300">
+              <span>{metadata?.code ?? subject.codes.join(" / ")}</span>
+              <span aria-hidden="true" className="text-zinc-500">
+                ·
+              </span>
+              <span>{subject.board}</span>
+            </div>
+          </div>
         </div>
-        <h4 className="m-0 leading-tight font-extrabold tracking-tight sm:text-3xl">
-          {subject.board} {subject.levels}
-        </h4>
-        <h1 className="m-0 text-4xl leading-tight font-extrabold tracking-tight sm:text-5xl">
-          {subject.name}
-        </h1>
-        <p className="mt-2 text-base font-semibold text-zinc-300">
+        <p className="mt-4 text-base font-semibold text-zinc-300">
           All of our resources are made by volunteer students.{" "}
           <a
             className="text-zinc-300 underline decoration-zinc-600 underline-offset-4 hover:text-white"
@@ -502,6 +517,20 @@ function SubjectResources({
           </a>
           .
         </p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a
+            className="inline-flex items-center justify-center rounded-lg bg-primary-500/85 px-4 py-2 text-base font-bold text-white transition-colors hover:bg-primary-600/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            href="/opportunities"
+          >
+            Contribute a Resource
+          </a>
+          <a
+            className="inline-flex items-center justify-center rounded-lg bg-primary-500/85 px-4 py-2 text-base font-bold text-white transition-colors hover:bg-primary-600/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            href="mailto:igcseresources.1@gmail.com"
+          >
+            Contact Us
+          </a>
+        </div>
       </header>
 
       {error && (

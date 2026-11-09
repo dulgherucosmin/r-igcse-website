@@ -145,11 +145,21 @@ function parseResource(file: DriveFile): ParsedDriveResource | null {
   const parts = file.name.split("|").map((part) => part.trim());
   if (parts.length !== 6) return null;
 
-  const [rawBoard, rawLevel, code, rawSubject, resourceName, author] = parts;
+  const [rawBoard, rawLevel, rawCode, rawSubject, resourceName, author] = parts;
   const board = normalizeBoard(rawBoard);
   const level = board ? normalizeLevel(board, rawLevel) : null;
-  if (!board || !level || !code || !resourceName) {
+  if (!board || !level || !rawCode || !resourceName) {
     return null;
+  }
+
+  let code;
+
+  if (board == "Edexcel") {
+    // split Subject code from paper code
+    code = rawCode.split("/")[0];
+
+  } else {
+    code = rawCode;
   }
 
   const subject = SUBJECTS_BY_KEY.get(normalizeSubjectName(rawSubject));
