@@ -49,13 +49,18 @@ function TimelineItem({
         <ItemMedia
           variant="icon"
           className={cn(
-            "size-9 rounded-full bg-secondary ring-4 ring-background transition-[color,filter,opacity,box-shadow] duration-500",
+            "size-9 rounded-full bg-secondary ring-4 ring-background transition-[color,box-shadow] duration-500",
             shown
-              ? "text-brand opacity-100 shadow-[0_0_0_1px_var(--primary),0_0_18px_-2px_var(--primary)]"
-              : "text-muted-foreground opacity-50 grayscale",
+              ? "text-brand shadow-[0_0_0_1px_var(--primary),0_0_18px_-2px_var(--primary)]"
+              : "text-muted-foreground",
           )}
         >
-          <Icon className="size-5" />
+          <Icon
+            className={cn(
+              "size-5 transition-[filter,opacity] duration-500",
+              !shown && "opacity-50 grayscale",
+            )}
+          />
         </ItemMedia>
         <motion.div
           className="min-w-0 flex-1"
