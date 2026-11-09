@@ -33,6 +33,21 @@ function groupByLevel(resources: DriveResource[]) {
 export const subjectTitle = (subject: DriveSubject) =>
   `${subject.levels.map((level) => LEVEL_NAMES[level] ?? level).join(" / ")} ${subject.name}`;
 
+export function SubjectBackLink() {
+  return (
+    <Link
+      href="/resources"
+      className={cn(
+        buttonVariants({ variant: "ghost" }),
+        "mb-8 -ml-2.5 text-muted-foreground",
+      )}
+    >
+      <ArrowLeftIcon />
+      All subjects
+    </Link>
+  );
+}
+
 export default function SubjectResources({
   subject,
   resources,
@@ -47,16 +62,7 @@ export default function SubjectResources({
   return (
     <main className={pageClassName}>
       <BackgroundArt />
-      <Link
-        href="/resources"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "mb-8 -ml-2.5 text-muted-foreground",
-        )}
-      >
-        <ArrowLeftIcon />
-        All subjects
-      </Link>
+      <SubjectBackLink />
 
       <header className="flex flex-col gap-6 sm:flex-row sm:items-center">
         <div
