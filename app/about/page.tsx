@@ -1,25 +1,11 @@
-import {
-  ArrowRightIcon,
-  BooksIcon,
-  HandshakeIcon,
-  UsersThreeIcon,
-} from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon, BooksIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { TextLink } from "@/components/text-link";
-import { Badge } from "@/components/ui/badge";
+import Timeline from "@/components/timeline";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Item,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from "@/components/ui/item";
 import { Separator } from "@/components/ui/separator";
-import { Discord } from "@/components/ui/svgs/discord";
-import { Reddit } from "@/components/ui/svgs/reddit";
 import { socials } from "@/data/footer";
 import { stats } from "@/data/home";
 import { timeline } from "@/data/timeline";
@@ -27,13 +13,6 @@ import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata("/about");
-
-const timelineIcons = {
-  reddit: Reddit,
-  discord: Discord,
-  handshake: HandshakeIcon,
-  users: UsersThreeIcon,
-};
 
 const publishedResources =
   stats.find((stat) => stat.label === "Published Resources")?.value ?? "100+";
@@ -134,34 +113,7 @@ export default function About() {
             >
               Our story
             </h2>
-            <ol className="relative max-w-2xl space-y-2 before:absolute before:top-4 before:bottom-4 before:left-[1.625rem] before:w-px before:bg-border">
-              {timeline.map((event) => {
-                const TimelineIcon = timelineIcons[event.icon];
-                return (
-                  <Item
-                    key={event.title}
-                    render={<li />}
-                    className="relative items-start px-2"
-                  >
-                    <ItemMedia
-                      variant="icon"
-                      className="size-9 rounded-full bg-secondary text-brand ring-4 ring-background"
-                    >
-                      <TimelineIcon className="size-5" />
-                    </ItemMedia>
-                    <ItemContent>
-                      <Badge variant="secondary">{event.date}</Badge>
-                      <ItemTitle className="mt-1 text-lg font-semibold">
-                        {event.title}
-                      </ItemTitle>
-                      <ItemDescription className="line-clamp-none text-base">
-                        {event.body}
-                      </ItemDescription>
-                    </ItemContent>
-                  </Item>
-                );
-              })}
-            </ol>
+            <Timeline events={timeline} />
           </div>
         </section>
         <Separator />
