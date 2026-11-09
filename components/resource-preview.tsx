@@ -1,4 +1,4 @@
-import { ArrowSquareOutIcon, ArrowsOutIcon } from "@phosphor-icons/react/ssr";
+import { ArrowSquareOutIcon } from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import type { DriveResource, DriveSubject } from "@/lib/drive";
@@ -8,11 +8,9 @@ import { cn } from "@/lib/utils";
 export function ResourceMeta({
   subject,
   resource,
-  compact = false,
 }: {
   subject: DriveSubject;
   resource: DriveResource;
-  compact?: boolean;
 }) {
   return (
     <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
@@ -22,11 +20,9 @@ export function ResourceMeta({
         {LEVEL_NAMES[resource.level] ?? resource.level}
       </Badge>
       <Badge variant="secondary">{resource.code}</Badge>
-      {!compact && (
-        <Badge variant="outline">
-          {subject.board} {subject.name}
-        </Badge>
-      )}
+      <Badge variant="outline">
+        {subject.board} {subject.name}
+      </Badge>
     </div>
   );
 }
@@ -48,37 +44,16 @@ export function ResourceFrame({
   );
 }
 
-export function ResourceActions({
-  subjectId,
-  resource,
-  showFullPage = false,
-  size = "default",
-}: {
-  subjectId: string;
-  resource: DriveResource;
-  showFullPage?: boolean;
-  size?: "default" | "sm";
-}) {
+export function ResourceActions({ resource }: { resource: DriveResource }) {
   return (
-    <div className="flex flex-wrap gap-2">
-      <a
-        href={resource.url || driveView(resource.id)}
-        target="_blank"
-        rel="noreferrer"
-        className={buttonVariants({ size })}
-      >
-        {size === "sm" ? "Open in Drive" : "Open in Google Drive"}
-        <ArrowSquareOutIcon />
-      </a>
-      {showFullPage && (
-        <a
-          href={`/resources/${subjectId}/${resource.id}`}
-          className={buttonVariants({ variant: "outline", size })}
-        >
-          <ArrowsOutIcon />
-          Full page
-        </a>
-      )}
-    </div>
+    <a
+      href={resource.url || driveView(resource.id)}
+      target="_blank"
+      rel="noreferrer"
+      className={buttonVariants()}
+    >
+      Open in Google Drive
+      <ArrowSquareOutIcon />
+    </a>
   );
 }

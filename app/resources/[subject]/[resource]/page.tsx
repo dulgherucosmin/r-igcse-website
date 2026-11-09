@@ -60,7 +60,7 @@ async function ResourcePage({ params }: Props) {
             <ResourceMeta subject={subject} resource={resource} />
           </div>
         </div>
-        <ResourceActions subjectId={subject.id} resource={resource} />
+        <ResourceActions resource={resource} />
       </div>
       <div className="mt-8 overflow-hidden rounded-xl ring-1 ring-border">
         <ResourceFrame resource={resource} className="h-[min(85svh,1000px)]" />
