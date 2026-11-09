@@ -10,6 +10,10 @@ export function pageMetadata(path: string): Metadata {
       : page.title,
     description: page.description,
     alternates: { canonical: path || "/" },
-    openGraph: { title: page.title, description: page.description },
+    openGraph: {
+      title: page.title,
+      description: page.description,
+      url: path || "/",
+    },
   };
 }
