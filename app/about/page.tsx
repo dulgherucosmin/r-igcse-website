@@ -68,10 +68,7 @@ export default function About() {
   return (
     <main className="page-container pt-12 pb-24 md:pt-20">
       <header className="max-w-3xl">
-        <p className="text-sm font-semibold tracking-wide text-brand uppercase">
-          About r/IGCSE
-        </p>
-        <h1 className="mt-2 text-4xl leading-tight font-black tracking-tight md:text-6xl">
+        <h1 className="text-4xl leading-tight font-black tracking-tight md:text-6xl">
           Built by students, for students
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
