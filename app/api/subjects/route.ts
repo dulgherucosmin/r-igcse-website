@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { connection, NextResponse } from "next/server";
 import { DriveApiError, listSubjects } from "@/lib/drive";
 
 export async function GET() {
+  await connection();
   try {
     return NextResponse.json({ subjects: await listSubjects() });
   } catch (error) {

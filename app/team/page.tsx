@@ -1,5 +1,23 @@
-import Image from "next/image";
-import { teamRoles } from "@/data/team";
+import type { Metadata } from "next";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item";
+import { type TeamMember, teamRoles } from "@/data/team";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = pageMetadata("/team");
 
 function getInitials(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -11,68 +29,53 @@ function getInitials(name: string) {
     .toUpperCase();
 }
 
-function MemberCard({
-  name,
-  title,
-  avatar,
-}: {
-  name: string;
-  title: string;
-  avatar?: string;
-}) {
+function MemberCard({ name, title, avatar }: TeamMember) {
   return (
-    <div className="flex w-28 flex-col items-center text-center sm:w-32">
-      <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-red-500 bg-[#141417] sm:h-24 sm:w-24">
-        {avatar ? (
-          <Image
-            src={avatar}
-            alt=""
-            width={96}
-            height={96}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <span className="text-lg font-bold text-zinc-300 sm:text-xl">
+    <Item className="w-28 flex-col p-0 text-center sm:w-32">
+      <ItemMedia>
+        <Avatar className="size-20 ring-2 ring-primary sm:size-24">
+          {avatar && <AvatarImage src={avatar} alt="" />}
+          <AvatarFallback className="text-lg font-bold sm:text-xl">
             {getInitials(name)}
-          </span>
-        )}
-      </div>
-      <p className="mt-3 text-sm font-semibold sm:text-base">{name}</p>
-      <p className="text-xs text-zinc-400 sm:text-sm">{title}</p>
-    </div>
+          </AvatarFallback>
+        </Avatar>
+      </ItemMedia>
+      <ItemContent className="items-center gap-0">
+        <ItemTitle className="text-sm font-semibold sm:text-base">
+          {name}
+        </ItemTitle>
+        <ItemDescription className="text-xs sm:text-sm">
+          {title}
+        </ItemDescription>
+      </ItemContent>
+    </Item>
   );
 }
 
 export default function Team() {
   return (
-    <div className="min-h-screen bg-[#121010] px-6 pt-8 pb-20 text-white md:px-16">
-      <h1 className="mb-12 text-center text-3xl font-bold underline decoration-red-500 decoration-2 underline-offset-8">
+    <main className="page-container min-h-screen pt-8 pb-20">
+      <h1 className="mb-12 text-center text-3xl font-bold underline decoration-primary decoration-2 underline-offset-8">
         The Team Behind r/IGCSE
       </h1>
 
-      <div className="mx-auto flex max-w-6xl justify-center flex-col gap-10">
+      <div className="flex flex-col gap-8">
         {teamRoles.map((group) => (
-          <section key={group.role} aria-labelledby={`${group.role}-heading`}>
-            <h2
-              id={`${group.role}-heading`}
-              className="mb-2 text-center justify-center text-2xl font-bold sm:text-center"
-            >
-              {group.role}
-            </h2>
-            <p
-                id={`${group.description}-heading`}
-                className="mx-auto mb-6 max-w-xl text-center justify-center italic sm:text-center"
-            >
-              {group.description}  
-            </p>
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-8 sm:justify-center">
+          <Card key={group.role} aria-label={group.role}>
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl font-bold">{group.role}</CardTitle>
+              <CardDescription className="mx-auto max-w-xl italic">
+                {group.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap justify-center gap-8">
               {group.members.map((member) => (
                 <MemberCard key={`${group.role}-${member.name}`} {...member} />
               ))}
-            </div>
-          </section>
+            </CardContent>
+          </Card>
         ))}
       </div>
-    </div>
+    </main>
   );
 }

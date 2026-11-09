@@ -3,12 +3,11 @@ export interface Link {
   url: string;
 }
 
-export interface SubjectMeta {
+interface SubjectMeta {
   code?: string;
   links?: Link[];
 }
 
-/** Subject codes and optional links, keyed by the exact Drive folder name. */
 export const SUBJECT_META: Record<string, SubjectMeta> = {
   "Computer Science": {
     code: "0478",

@@ -1,51 +1,33 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --site-header-height: 60px;
+  --page-gutter: 1.5rem;
   --background: #121010;
-  --foreground: #fff;
-  --primary-50: #fad3d1;
-  --primary-100: #f9c2bf;
-  --primary-200: #f59f99;
-  --primary-300: #f17b74;
-  --primary-400: #ee584f;
-  --primary-500: #ea352a;
-  --primary-600: #c81e14;
-  --primary-700: #95160f;
-  --primary-800: #620f0a;
-  --primary-900: #2f0705;
-  --primary-950: #150302;
-}
-
-@theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary-50: var(--primary-50);
-  --color-primary-100: var(--primary-100);
-  --color-primary-200: var(--primary-200);
-  --color-primary-300: var(--primary-300);
-  --color-primary-400: var(--primary-400);
-  --color-primary-500: var(--primary-500);
-  --color-primary-600: var(--primary-600);
-  --color-primary-700: var(--primary-700);
-  --color-primary-800: var(--primary-800);
-  --color-primary-900: var(--primary-900);
-  --color-primary-950: var(--primary-950);
-  --font-sans: var(--font-dm-sans);
-}
-
-html {
-  min-width: 280px;
-  background: var(--background);
-  color-scheme: dark;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #ededed;
-    --foreground: #0a0a0a;
-    color-scheme: light;
-  }
+  --foreground: #ffffff;
+  --card: #1a1717;
+  --card-foreground: #ffffff;
+  --popover: #1a1717;
+  --popover-foreground: #ffffff;
+  --primary: #e62317;
+  --brand: #eb4036;
+  --primary-foreground: #ffffff;
+  --secondary: #272121;
+  --secondary-foreground: #ffffff;
+  --muted: #272121;
+  --muted-foreground: #aea3a3;
+  --accent: #272121;
+  --accent-foreground: #ffffff;
+  --destructive: #f87171;
+  --border: #312b2b;
+  --input: #3e3737;
+  --ring: #ea352a;
+  --highlight: #fefb88;
+  --radius: 0.625rem;
 }
 
 @media (max-width: 1250px) {
@@ -54,30 +36,65 @@ html {
   }
 }
 
-@media (min-width: 1251px) and (max-width: 1919px) {
+@media (min-width: 768px) {
   :root {
-    --site-header-height: 3.125vw;
+    --page-gutter: 2.5rem;
   }
 }
 
-body {
-  min-height: 100%;
-  margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+@utility page-container {
+  width: 100%;
+  max-width: calc(72rem + 2 * var(--page-gutter));
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
 }
 
-button {
-  font: inherit;
+@theme inline {
+  --font-sans: var(--font-dm-sans);
+  --font-heading: var(--font-dm-sans);
+  --color-highlight: var(--highlight);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-brand: var(--brand);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-a {
-  font-family: inherit;
-}
-
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--primary-500);
-  outline-offset: 3px;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    min-width: 280px;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }

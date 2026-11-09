@@ -152,15 +152,7 @@ function parseResource(file: DriveFile): ParsedDriveResource | null {
     return null;
   }
 
-  let code;
-
-  if (board == "Edexcel") {
-    // split Subject code from paper code
-    code = rawCode.split("/")[0];
-
-  } else {
-    code = rawCode;
-  }
+  const code = board === "Edexcel" ? rawCode.split("/")[0] : rawCode;
 
   const subject = SUBJECTS_BY_KEY.get(normalizeSubjectName(rawSubject));
   if (!subject) return null;
@@ -201,7 +193,7 @@ async function listAllFiles(folderId: string): Promise<DriveFile[]> {
   return files;
 }
 
-export async function listDriveResources(): Promise<DriveResource[]> {
+async function listDriveResources(): Promise<DriveResource[]> {
   const files = await listAllFiles(ROOT_FOLDER_ID);
   return files
     .flatMap((file) => {
@@ -302,24 +294,4 @@ export async function getSubjectResources(
     (item) => item.id === id,
   );
   return subject ? { subject, resources } : null;
-}
-
-/** Temporarily gathers every item name, including folder names, for debugging. */
-export async function listAllFileNames(folderId: string): Promise<string[]> {
-  const names: string[] = [];
-  const folders = [folderId];
-  const visited = new Set<string>();
-
-  while (folders.length > 0) {
-    const currentFolder = folders.pop();
-    if (!currentFolder || visited.has(currentFolder)) continue;
-    visited.add(currentFolder);
-
-    for (const file of await list(currentFolder)) {
-      names.push(file.name);
-      if (file.mimeType === FOLDER) folders.push(file.id);
-    }
-  }
-
-  return names.sort((a, b) => a.localeCompare(b));
 }

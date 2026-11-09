@@ -1,6 +1,51 @@
 "use client";
 
+import {
+  ArrowLeftIcon,
+  MagnifyingGlassIcon,
+  WarningCircleIcon,
+} from "@phosphor-icons/react/ssr";
+import NextLink from "next/link";
 import { Fragment, useEffect, useMemo, useState } from "react";
+import { TextLink } from "@/components/text-link";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   CategoryIcon,
   SUBJECT_COLOR_CLASSES,
@@ -13,13 +58,18 @@ import type {
   SubjectLevel,
 } from "@/lib/drive";
 import { GLOBAL_LINKS, type Link, SUBJECT_META } from "@/lib/subject-meta";
+import { cn } from "@/lib/utils";
 
 const SUBJECT_HASH = "#/subject/";
 const pageClassName =
-  "relative isolate mx-auto min-h-[calc(100svh-var(--site-header-height))] w-full max-w-[1060px] overflow-hidden px-5 py-8 text-white sm:px-6 sm:py-12 lg:py-16";
+  "page-container relative isolate min-h-[calc(100svh-var(--site-header-height))] overflow-hidden py-8 sm:py-12 lg:py-16";
 const match = (value: string, query: string) =>
   value.toLowerCase().includes(query.toLowerCase());
 const BOARD_ORDER: Board[] = ["CAIE", "Edexcel"];
+const SUBJECT_SKELETONS = Array.from(
+  { length: 9 },
+  (_, index) => `subject-skeleton-${index}`,
+);
 
 interface ResourceGroup {
   board: Board;
@@ -41,23 +91,51 @@ function StudyToolsParagraph({ links }: { links: Link[] }) {
   if (links.length === 0) return null;
 
   return (
-    <p className="m-0 leading-relaxed text-zinc-300">
+    <p className="leading-relaxed text-muted-foreground">
       Explore these study tools and websites:{" "}
       {links.map((link, index) => (
         <Fragment key={`${link.url}${link.label}`}>
           {index > 0 && (index === links.length - 1 ? ", and " : ", ")}
-          <a
-            className="text-blue-300 underline decoration-zinc-600 underline-offset-4 hover:text-white"
-            href={link.url}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <TextLink href={link.url} target="_blank" rel="noreferrer">
             {link.label}
-          </a>
+          </TextLink>
         </Fragment>
       ))}
       .
     </p>
+  );
+}
+
+function StatusAlert({ children }: { children: string }) {
+  return (
+    <Alert variant="destructive">
+      <WarningCircleIcon />
+      <AlertDescription>{children}</AlertDescription>
+    </Alert>
+  );
+}
+
+function EmptyState({ title, children }: { title: string; children?: string }) {
+  return (
+    <Empty className="border">
+      <EmptyHeader>
+        <EmptyTitle>{title}</EmptyTitle>
+        {children && <EmptyDescription>{children}</EmptyDescription>}
+      </EmptyHeader>
+    </Empty>
+  );
+}
+
+function BackButton({ onClick }: { onClick: () => void }) {
+  return (
+    <Button
+      variant="ghost"
+      className="mb-6 -ml-2.5 text-base font-semibold text-muted-foreground"
+      onClick={onClick}
+    >
+      <ArrowLeftIcon />
+      Back to all subjects
+    </Button>
   );
 }
 
@@ -102,69 +180,70 @@ function ResourceViewer({
 }) {
   return (
     <div className="grid items-start gap-4 md:grid-cols-[minmax(0,0.58fr)_minmax(220px,0.42fr)]">
-      <article className="min-w-0 overflow-hidden rounded-sm border border-zinc-800 bg-[#19191c] font-sans">
+      <Card className="min-w-0 gap-0 py-0">
         {selectedResource ? (
           <>
-            <p className="m-0 border-b border-zinc-800 px-4 py-3 text-base font-semibold text-zinc-200">
-              {selectedResource.resourceName}
+            <CardHeader className="border-b py-3">
+              <CardTitle className="text-base">
+                {selectedResource.resourceName}
+              </CardTitle>
               {selectedResource.author && (
-                <span className="mt-1 block text-sm font-normal text-zinc-500">
-                  {selectedResource.author}
-                </span>
+                <CardDescription>{selectedResource.author}</CardDescription>
               )}
-            </p>
+            </CardHeader>
             <iframe
               key={selectedResource.id}
               src={`https://drive.google.com/file/d/${selectedResource.id}/preview`}
               title={selectedResource.fileName}
               loading="lazy"
               allow="autoplay"
-              className="block h-[min(84svh,900px)] min-h-[560px] w-full border-0 bg-zinc-950"
+              className="block h-[min(84svh,900px)] min-h-[560px] w-full border-0 bg-background"
             />
           </>
         ) : (
-          <p className="m-0 grid min-h-[560px] place-items-center p-6 text-center text-zinc-500">
-            Select a resource to preview it.
-          </p>
+          <EmptyState title="Select a resource to preview it." />
         )}
-      </article>
+      </Card>
 
-      <aside className="min-w-0 font-sans">
-        <h2 className="mb-2 text-base font-semibold text-zinc-300">
+      <aside className="min-w-0">
+        <h2 className="mb-2 text-base font-semibold text-muted-foreground">
           Published Resources
         </h2>
-        <div className="max-h-[min(76svh,800px)] overflow-y-auto rounded-xl border border-zinc-800 bg-[#19191c]">
-          {groups.map((group) => (
-            <section key={group.key}>
-              <h3 className="m-0 border-b border-zinc-700 px-4 py-2.5 text-base font-medium text-white">
-                {group.level}
-              </h3>
-              <ul className="my-3 ml-4 mr-3 list-none border-l border-zinc-500 py-1 pl-2.5">
-                {group.resources.map((resource) => (
-                  <li className="list-none" key={resource.id}>
-                    <button
-                      aria-pressed={resource.id === selectedResource?.id}
-                      className={`-ml-px w-[calc(100%+1px)] border-l-0 px-2.5 py-2 text-left transition-colors ${
-                        resource.id === selectedResource?.id
-                          ? "bg-zinc-800/80 text-white"
-                          : "text-zinc-300 hover:bg-zinc-800/50 hover:text-white"
-                      }`}
-                      onClick={() => onSelectResource(resource.id)}
-                      type="button"
-                    >
-                      <span className="block text-sm">
-                        {resource.resourceName}
-                      </span>
-                      <span className="mt-0.5 block text-xs text-zinc-500">
-                        {resource.author || "Author not listed"}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
+        <Card className="py-0">
+          <ScrollArea className="max-h-[min(76svh,800px)]">
+            {groups.map((group, index) => (
+              <section key={group.key}>
+                {index > 0 && <Separator />}
+                <h3 className="px-4 py-2.5 text-base font-medium">
+                  {group.level}
+                </h3>
+                <Separator />
+                <ul className="my-3 mr-3 ml-4 border-l pl-2.5">
+                  {group.resources.map((resource) => {
+                    const selected = resource.id === selectedResource?.id;
+                    return (
+                      <li key={resource.id}>
+                        <Button
+                          variant={selected ? "secondary" : "ghost"}
+                          aria-pressed={selected}
+                          className="h-auto w-full flex-col items-start gap-0.5 px-2.5 py-2 text-left whitespace-normal"
+                          onClick={() => onSelectResource(resource.id)}
+                        >
+                          <span className="text-sm">
+                            {resource.resourceName}
+                          </span>
+                          <span className="text-xs font-normal text-muted-foreground">
+                            {resource.author || "Author not listed"}
+                          </span>
+                        </Button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            ))}
+          </ScrollArea>
+        </Card>
       </aside>
     </div>
   );
@@ -172,47 +251,41 @@ function ResourceViewer({
 
 function ResourceBank({ resources }: { resources: DriveResource[] }) {
   return (
-    <div className="overflow-x-auto border border-zinc-800 bg-[#19191c]">
-      <table className="w-full min-w-[650px] table-fixed border-collapse text-left text-sm">
-        <thead>
-          <tr className="border-b border-zinc-700 text-xs tracking-wide text-zinc-400 uppercase">
-            <th className="w-[42%] px-3 py-3 font-semibold sm:px-4">
-              Resource
-            </th>
-            <th className="w-[20%] px-3 py-3 font-semibold sm:px-4">
-              Board / level
-            </th>
-            <th className="w-[18%] px-3 py-3 font-semibold sm:px-4">Code</th>
-            <th className="px-3 py-3 font-semibold sm:px-4">Author</th>
-          </tr>
-        </thead>
-        <tbody>
+    <Card className="py-0">
+      <Table className="min-w-[650px] table-fixed">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[42%]">Resource</TableHead>
+            <TableHead className="w-[20%]">Board / level</TableHead>
+            <TableHead className="w-[18%]">Code</TableHead>
+            <TableHead>Author</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {resources.map((resource) => (
-            <tr className="border-t border-zinc-800" key={resource.id}>
-              <td className="px-3 py-2.5 sm:px-4">
-                <a
-                  className="text-zinc-300 no-underline hover:text-white"
+            <TableRow key={resource.id}>
+              <TableCell className="whitespace-normal">
+                <TextLink
                   href={resource.url}
-                  target="_blank"
-                  rel="noreferrer"
+                  className="text-foreground no-underline hover:underline"
                 >
                   {resource.resourceName}
-                </a>
-              </td>
-              <td className="px-3 py-2.5 text-zinc-400 sm:px-4">
+                </TextLink>
+              </TableCell>
+              <TableCell className="text-muted-foreground">
                 {resource.board} · {resource.level}
-              </td>
-              <td className="px-3 py-2.5 text-zinc-400 sm:px-4">
+              </TableCell>
+              <TableCell className="text-muted-foreground">
                 {resource.code}
-              </td>
-              <td className="px-3 py-2.5 text-zinc-400 sm:px-4">
+              </TableCell>
+              <TableCell className="whitespace-normal text-muted-foreground">
                 {resource.author || "—"}
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </Card>
   );
 }
 
@@ -286,7 +359,15 @@ export default function ResourcesDisplay() {
     return (
       <main className={pageClassName}>
         <BackgroundArt />
-        <p className="text-center text-sm text-zinc-400">Loading subject...</p>
+        <Skeleton className="mb-6 h-8 w-48" />
+        <div className="mb-8 flex items-center gap-4">
+          <Skeleton className="size-[68px]" />
+          <div className="grid gap-2">
+            <Skeleton className="h-9 w-72 max-w-full" />
+            <Skeleton className="h-5 w-32" />
+          </div>
+        </div>
+        <Skeleton className="h-[560px] w-full" />
       </main>
     );
   }
@@ -305,16 +386,10 @@ export default function ResourcesDisplay() {
     return (
       <main className={pageClassName}>
         <BackgroundArt />
-        <button
-          className="mb-6 inline-flex items-center gap-2 border-0 bg-transparent px-0 py-1.5 font-semibold text-zinc-300 hover:text-white"
-          onClick={clearSubject}
-          type="button"
-        >
-          Back to all subjects
-        </button>
-        <p className="rounded-xl border border-red-500/35 bg-red-950/20 p-4 text-center text-red-300">
+        <BackButton onClick={clearSubject} />
+        <StatusAlert>
           That subject is not present in the resource repository.
-        </p>
+        </StatusAlert>
       </main>
     );
   }
@@ -328,33 +403,31 @@ export default function ResourcesDisplay() {
         </h1>
       </div>
 
-      <label className="mx-auto mb-7 flex min-h-[46px] w-full max-w-[660px] items-center gap-2.5 rounded-[0.65rem] border border-[#38383e] bg-[#171719] px-3.5 focus-within:border-blue-500">
-        <span className="sr-only">Search subjects</span>
-        <svg
-          className="h-[19px] w-[19px] shrink-0 fill-none stroke-zinc-500 stroke-[1.8]"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <circle cx="10.8" cy="10.8" r="6.8" />
-          <path d="m16 16 5 5" />
-        </svg>
-        <input
-          className="w-full min-w-0 border-0 bg-transparent text-[0.95rem] text-white outline-none placeholder:text-zinc-500"
+      <InputGroup className="mx-auto mb-7 h-11 max-w-[660px]">
+        <InputGroupAddon>
+          <MagnifyingGlassIcon className="size-[19px]" />
+        </InputGroupAddon>
+        <InputGroupInput
           type="search"
+          aria-label="Search subjects"
           placeholder="Search subjects"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-      </label>
+      </InputGroup>
 
       {loading && (
-        <p className="text-center text-sm text-zinc-400">Loading subjects...</p>
+        <div
+          role="status"
+          aria-label="Loading subjects"
+          className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,255px),1fr))] gap-3.5"
+        >
+          {SUBJECT_SKELETONS.map((key) => (
+            <Skeleton key={key} className="h-[76px]" />
+          ))}
+        </div>
       )}
-      {error && (
-        <p className="rounded-xl border border-red-500/35 bg-red-950/20 p-4 text-center text-red-300">
-          {error}
-        </p>
-      )}
+      {error && <StatusAlert>{error}</StatusAlert>}
 
       <div className="space-y-8">
         {(
@@ -375,34 +448,32 @@ export default function ResourcesDisplay() {
               </h2>
               <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,255px),1fr))] gap-3.5">
                 {group.map((subject) => (
-                  <button
-                    className="flex min-h-[76px] min-w-0 cursor-pointer items-center gap-3 rounded-[0.55rem] bg-[#141417] p-2.5 text-left text-white transition-colors hover:border-[#4b4b54] hover:bg-[#202024]"
+                  <Item
                     key={subject.id}
-                    onClick={() => {
-                      window.location.hash = `${SUBJECT_HASH}${subject.id}`;
-                    }}
-                    type="button"
+                    variant="muted"
+                    className="min-h-[76px] min-w-0 flex-nowrap bg-card p-2.5 hover:bg-muted"
+                    render={<a href={`${SUBJECT_HASH}${subject.id}`} />}
                   >
-                    <span
-                      className={`inline-flex size-[46px] shrink-0 items-center justify-center rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
+                    <ItemMedia
+                      className={`size-[46px] rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
                     >
                       <CategoryIcon category={subject.category} />
-                    </span>
-                    <span className="grid min-w-0 gap-0.5">
-                      <span className="text-xs font-semibold text-white">
+                    </ItemMedia>
+                    <ItemContent className="min-w-0 gap-0.5">
+                      <span className="text-xs font-semibold">
                         {subject.board} |{" "}
                         {subject.track === "IGCSE"
                           ? "IGCSE"
                           : subject.levels.join(" · ")}
                       </span>
-                      <span className="overflow-hidden text-ellipsis text-base leading-tight font-bold">
+                      <ItemTitle className="block truncate text-base leading-tight font-bold">
                         {subject.codes.join(" / ")} {subject.name}
-                      </span>
-                      <span className="text-xs text-[#a2a2a8]">
+                      </ItemTitle>
+                      <ItemDescription className="text-xs">
                         {subject.resourceCount} resources available
-                      </span>
-                    </span>
-                  </button>
+                      </ItemDescription>
+                    </ItemContent>
+                  </Item>
                 ))}
               </div>
             </section>
@@ -411,9 +482,9 @@ export default function ResourcesDisplay() {
       </div>
 
       {!loading && !error && visibleSubjects.length === 0 && (
-        <p className="text-center text-zinc-400">
-          No subjects match your search.
-        </p>
+        <EmptyState title="No subjects match your search.">
+          Try a different subject name or exam board.
+        </EmptyState>
       )}
     </main>
   );
@@ -479,72 +550,65 @@ function SubjectResources({
   return (
     <main className={pageClassName}>
       <BackgroundArt />
-      <button
-        className="mb-6 inline-flex items-center gap-2 border-0 bg-transparent px-0 py-1.5 font-semibold text-zinc-300 hover:text-white"
-        onClick={onBack}
-        type="button"
-      >
-        <span aria-hidden="true">←</span> Back to all subjects
-      </button>
+      <BackButton onClick={onBack} />
 
       <header className="mb-8">
         <div className="flex items-center gap-4 text-left">
-          <span
-            className={`inline-flex size-[68px] shrink-0 items-center justify-center rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
+          <Badge
+            className={`size-[68px] shrink-0 rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
           >
             <CategoryIcon category={subject.category} size={46} />
-          </span>
+          </Badge>
           <div className="min-w-0">
             <h1 className="m-0 text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl">
               {levels} {subject.name}
             </h1>
-            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 text-base font-semibold text-zinc-300">
+            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 text-base font-semibold text-muted-foreground">
               <span>{metadata?.code ?? subject.codes.join(" / ")}</span>
-              <span aria-hidden="true" className="text-zinc-500">
-                ·
-              </span>
+              <span aria-hidden="true">·</span>
               <span>{subject.board}</span>
             </div>
           </div>
         </div>
-        <p className="mt-4 text-base font-semibold text-zinc-300">
+        <p className="mt-4 text-base font-semibold text-muted-foreground">
           All of our resources are made by volunteer students.{" "}
-          <a
-            className="text-zinc-300 underline decoration-zinc-600 underline-offset-4 hover:text-white"
-            href="/opportunities"
-          >
+          <TextLink href="/opportunities" className="text-muted-foreground">
             Find out more
-          </a>
+          </TextLink>
           .
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <a
-            className="inline-flex items-center justify-center rounded-lg bg-primary-500/85 px-4 py-2 text-base font-bold text-white transition-colors hover:bg-primary-600/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          <NextLink
             href="/opportunities"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "text-base font-bold",
+            )}
           >
             Contribute a Resource
-          </a>
+          </NextLink>
           <a
-            className="inline-flex items-center justify-center rounded-lg bg-primary-500/85 px-4 py-2 text-base font-bold text-white transition-colors hover:bg-primary-600/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             href="mailto:igcseresources.1@gmail.com"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "text-base font-bold",
+            )}
           >
             Contact Us
           </a>
         </div>
       </header>
 
-      {error && (
-        <p className="border border-red-500/35 bg-red-950/20 p-4 text-center text-red-300">
-          {error}
-        </p>
-      )}
+      {error && <StatusAlert>{error}</StatusAlert>}
       {!resources && !error && (
-        <p className="text-center text-sm text-zinc-400">
-          Loading subject resources...
-        </p>
+        <Skeleton
+          role="status"
+          aria-label="Loading subject resources"
+          className="mt-8 h-[560px]"
+        />
       )}
       {resources && resources.length > 0 && (
-        <section className="mx-auto mt-8 max-w-5xl">
+        <section className="mt-8">
           <ResourceViewer
             groups={groups}
             selectedResource={selectedResource}
@@ -553,24 +617,22 @@ function SubjectResources({
         </section>
       )}
       {resources && resources.length === 0 && (
-        <p className="text-center text-sm text-zinc-400">
-          No resources match this subject.
-        </p>
+        <EmptyState title="No resources match this subject." />
       )}
 
       {resources && (
         <>
-          <section className="mt-9 border-t border-zinc-800 pt-5">
+          <Separator className="mt-9" />
+          <section className="pt-5">
             <h2 className="mb-3 text-xl font-bold">Study tools</h2>
             <StudyToolsParagraph links={links} />
           </section>
 
           <section className="mt-9">
-            <h2 className="mb-3 border-b border-zinc-800 pb-2 text-xl font-bold">
-              Resource bank
-            </h2>
+            <h2 className="mb-2 text-xl font-bold">Resource bank</h2>
+            <Separator className="mb-3" />
             {resources.length === 0 ? (
-              <p className="text-sm text-zinc-400">No matching resources.</p>
+              <EmptyState title="No matching resources." />
             ) : (
               <ResourceBank resources={resources} />
             )}

@@ -1,4 +1,14 @@
-import type { ReactNode } from "react";
+import type { Icon } from "@phosphor-icons/react";
+import {
+  BankIcon,
+  ChartBarIcon,
+  ChatCircleIcon,
+  CodeIcon,
+  FlaskIcon,
+  FolderIcon,
+  MathOperationsIcon,
+  MusicNotesIcon,
+} from "@phosphor-icons/react/ssr";
 import { normalizeSubjectName, SUBJECT_CATALOG } from "./subject-catalog";
 
 export type Category =
@@ -29,10 +39,10 @@ const SUBJECT_CATEGORIES = new Map(
   ]),
 );
 
-export const categoryOf = (name: string): Category =>
+const categoryOf = (name: string): Category =>
   SUBJECT_CATEGORIES.get(normalizeSubjectName(name)) ?? "Other";
 
-export type SubjectColor =
+type SubjectColor =
   | "biology"
   | "mathematics"
   | "physics"
@@ -84,42 +94,15 @@ export const SUBJECT_COLOR_CLASSES: Record<SubjectColor, string> = {
   other: "bg-[#d1d1d6] text-[#29252b]",
 };
 
-const PATHS: Record<Category, ReactNode> = {
-  Sciences: (
-    <>
-      <path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3" />
-      <path d="M7.5 15h9" />
-    </>
-  ),
-  Mathematics: (
-    <>
-      <path d="M6 4v6M3 7h6" />
-      <path d="M15 7h6" />
-      <path d="M3 17h6" />
-      <path d="M15 14l6 6M21 14l-6 6" />
-    </>
-  ),
-  Languages: <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" />,
-  Humanities: (
-    <path d="M3 21h18M5 21V10M10 21V10M14 21V10M19 21V10M3 10l9-6 9 6" />
-  ),
-  Business: (
-    <>
-      <path d="M4 20V4M4 20h16" />
-      <path d="M8 16v-4M12 16V8M16 16v-6" />
-    </>
-  ),
-  Technology: <path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14" />,
-  Arts: (
-    <>
-      <path d="M9 18V5l11-2v13" />
-      <circle cx="6" cy="18" r="3" />
-      <circle cx="17" cy="16" r="3" />
-    </>
-  ),
-  Other: (
-    <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-  ),
+const ICONS: Record<Category, Icon> = {
+  Sciences: FlaskIcon,
+  Mathematics: MathOperationsIcon,
+  Languages: ChatCircleIcon,
+  Humanities: BankIcon,
+  Business: ChartBarIcon,
+  Technology: CodeIcon,
+  Arts: MusicNotesIcon,
+  Other: FolderIcon,
 };
 
 export function CategoryIcon({
@@ -129,19 +112,6 @@ export function CategoryIcon({
   category: Category;
   size?: number;
 }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      {PATHS[category]}
-    </svg>
-  );
+  const CategoryGlyph = ICONS[category];
+  return <CategoryGlyph size={size} aria-hidden="true" />;
 }

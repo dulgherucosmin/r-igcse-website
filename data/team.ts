@@ -1,26 +1,21 @@
 export type TeamMember = {
   name: string;
   title: string;
-  /** Optional photo path from /public. Falls back to initials when omitted. */
   avatar?: string;
 };
 
-export type TeamRole = {
+type TeamRole = {
   role: string;
   members: TeamMember[];
   description: string;
 };
 
-// Edit this list to update the Team page. Roles are displayed in this order,
-// and each role should keep at least 5 members so the row of circles looks
-// consistent. Names/titles below are placeholders - replace with the real team.
 export const teamRoles: TeamRole[] = [
   {
     role: "Community Lead",
-    members: [
-      { name: "Alex Morgan", title: "Community Lead" },
-    ],
-    description: "Staff Members are responsible for managing and moderating the Discord server, including all resource creation & applications for various positions in the server.",
+    members: [{ name: "Alex Morgan", title: "Community Lead" }],
+    description:
+      "Staff Members are responsible for managing and moderating the Discord server, including all resource creation & applications for various positions in the server.",
   },
   {
     role: "Community Managers",
@@ -31,7 +26,8 @@ export const teamRoles: TeamRole[] = [
       { name: "Riley Scott", title: "Community Manager" },
       { name: "Avery Hunt", title: "Community Manager" },
     ],
-    description: "Community Managers are responsible for day-to-day team management, growth analysis, reviewing emails, policy changes, and more.",
+    description:
+      "Community Managers are responsible for day-to-day team management, growth analysis, reviewing emails, policy changes, and more.",
   },
   {
     role: "Senior Moderators",

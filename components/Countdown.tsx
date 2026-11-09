@@ -1,46 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { CountdownEvent } from "@/data/events";
-
-/**
- * Converts the DD/MM/YYYY date, HH:MM[:SS] time and UTC offset from the event
- * config into a timestamp. Returns NaN if any part is invalid (including dates
- * that don't exist, like 31/02/2026).
- */
-function parseEventDate(event: CountdownEvent) {
-  const dateMatch = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(event.date.trim());
-  const timeMatch = /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/.exec(event.time.trim());
-  const offsetMatch = /^(?:Z|[+-]\d{2}:\d{2})$/.exec(event.utcOffset.trim());
-  if (!dateMatch || !timeMatch || !offsetMatch) return Number.NaN;
-
-  const [day, month, year] = [dateMatch[1], dateMatch[2], dateMatch[3]].map(
-    Number,
-  );
-  const [hours, minutes, seconds] = [
-    timeMatch[1],
-    timeMatch[2],
-    timeMatch[3] ?? "0",
-  ].map(Number);
-
-  const check = new Date(Date.UTC(year, month - 1, day));
-  const validDate =
-    check.getUTCFullYear() === year &&
-    check.getUTCMonth() === month - 1 &&
-    check.getUTCDate() === day;
-  if (!validDate || hours > 23 || minutes > 59 || seconds > 59)
-    return Number.NaN;
-
-  const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}${event.utcOffset.trim()}`;
-  return new Date(iso).getTime();
-}
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import type { ExamSession } from "@/data/events";
+import {
+  formatSessionDate,
+  pickSessions,
+  type SessionState,
+  sessionStart,
+} from "@/lib/exam-sessions";
 
 function getTimeLeft(target: number, now: number) {
-  const diff = target - now;
-  const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+  const totalSeconds = Math.max(0, Math.floor((target - now) / 1000));
 
   return {
-    ended: diff <= 0,
     days: Math.floor(totalSeconds / 86_400),
     hours: Math.floor((totalSeconds % 86_400) / 3600),
     minutes: Math.floor((totalSeconds % 3600) / 60),
@@ -50,9 +30,13 @@ function getTimeLeft(target: number, now: number) {
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
-export default function Countdown({ event }: { event: CountdownEvent }) {
-  const target = parseEventDate(event);
-  // null until mounted, so server and client render the same markup.
+export default function Countdown({
+  sessions,
+  initial,
+}: {
+  sessions: ExamSession[];
+  initial: SessionState;
+}) {
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
@@ -61,9 +45,13 @@ export default function Countdown({ event }: { event: CountdownEvent }) {
     return () => clearInterval(interval);
   }, []);
 
-  if (Number.isNaN(target)) return null;
+  const state = now === null ? initial : pickSessions(sessions, now);
+  const current = state.current === null ? null : sessions[state.current];
+  const next = state.next === null ? null : sessions[state.next];
+  if (!current && !next) return null;
 
-  const timeLeft = now === null ? null : getTimeLeft(target, now);
+  const timeLeft =
+    next && now !== null ? getTimeLeft(sessionStart(next), now) : null;
 
   const units = [
     { label: "Days", value: timeLeft?.days },
@@ -73,66 +61,75 @@ export default function Countdown({ event }: { event: CountdownEvent }) {
   ];
 
   return (
-    <section
-      aria-labelledby="countdown-title"
-      className="border-t border-zinc-800 px-6 py-16 md:px-16"
-    >
-      <div className="mx-auto max-w-3xl rounded-lg border-t-4 border-primary-500 bg-[#141417] p-6 text-center md:p-10">
-        {event.label && (
-          <p className="text-sm font-semibold tracking-wide text-primary-500 uppercase">
-            {event.label}
-          </p>
-        )}
-        <h2
-          id="countdown-title"
-          className="mt-1 text-2xl font-bold md:text-4xl"
-        >
-          {event.title}
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl leading-relaxed text-zinc-300">
-          {event.description}
-        </p>
-        
-        <p className="mx-auto mt-3 mb-0 max-w-xl text-xl leading-relaxed text-white-500">
-          {event.date}
-        </p>
-
-        {timeLeft?.ended ? (
-          <p className="mt-8 text-lg font-semibold text-[#fefb88]">
-            {event.endedMessage}
-          </p>
-        ) : (
-          <div
-            role="timer"
-            aria-label={
-              timeLeft
-                ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes and ${timeLeft.seconds} seconds remaining`
-                : "Loading countdown"
-            }
-            className="mt-6 grid grid-cols-4 gap-2 md:gap-6"
-          >
-            {units.map((unit) => (
-              <div
-                key={unit.label}
-                className="rounded-lg border border-zinc-800 bg-[#121010] px-1 py-4 md:px-2 md:py-6"
+    <section aria-labelledby="countdown-title" className="page-container py-16">
+      <Card className="mx-auto max-w-3xl text-center md:py-10">
+        <CardHeader className="justify-items-center md:px-10">
+          {current && (
+            <Badge variant="secondary" className="mb-2">
+              {current.title} is underway. Good luck to everyone sitting exams!
+            </Badge>
+          )}
+          {next ? (
+            <>
+              <p className="text-sm font-semibold tracking-wide text-brand uppercase">
+                Next Exam Session
+              </p>
+              <CardTitle
+                id="countdown-title"
+                className="text-2xl font-bold md:text-4xl"
               >
-                <div
+                {next.title} Session
+              </CardTitle>
+              <CardDescription className="mx-auto max-w-xl text-base leading-relaxed">
+                Countdown to the start of the {next.title} exam session. Make
+                the most of the time left with our free resources.
+              </CardDescription>
+              <p className="mx-auto max-w-xl text-xl leading-relaxed">
+                <time dateTime={next.date.split("/").reverse().join("-")}>
+                  {formatSessionDate(next)}
+                </time>
+              </p>
+            </>
+          ) : (
+            <CardTitle
+              id="countdown-title"
+              className="text-2xl font-bold md:text-4xl"
+            >
+              {current?.title} Session
+            </CardTitle>
+          )}
+        </CardHeader>
+
+        {next && (
+          <CardContent className="md:px-10">
+            <div
+              role="timer"
+              aria-label={
+                timeLeft
+                  ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes and ${timeLeft.seconds} seconds until the ${next.title} session`
+                  : "Loading countdown"
+              }
+              className="grid grid-cols-4 gap-2 md:gap-6"
+            >
+              {units.map((unit) => (
+                <Card
+                  key={unit.label}
+                  size="sm"
                   aria-hidden="true"
-                  className="text-3xl font-extrabold text-[#fefb88] tabular-nums sm:text-4xl md:text-6xl"
+                  className="gap-1 bg-background px-1 md:py-6"
                 >
-                  {unit.value === undefined ? "--" : pad(unit.value)}
-                </div>
-                <div
-                  aria-hidden="true"
-                  className="mt-1 text-[10px] font-semibold tracking-wide text-zinc-400 uppercase sm:text-xs md:text-sm"
-                >
-                  {unit.label}
-                </div>
-              </div>
-            ))}
-          </div>
+                  <span className="text-3xl font-extrabold text-highlight tabular-nums sm:text-4xl md:text-6xl">
+                    {unit.value === undefined ? "--" : pad(unit.value)}
+                  </span>
+                  <span className="text-[10px] font-semibold tracking-wide text-muted-foreground uppercase sm:text-xs md:text-sm">
+                    {unit.label}
+                  </span>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
         )}
-      </div>
+      </Card>
     </section>
   );
 }

@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { isDirectLanding } from "@/lib/landing";
 
 type CountUpStatProps = {
-  value: string; // final value we want to display
-  durationMs?: number; // how long the animation should last
+  value: string;
+  from?: number;
+  durationMs?: number;
 };
 
-// parses the string value into a useable number e.g 200,000+ -> 200000
 function parseStat(value: string) {
   const match = /^([\d,]+)(.*)$/.exec(value.trim());
   if (!match) return { target: 0, suffix: value };
@@ -18,20 +19,19 @@ const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
 
 export default function StatsAnimation({
   value,
+  from = 0,
   durationMs = 2000,
 }: CountUpStatProps) {
   const { target, suffix } = parseStat(value);
-  const [display, setDisplay] = useState(0);
-  const hasAnimated = useRef(false);
+  const [animate] = useState(isDirectLanding);
+  const [display, setDisplay] = useState(animate ? from : target);
 
   useEffect(() => {
-    if (hasAnimated.current) return;
-    hasAnimated.current = true;
-
+    if (!animate) return;
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (prefersReducedMotion || target === 0) {
+    if (prefersReducedMotion || target === from) {
       setDisplay(target);
       return;
     }
@@ -41,19 +41,22 @@ export default function StatsAnimation({
 
     const tick = (now: number) => {
       const progress = Math.min((now - start) / durationMs, 1);
-      setDisplay(Math.round(easeOutCubic(progress) * target));
+      setDisplay(Math.round(from + easeOutCubic(progress) * (target - from)));
       if (progress < 1) frame = requestAnimationFrame(tick);
     };
 
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);   
-  }, [target, durationMs]);
+    return () => cancelAnimationFrame(frame);
+  }, [animate, from, target, durationMs]);
 
   return (
-    <span className="tabular-nums">
-      {/* Decorative counter; screen readers get the final value below instead. */}
-      <span aria-hidden="true">
-        {display.toLocaleString()}
+    <span className="inline-grid tabular-nums">
+      <span aria-hidden="true" className="invisible col-start-1 row-start-1">
+        {target.toLocaleString("en-US")}
+        {suffix}
+      </span>
+      <span aria-hidden="true" className="col-start-1 row-start-1">
+        {display.toLocaleString("en-US")}
         {suffix}
       </span>
       <span className="sr-only">{value}</span>
