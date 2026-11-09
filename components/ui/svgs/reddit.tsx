@@ -1,6 +1,8 @@
-import type { SVGProps } from "react";
+import { type SVGProps, useId } from "react";
 
-const Reddit = (props: SVGProps<SVGSVGElement>) => (
+const Reddit = (props: SVGProps<SVGSVGElement>) => {
+  const uid = useId();
+  return (
   <svg
     {...props}
     version="1.1"
@@ -15,7 +17,7 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
     <g>
       <circle fill="#FF4500" cx="200.6" cy="123.7" r="29.9" />
       <radialGradient
-        id="SVGID_00000036246770641878814990000005919777119678409602_"
+        id={`${uid}-g0`}
         cx="672.2592"
         cy="1.811"
         r="127.45"
@@ -39,14 +41,14 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       </radialGradient>
       <circle
         style={{
-          fill: "url(#SVGID_00000036246770641878814990000005919777119678409602_)",
+          fill: `url(#${uid}-g0)`,
         }}
         cx="55.4"
         cy="123.7"
         r="29.9"
       />
       <radialGradient
-        id="SVGID_00000018938084004212545110000003812637463316940965_"
+        id={`${uid}-g1`}
         cx="830.6751"
         cy="-224.6845"
         r="384.44"
@@ -68,7 +70,7 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       </radialGradient>
       <ellipse
         style={{
-          fill: "url(#SVGID_00000018938084004212545110000003812637463316940965_)",
+          fill: `url(#${uid}-g1)`,
         }}
         cx="128.1"
         cy="149.3"
@@ -78,7 +80,7 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       <path fill="#842123" d="M102.8,143.1c-0.5,10.8-7.7,14.8-16.1,14.8s-14.8-5.6-14.3-16.4s7.7-18,16.1-18S103.3,132.3,102.8,143.1z" />
       <path fill="#842123" d="M183.6,141.5c0.5,10.8-5.9,16.4-14.3,16.4s-15.6-3.9-16.1-14.8c-0.5-10.8,5.9-19.6,14.3-19.6 S183.1,130.6,183.6,141.5L183.6,141.5z" />
       <radialGradient
-        id="SVGID_00000100358442326342623590000001008359023910400391_"
+        id={`${uid}-g2`}
         cx="-2957.2551"
         cy="173.4222"
         r="32.12"
@@ -94,12 +96,12 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       </radialGradient>
       <path
         style={{
-          fill: "url(#SVGID_00000100358442326342623590000001008359023910400391_)",
+          fill: `url(#${uid}-g2)`,
         }}
         d="M153.3,144.1c0.5,10.1,7.2,13.8,15,13.8 s13.8-5.5,13.4-15.7c-0.5-10.1-7.2-16.8-15-16.8S152.8,133.9,153.3,144.1z"
       />
       <radialGradient
-        id="SVGID_00000101795553196247918750000016558665307898727865_"
+        id={`${uid}-g3`}
         cx="745.2351"
         cy="173.4222"
         r="32.12"
@@ -115,14 +117,14 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       </radialGradient>
       <path
         style={{
-          fill: "url(#SVGID_00000101795553196247918750000016558665307898727865_)",
+          fill: `url(#${uid}-g3)`,
         }}
         d="M102.8,144.1c-0.5,10.1-7.2,13.8-15,13.8 s-13.8-5.5-13.3-15.7c0.5-10.1,7.2-16.8,15-16.8S103.3,133.9,102.8,144.1z"
       />
       <path fill="#BBCFDA" d="M128.1,165.1c-10.6,0-20.7,0.5-30.1,1.4c-1.6,0.2-2.6,1.8-2,3.2c5.2,12.3,17.6,21,32.1,21s26.8-8.6,32.1-21 c0.6-1.5-0.4-3.1-2-3.2C148.8,165.6,138.7,165.1,128.1,165.1z" />
       <path fill="#FFFFFF" d="M128.1,167.5c-10.6,0-20.7,0.5-30,1.5c-1.6,0.2-2.6,1.8-2,3.3c5.2,12.5,17.6,21.3,32,21.3s26.8-8.8,32-21.3 c0.6-1.5-0.4-3.1-2-3.3C148.7,168,138.6,167.5,128.1,167.5L128.1,167.5z" />
       <radialGradient
-        id="SVGID_00000129915728043071345700000001618660102739666578_"
+        id={`${uid}-g4`}
         cx="826.4651"
         cy="-508.4764"
         r="113.26"
@@ -136,12 +138,12 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       </radialGradient>
       <path
         style={{
-          fill: "url(#SVGID_00000129915728043071345700000001618660102739666578_)",
+          fill: `url(#${uid}-g4)`,
         }}
         d="M128.1,166.2c-10.4,0-20.3,0.5-29.5,1.4 c-1.6,0.2-2.6,1.8-2,3.2c5.2,12.3,17.3,21,31.5,21s26.3-8.6,31.5-21c0.6-1.5-0.4-3.1-2-3.2C148.4,166.8,138.5,166.2,128.1,166.2z"
       />
       <radialGradient
-        id="SVGID_00000132773094689987568360000004811110407827195799_"
+        id={`${uid}-g5`}
         cx="926.3451"
         cy="277.9019"
         r="99.42"
@@ -163,14 +165,14 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       </radialGradient>
       <circle
         style={{
-          fill: "url(#SVGID_00000132773094689987568360000004811110407827195799_)",
+          fill: `url(#${uid}-g5)`,
         }}
         cx="174.8"
         cy="55.5"
         r="21.2"
       />
       <radialGradient
-        id="SVGID_00000093173154653334829310000007940785063173693333_"
+        id={`${uid}-g6`}
         cx="884.9151"
         cy="177.5619"
         r="81.49"
@@ -184,7 +186,7 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
       </radialGradient>
       <path
         style={{
-          fill: "url(#SVGID_00000093173154653334829310000007940785063173693333_)",
+          fill: `url(#${uid}-g6)`,
         }}
         d="M127.8,88c-2.5,0-4.6-1.1-4.6-2.7 c0-19,15.4-34.4,34.4-34.4c2.5,0,4.6,2.1,4.6,4.6s-2.1,4.6-4.6,4.6c-13.9,0-25.2,11.3-25.2,25.2C132.4,87,130.3,88,127.8,88z"
       />
@@ -195,5 +197,6 @@ const Reddit = (props: SVGProps<SVGSVGElement>) => (
     </g>
   </svg>
 );
+};
 
 export { Reddit };
