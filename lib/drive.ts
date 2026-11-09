@@ -139,13 +139,27 @@ const SUBJECTS_BY_KEY = new Map(
   ]),
 );
 
+const FIELD_SEPARATOR = /\s+[|_]\s+/;
+const FILE_EXTENSION = /\.(?:pdf|docx?|pptx?|xlsx?)$/i;
+
 function parseResource(file: DriveFile): ParsedDriveResource | null {
   if (file.mimeType === FOLDER) return null;
 
-  const parts = file.name.split("|").map((part) => part.trim());
+  const parts = file.name
+    .replace(FILE_EXTENSION, "")
+    .split(FIELD_SEPARATOR)
+    .map((part) => part.trim().replace(/\br_IGCSE\b/g, "r/IGCSE"));
   if (parts.length !== 6) return null;
 
-  const [rawBoard, rawLevel, rawCode, rawSubject, resourceName, author] = parts;
+  const [
+    rawBoard,
+    rawLevel,
+    underscoredCode,
+    rawSubject,
+    resourceName,
+    author,
+  ] = parts;
+  const rawCode = underscoredCode.replaceAll("_", "/");
   const board = normalizeBoard(rawBoard);
   const level = board ? normalizeLevel(board, rawLevel) : null;
   if (!board || !level || !rawCode || !resourceName) {
