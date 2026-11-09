@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export default function SubjectLayout({
+export default function ResourcesLayout({
   children,
   modal,
 }: {

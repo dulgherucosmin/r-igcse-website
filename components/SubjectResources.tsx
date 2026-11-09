@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, EnvelopeSimpleIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
-import { Fragment } from "react";
-import { ResourceThumbnail } from "@/components/resource-thumbnail";
+import { Fragment, type ReactNode } from "react";
+import { ResourceGrid } from "@/components/resource-grid";
 import {
   BackgroundArt,
   EmptyState,
@@ -48,22 +48,21 @@ export function SubjectBackLink() {
   );
 }
 
-export default function SubjectResources({
+export function SubjectDetails({
   subject,
   resources,
+  title,
 }: {
   subject: DriveSubject;
   resources: DriveResource[];
+  title: ReactNode;
 }) {
   const metadata = SUBJECT_META[subject.name];
   const links = [...(metadata?.links ?? []), ...GLOBAL_LINKS];
   const groups = groupByLevel(resources);
 
   return (
-    <main className={pageClassName}>
-      <BackgroundArt />
-      <SubjectBackLink />
-
+    <>
       <header className="flex flex-col gap-6 sm:flex-row sm:items-center">
         <div
           className={cn(
@@ -74,9 +73,7 @@ export default function SubjectResources({
           <CategoryIcon category={subject.category} size={40} />
         </div>
         <div className="min-w-0">
-          <h1 className="text-4xl leading-tight font-black tracking-tight md:text-5xl">
-            {subjectTitle(subject)}
-          </h1>
+          {title}
           <div className="mt-3 flex flex-wrap gap-2">
             <Badge variant="secondary">
               {metadata?.code ?? subject.codes.join(" / ")}
@@ -122,32 +119,7 @@ export default function SubjectResources({
               >
                 {LEVEL_NAMES[group.level] ?? group.level}
               </h2>
-              <ul className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                {group.resources.map((resource) => (
-                  <li key={resource.id}>
-                    <Link
-                      href={`/resources/${subject.id}/${resource.id}`}
-                      scroll={false}
-                      className="group block rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-                    >
-                      <div className="aspect-[1024/1448] overflow-hidden rounded-lg bg-card shadow-lg shadow-black/40 ring-1 ring-border transition-transform duration-300 group-hover:-translate-y-1 group-hover:ring-primary/60">
-                        <ResourceThumbnail
-                          id={resource.id}
-                          subjectName={subject.name}
-                          category={subject.category}
-                          className="size-full"
-                        />
-                      </div>
-                      <p className="mt-3 line-clamp-2 font-semibold leading-snug group-hover:text-brand">
-                        {resource.resourceName}
-                      </p>
-                      <p className="mt-0.5 text-sm text-muted-foreground">
-                        {resource.author || "Author not listed"}
-                      </p>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <ResourceGrid subject={subject} resources={group.resources} />
             </section>
           ))}
         </div>
@@ -176,6 +148,31 @@ export default function SubjectResources({
           </section>
         </>
       )}
+    </>
+  );
+}
+
+export const subjectTitleClassName =
+  "text-4xl leading-tight font-black tracking-tight md:text-5xl";
+
+export default function SubjectResources({
+  subject,
+  resources,
+}: {
+  subject: DriveSubject;
+  resources: DriveResource[];
+}) {
+  return (
+    <main className={pageClassName}>
+      <BackgroundArt />
+      <SubjectBackLink />
+      <SubjectDetails
+        subject={subject}
+        resources={resources}
+        title={
+          <h1 className={subjectTitleClassName}>{subjectTitle(subject)}</h1>
+        }
+      />
     </main>
   );
 }

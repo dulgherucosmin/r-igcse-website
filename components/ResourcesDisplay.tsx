@@ -200,7 +200,12 @@ export default function ResourcesDisplay() {
                         key={subject.id}
                         variant="muted"
                         className="min-h-[76px] min-w-0 flex-nowrap bg-card p-2.5 hover:bg-muted"
-                        render={<NextLink href={`/resources/${subject.id}`} />}
+                        render={
+                          <NextLink
+                            href={`/resources/${subject.id}`}
+                            scroll={false}
+                          />
+                        }
                       >
                         <ItemMedia
                           className={`size-[46px] rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
