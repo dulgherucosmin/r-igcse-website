@@ -71,14 +71,11 @@ export default function Countdown({
           )}
           {next ? (
             <>
-              <p className="text-sm font-semibold tracking-wide text-brand uppercase">
-                Next Exam Session
-              </p>
               <CardTitle
                 id="countdown-title"
                 className="text-2xl font-bold md:text-4xl"
               >
-                {next.title} Session
+                Next session: {next.title}
               </CardTitle>
               <CardDescription className="mx-auto max-w-xl text-base leading-relaxed">
                 Countdown to the start of the {next.title} exam session. Make

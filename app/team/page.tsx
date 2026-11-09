@@ -57,10 +57,7 @@ export default function Team() {
   return (
     <main className="page-container pt-12 pb-24 md:pt-20">
       <header className="max-w-3xl">
-        <p className="text-sm font-semibold tracking-wide text-brand uppercase">
-          The team
-        </p>
-        <h1 className="mt-2 text-4xl leading-tight font-black tracking-tight md:text-6xl">
+        <h1 className="text-4xl leading-tight font-black tracking-tight md:text-6xl">
           The people behind r/IGCSE
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
@@ -91,12 +88,10 @@ export default function Team() {
             />
           ))}
           <div className="max-w-2xl">
-            <h2 id="lead-heading" className="text-sm font-semibold text-brand">
-              {leadRole.role}
-            </h2>
-            <p className="mt-1 text-2xl font-bold">
+            <h2 id="lead-heading" className="text-2xl font-bold">
               {leadRole.members.map((member) => member.name).join(", ")}
-            </p>
+            </h2>
+            <p className="text-muted-foreground">{leadRole.role}</p>
             <p className="mt-2 leading-relaxed text-muted-foreground">
               {leadRole.description}
             </p>
