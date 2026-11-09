@@ -160,9 +160,13 @@ export default function Home() {
         </div>
       </section>
 
-      <Separator />
+      <div className="page-container">
+        <Separator />
+      </div>
       <CountdownSection />
-      <Separator />
+      <div className="page-container">
+        <Separator />
+      </div>
 
       <section aria-labelledby="about-us-title" className="py-16">
         <div className="page-container">
@@ -194,7 +198,9 @@ export default function Home() {
         </div>
       </section>
 
-      <Separator />
+      <div className="page-container">
+        <Separator />
+      </div>
 
       <section aria-labelledby="why-title" className="py-16">
         <div className="page-container">
