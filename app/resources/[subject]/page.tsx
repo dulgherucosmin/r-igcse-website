@@ -9,9 +9,11 @@ import {
 import SubjectResources, { subjectTitle } from "@/components/SubjectResources";
 import { SubjectSkeleton } from "@/components/subject-skeleton";
 import { DriveApiError } from "@/lib/drive";
-import { loadSubject } from "@/lib/subject-data";
+import { loadSubject, subjectParams } from "@/lib/subject-data";
 
 type Props = { params: Promise<{ subject: string }> };
+
+export const generateStaticParams = subjectParams;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { subject: id } = await params;

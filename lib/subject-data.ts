@@ -1,5 +1,9 @@
 import { cacheLife } from "next/cache";
-import { getSubjectResources, listDriveResources } from "@/lib/drive";
+import {
+  getSubjectResources,
+  listDriveResources,
+  listSubjects,
+} from "@/lib/drive";
 
 export async function loadSubject(id: string) {
   "use cache";
@@ -11,4 +15,11 @@ export async function loadAllResources() {
   "use cache";
   cacheLife("hours");
   return listDriveResources();
+}
+
+export async function subjectParams() {
+  "use cache";
+  cacheLife("hours");
+  const subjects = await listSubjects().catch(() => []);
+  return subjects.map((subject) => ({ subject: subject.id }));
 }
