@@ -207,7 +207,7 @@ async function listAllFiles(folderId: string): Promise<DriveFile[]> {
   return files;
 }
 
-async function listDriveResources(): Promise<DriveResource[]> {
+export async function listDriveResources(): Promise<DriveResource[]> {
   const files = await listAllFiles(ROOT_FOLDER_ID);
   return files
     .flatMap((file) => {
