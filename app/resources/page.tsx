@@ -1,12 +1,12 @@
-import ResourcesDisplay from "./_components/ResourcesDisplay";
+import type { Metadata } from "next";
+import ResourcesDisplay from "@/components/ResourcesDisplay";
 
-export default function Resources() {
-  return (
-    <main>
-      <h1 className="md:text-6xl text-4xl font-semibold text-center my-5">
-        Resources
-      </h1>
-      <ResourcesDisplay />
-    </main>
-  );
+export const metadata: Metadata = {
+  title: "Resources | r/IGCSE",
+  description:
+    "Browse community-created IGCSE and AS/A Level study resources by subject.",
+};
+
+export default function ResourcesPage() {
+  return <ResourcesDisplay />;
 }

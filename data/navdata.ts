@@ -23,8 +23,8 @@ export const navItems: NavItem[] = [
   },
   {
     id: 4,
-    name: "Team",
-    href: "/team",
+    name: "Opportunities",
+    href: "/opportunities",
   },
   {
     id: 5,
@@ -38,14 +38,14 @@ export const navItems: NavItem[] = [
   },
   {
     id: 7,
-    name: "Discord",
+    name: "Socials",
     href: "https://discord.gg/igcse",
     external: true,
   },
   {
     id: 8,
-    name: "Reddit",
-    href: "https://www.reddit.com/r/IGCSE/",
-    external: true,
+    name: "Team",
+    href: "/team",
   },
+  
 ];
