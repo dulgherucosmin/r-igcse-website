@@ -32,10 +32,7 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <Link
             href="/"
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "h-auto w-fit gap-2 px-0 text-xl font-black hover:bg-transparent",
-            )}
+            className="flex w-fit items-center gap-2 rounded-md text-xl font-black outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             <Image
               src="/logo.svg"

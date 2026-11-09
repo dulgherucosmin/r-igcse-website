@@ -112,10 +112,7 @@ export default function Header() {
         <Link
           href="/"
           aria-label="r/IGCSE home"
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "h-auto gap-2 justify-self-start px-0 text-xl font-black hover:bg-transparent",
-          )}
+          className="flex items-center gap-2 justify-self-start rounded-md text-xl font-black outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <Image
             src="/logo.svg"
