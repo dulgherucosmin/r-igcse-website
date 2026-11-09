@@ -1,95 +1,32 @@
-import { HandshakeIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr";
+import {
+  ArrowRightIcon,
+  BooksIcon,
+  HandshakeIcon,
+  UsersThreeIcon,
+} from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { TextLink } from "@/components/text-link";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Item,
   ItemContent,
   ItemDescription,
-  ItemGroup,
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item";
+import { Separator } from "@/components/ui/separator";
 import { Discord } from "@/components/ui/svgs/discord";
 import { Reddit } from "@/components/ui/svgs/reddit";
+import { socials } from "@/data/footer";
+import { stats } from "@/data/home";
 import { timeline } from "@/data/timeline";
 import { pageMetadata } from "@/lib/metadata";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata("/about");
-
-const sections: {
-  title: string;
-  icon: string;
-  body: ReactNode;
-}[] = [
-  {
-    title: "Our Mission",
-    icon: "/flag.png",
-    body: (
-      <>
-        <p>
-          r/IGCSE caters to students around the globe, providing both IGCSE &
-          AS/A Level notes, subject guides, study sessions, and more. Our{" "}
-          <TextLink href="https://discord.gg/igcse">Discord Server</TextLink> is
-          focused on providing subject-specific channels in which you or other
-          students may ask our verified Subject Helpers for assistance.
-        </p>
-        <p>
-          We are completely student-run, and all resources displayed have been
-          created by other IGCSE & AS/A Level students. r/IGCSE is free and will
-          always remain free.
-        </p>
-      </>
-    ),
-  },
-  {
-    title: "Resource Repository",
-    icon: "/book1.png",
-    body: (
-      <>
-        <p>
-          r/IGCSE has over 40+ resources published by our wonderful server
-          members. These resources are free to view on our{" "}
-          <TextLink href="/resources">resource repository</TextLink>.
-        </p>
-        <p>
-          If you find any mistakes within official r/IGCSE published resources,
-          please do not hesitate to contact us through
-          igcseresources.1@gmail.com.
-        </p>
-      </>
-    ),
-  },
-  {
-    title: "Opportunities",
-    icon: "/team1.png",
-    body: (
-      <>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Necessitatibus neque corrupti ratione rem eius ipsam sapiente
-          cupiditate vel facere magnam dolorem, id molestiae velit aperiam
-          voluptas pariatur omnis illo harum.
-        </p>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi, porro?
-          Minus vero magnam vitae laudantium facere, officia voluptatem enim,
-          nesciunt voluptatum repudiandae ipsa velit animi corporis ad adipisci
-          expedita iste.
-        </p>
-      </>
-    ),
-  },
-];
 
 const timelineIcons = {
   reddit: Reddit,
@@ -98,73 +35,177 @@ const timelineIcons = {
   users: UsersThreeIcon,
 };
 
+const publishedResources =
+  stats.find((stat) => stat.label === "Published Resources")?.value ?? "100+";
+
+const facts = [...stats, { label: "Cost to students", value: "Free" }];
+
+function Row({
+  id,
+  title,
+  children,
+}: {
+  id: string;
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <section aria-labelledby={id}>
+      <Separator />
+      <div className="grid gap-6 py-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-12">
+        <h2 id={id} className="text-2xl font-bold tracking-tight">
+          {title}
+        </h2>
+        <div className="max-w-2xl space-y-4 text-lg leading-relaxed text-muted-foreground">
+          {children}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function About() {
   return (
-    <main className="page-container min-h-screen pt-8 pb-20">
-      <h1 className="mb-10 text-center text-3xl font-bold underline decoration-primary decoration-2 underline-offset-8">
-        About r/IGCSE
-      </h1>
+    <main className="page-container pt-12 pb-24 md:pt-20">
+      <header className="max-w-3xl">
+        <p className="text-sm font-semibold tracking-wide text-brand uppercase">
+          About r/IGCSE
+        </p>
+        <h1 className="mt-2 text-4xl leading-tight font-black tracking-tight md:text-6xl">
+          Built by students, for students
+        </h1>
+        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+          r/IGCSE is a student-run community for CAIE and Edexcel IGCSE, O Level
+          and AS/A Level students around the world, with notes, subject guides,
+          study sessions and help from people who have sat the same exams.
+        </p>
+      </header>
 
-      <div className="grid gap-10 lg:grid-cols-[2fr_1fr]">
-        <div className="flex flex-col gap-6">
-          {sections.map((section) => (
-            <Card key={section.title}>
-              <CardHeader className="flex items-center gap-2">
-                <Image
-                  src={section.icon}
-                  alt=""
-                  width={64}
-                  height={64}
-                  className="size-16"
-                />
-                <CardTitle className="text-2xl font-bold">
-                  {section.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="space-y-4 text-base leading-relaxed text-foreground">
-                  {section.body}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      <dl className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+        {facts.map((fact) => (
+          <div
+            key={fact.label}
+            className="flex flex-col-reverse border-l-4 border-primary pl-4"
+          >
+            <dt className="mt-1 text-sm font-medium text-muted-foreground">
+              {fact.label}
+            </dt>
+            <dd className="text-3xl font-extrabold text-highlight md:text-4xl">
+              {fact.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
 
-        <ItemGroup
-          role="list"
-          aria-label="r/IGCSE timeline"
-          className="gap-6 border-s-2 border-primary ps-4"
-        >
-          {timeline.map((event) => {
-            const TimelineIcon = timelineIcons[event.icon];
-            return (
-              <Item
-                key={event.title}
-                role="listitem"
-                className="items-start p-0"
-              >
-                <ItemMedia
-                  variant="icon"
-                  className="size-9 rounded-full bg-secondary text-primary"
-                >
-                  <TimelineIcon className="size-5" />
-                </ItemMedia>
-                <ItemContent>
-                  <Badge variant="secondary" className="text-sm">
-                    {event.date}
-                  </Badge>
-                  <ItemTitle className="mt-1 text-lg font-semibold">
-                    {event.title}
-                  </ItemTitle>
-                  <ItemDescription className="line-clamp-none text-sm">
-                    {event.body}
-                  </ItemDescription>
-                </ItemContent>
-              </Item>
-            );
-          })}
-        </ItemGroup>
+      <div className="mt-14">
+        <Row id="mission-heading" title="Our mission">
+          <p>
+            We help students around the globe with IGCSE and AS/A Level notes,
+            subject guides and study sessions. Our{" "}
+            <TextLink href={socials.discord}>Discord server</TextLink> has
+            subject-specific channels where you can ask verified Subject Helpers
+            for help.
+          </p>
+          <p>
+            We are completely student-run, and every resource is written by
+            other IGCSE and AS/A Level students. r/IGCSE is free and will always
+            stay free.
+          </p>
+        </Row>
+
+        <Row id="repository-heading" title="The resource repository">
+          <p>
+            Our members have published {publishedResources} resources, all free
+            to read in the{" "}
+            <TextLink href="/resources">resource repository</TextLink>.
+          </p>
+          <p>
+            Spotted a mistake in one of our resources? Let us know at{" "}
+            <TextLink href="mailto:igcseresources.1@gmail.com">
+              igcseresources.1@gmail.com
+            </TextLink>
+            .
+          </p>
+        </Row>
+
+        <section aria-labelledby="story-heading">
+          <Separator />
+          <div className="grid gap-6 py-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-12">
+            <h2
+              id="story-heading"
+              className="text-2xl font-bold tracking-tight"
+            >
+              Our story
+            </h2>
+            <ol className="relative max-w-2xl space-y-2 before:absolute before:top-4 before:bottom-4 before:left-[1.625rem] before:w-px before:bg-border">
+              {timeline.map((event) => {
+                const TimelineIcon = timelineIcons[event.icon];
+                return (
+                  <Item
+                    key={event.title}
+                    render={<li />}
+                    className="relative items-start px-2"
+                  >
+                    <ItemMedia
+                      variant="icon"
+                      className="size-9 rounded-full bg-secondary text-brand ring-4 ring-background"
+                    >
+                      <TimelineIcon className="size-5" />
+                    </ItemMedia>
+                    <ItemContent>
+                      <Badge variant="secondary">{event.date}</Badge>
+                      <ItemTitle className="mt-1 text-lg font-semibold">
+                        {event.title}
+                      </ItemTitle>
+                      <ItemDescription className="line-clamp-none text-base">
+                        {event.body}
+                      </ItemDescription>
+                    </ItemContent>
+                  </Item>
+                );
+              })}
+            </ol>
+          </div>
+        </section>
+        <Separator />
       </div>
+
+      <section
+        aria-labelledby="involved-heading"
+        className="mt-16 flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between"
+      >
+        <div className="max-w-xl">
+          <h2
+            id="involved-heading"
+            className="text-2xl font-bold tracking-tight"
+          >
+            Get involved
+          </h2>
+          <p className="mt-2 leading-relaxed text-muted-foreground">
+            Write a resource, help other students or join the team. Everything
+            here is made by volunteers like you.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/resources"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "lg" }),
+              "font-bold",
+            )}
+          >
+            <BooksIcon weight="fill" />
+            Browse resources
+          </Link>
+          <Link
+            href="/opportunities"
+            className={cn(buttonVariants({ size: "lg" }), "font-bold")}
+          >
+            See opportunities
+            <ArrowRightIcon />
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }

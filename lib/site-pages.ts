@@ -106,7 +106,7 @@ We are completely student-run, and all resources displayed have been created by 
 
 ## Resource repository
 
-r/IGCSE has over 40 resources published by our server members. These resources are free to view on our [resource repository](${url("/resources")}).
+r/IGCSE has ${stats.find((stat) => stat.label === "Published Resources")?.value ?? "100+"} resources published by our server members. These resources are free to view on our [resource repository](${url("/resources")}).
 
 If you find any mistakes within official r/IGCSE published resources, please contact us at igcseresources.1@gmail.com.
 
