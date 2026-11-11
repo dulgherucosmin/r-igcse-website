@@ -139,28 +139,34 @@ const SUBJECTS_BY_KEY = new Map(
   ]),
 );
 
+const FIELD_SEPARATOR = /\s+[|_]\s+/;
+const FILE_EXTENSION = /\.(?:pdf|docx?|pptx?|xlsx?)$/i;
+
 function parseResource(file: DriveFile): ParsedDriveResource | null {
   if (file.mimeType === FOLDER) return null;
 
-  const parts = file.name.split("|").map((part) => part.trim());
+  const parts = file.name
+    .replace(FILE_EXTENSION, "")
+    .split(FIELD_SEPARATOR)
+    .map((part) => part.trim().replace(/\br_IGCSE\b/g, "r/IGCSE"));
   if (parts.length !== 6) return null;
 
-  const [rawBoard, rawLevel, rawCode, rawSubject, resourceName, author] = parts;
+  const [
+    rawBoard,
+    rawLevel,
+    underscoredCode,
+    rawSubject,
+    resourceName,
+    author,
+  ] = parts;
+  const rawCode = underscoredCode.replaceAll("_", "/");
   const board = normalizeBoard(rawBoard);
   const level = board ? normalizeLevel(board, rawLevel) : null;
   if (!board || !level || !rawCode || !resourceName) {
     return null;
   }
 
-  let code;
-
-  if (board == "Edexcel") {
-    // split Subject code from paper code
-    code = rawCode.split("/")[0];
-
-  } else {
-    code = rawCode;
-  }
+  const code = board === "Edexcel" ? rawCode.split("/")[0] : rawCode;
 
   const subject = SUBJECTS_BY_KEY.get(normalizeSubjectName(rawSubject));
   if (!subject) return null;
@@ -302,24 +308,4 @@ export async function getSubjectResources(
     (item) => item.id === id,
   );
   return subject ? { subject, resources } : null;
-}
-
-/** Temporarily gathers every item name, including folder names, for debugging. */
-export async function listAllFileNames(folderId: string): Promise<string[]> {
-  const names: string[] = [];
-  const folders = [folderId];
-  const visited = new Set<string>();
-
-  while (folders.length > 0) {
-    const currentFolder = folders.pop();
-    if (!currentFolder || visited.has(currentFolder)) continue;
-    visited.add(currentFolder);
-
-    for (const file of await list(currentFolder)) {
-      names.push(file.name);
-      if (file.mimeType === FOLDER) folders.push(file.id);
-    }
-  }
-
-  return names.sort((a, b) => a.localeCompare(b));
 }

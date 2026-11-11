@@ -1,81 +1,177 @@
 "use client";
 
+import { BooksIcon, ListIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import Navbar from "./navbar";
+import { Fragment, Suspense, useState } from "react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { type NavItem, navItems } from "@/data/navdata";
+import { trackPath } from "@/lib/landing";
+import { cn } from "@/lib/utils";
+
+function navLink(
+  item: NavItem,
+  props?: { className?: string; onClick?: () => void; "aria-current"?: "page" },
+) {
+  return item.external ? (
+    <a href={item.href} target="_blank" rel="noreferrer" {...props}>
+      {item.name}
+    </a>
+  ) : (
+    <Link href={item.href} {...props}>
+      {item.name}
+    </Link>
+  );
+}
+
+const isActive = (pathname: string | undefined, href: string) =>
+  pathname === href || Boolean(pathname?.startsWith(`${href}/`));
+
+function DesktopNavLinks({ pathname }: { pathname?: string }) {
+  return (
+    <NavigationMenuList className="gap-1">
+      {navItems.map((item) => {
+        const active = isActive(pathname, item.href);
+        return (
+          <NavigationMenuItem key={item.id}>
+            <NavigationMenuLink
+              active={active}
+              className={cn("px-3 text-base", active && "text-brand")}
+              render={navLink(item)}
+            />
+          </NavigationMenuItem>
+        );
+      })}
+    </NavigationMenuList>
+  );
+}
+
+function MobileNavLinks({
+  pathname,
+  onNavigate,
+}: {
+  pathname?: string;
+  onNavigate: () => void;
+}) {
+  return navItems.map((item) => {
+    const active = isActive(pathname, item.href);
+    return (
+      <Fragment key={item.id}>
+        {navLink(item, {
+          "aria-current": active ? "page" : undefined,
+          onClick: onNavigate,
+          className: cn(
+            buttonVariants({
+              variant: active ? "secondary" : "ghost",
+              size: "lg",
+            }),
+            "justify-start text-base",
+          ),
+        })}
+      </Fragment>
+    );
+  });
+}
+
+function CurrentDesktopNavLinks() {
+  return <DesktopNavLinks pathname={usePathname()} />;
+}
+
+function CurrentMobileNavLinks({ onNavigate }: { onNavigate: () => void }) {
+  return <MobileNavLinks pathname={usePathname()} onNavigate={onNavigate} />;
+}
+
+function PathTracker() {
+  trackPath(usePathname());
+  return null;
+}
 
 export default function Header() {
-  const pathname = usePathname();
-  const isHomepage = pathname === "/";
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <header
-        className={`sticky top-0 right-0 left-0 z-50 h-[var(--site-header-height)] bg-background text-foreground ${isHomepage ? "bg-[#121010] text-white" : ""}`}
-      >
-        <div className="relative mx-auto h-full w-full max-w-[1920px] max-[700px]:w-[min(100%,393px)]">
+    <header className="sticky top-0 z-50 h-(--site-header-height) border-b border-border/60 bg-background/95 backdrop-blur">
+      <Suspense fallback={null}>
+        <PathTracker />
+      </Suspense>
+      <div className="page-container grid h-full grid-cols-[1fr_auto_1fr] items-center gap-6">
+        <Link
+          href="/"
+          aria-label="r/IGCSE home"
+          className="flex items-center gap-2 justify-self-start rounded-md text-xl font-black outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          <Image
+            src="/logo.svg"
+            alt=""
+            width={187}
+            height={197}
+            className="h-8 w-auto"
+          />
+          r/IGCSE
+        </Link>
+
+        <NavigationMenu
+          aria-label="Primary navigation"
+          className="max-lg:hidden"
+        >
+          <Suspense fallback={<DesktopNavLinks />}>
+            <CurrentDesktopNavLinks />
+          </Suspense>
+        </NavigationMenu>
+
+        <div className="col-start-3 flex items-center gap-2 justify-self-end">
           <Link
-            className="absolute top-[min(0.260417vw,5px)] left-[min(1.510417vw,29px)] flex h-[min(2.604167vw,50px)] items-center gap-[min(0.625vw,12px)] whitespace-nowrap text-inherit no-underline [font-size:min(1.25vw,24px)] leading-none font-black max-[1250px]:top-[10px] max-[1250px]:left-[19px] max-[1250px]:h-[30px] max-[1250px]:gap-0 max-[1250px]:text-base max-[1250px]:opacity-90"
-            href="/"
-            aria-label="r/IGCSE home"
+            href="/resources"
+            className={cn(buttonVariants(), "max-sm:hidden")}
           >
-            <Image
-              className="size-[min(2.604167vw,50px)] object-contain max-[1250px]:size-[30px]"
-              src="/logo.png"
-              alt=""
-              width={50}
-              height={50}
-            />
-            <span>r/IGCSE</span>
+            <BooksIcon weight="fill" />
+            Browse Resources
           </Link>
 
-          <nav
-            className="absolute inset-0 max-[1250px]:hidden"
-            aria-label="Primary navigation"
-          >
-            <Navbar />
-          </nav>
-
-          <button
-            className="absolute top-[13px] right-[18px] hidden size-6 cursor-pointer flex-col items-center justify-center gap-1 border-0 bg-transparent p-0 text-inherit max-[1250px]:flex"
-            type="button"
-            aria-label={isOpen ? "Close navigation" : "Open navigation"}
-            aria-expanded={isOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setIsOpen((open) => !open)}
-          >
-            <span className="block h-[1.5px] w-[16.5px] rounded-full bg-current" />
-            <span className="block h-[1.5px] w-[16.5px] rounded-full bg-current" />
-            <span className="block h-[1.5px] w-[16.5px] rounded-full bg-current" />
-          </button>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="lg:hidden"
+                  aria-label="Open navigation"
+                />
+              }
+            >
+              <ListIcon className="size-5" />
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[min(78vw,310px)]">
+              <SheetHeader>
+                <SheetTitle>Navigation</SheetTitle>
+              </SheetHeader>
+              <nav aria-label="Mobile navigation" className="grid gap-1 px-2">
+                <Suspense
+                  fallback={
+                    <MobileNavLinks onNavigate={() => setOpen(false)} />
+                  }
+                >
+                  <CurrentMobileNavLinks onNavigate={() => setOpen(false)} />
+                </Suspense>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
-      </header>
-
-      <button
-        className={`fixed inset-0 z-[38] hidden h-full w-full border-0 bg-black/55 p-0 opacity-0 transition-opacity duration-200 max-[1250px]:block ${isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none"}`}
-        type="button"
-        aria-label="Close navigation"
-        tabIndex={isOpen ? 0 : -1}
-        onClick={() => setIsOpen(false)}
-      />
-      <nav
-        id="mobile-navigation"
-        className={`fixed top-[var(--site-header-height)] right-0 z-[45] hidden w-[min(78vw,310px)] rounded-bl-xl bg-background px-0 pt-2 pb-4 text-foreground opacity-0 shadow-[0_20px_50px_rgb(0_0_0/42%)] transition-[opacity,transform] duration-200 motion-reduce:transition-none max-[1250px]:block max-[1250px]:translate-x-[105%] ${isHomepage ? "bg-[#121010] text-white" : ""} ${isOpen ? "pointer-events-auto opacity-100 max-[1250px]:translate-x-0" : "pointer-events-none"}`}
-        aria-label="Mobile navigation"
-      >
-        <Navbar onNavigate={() => setIsOpen(false)} />
-      </nav>
-    </>
+      </div>
+    </header>
   );
 }

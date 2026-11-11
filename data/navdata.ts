@@ -7,11 +7,6 @@ export type NavItem = {
 
 export const navItems: NavItem[] = [
   {
-    id: 1,
-    name: "Home",
-    href: "/",
-  },
-  {
     id: 2,
     name: "Resources",
     href: "/resources",
@@ -27,25 +22,8 @@ export const navItems: NavItem[] = [
     href: "/opportunities",
   },
   {
-    id: 5,
-    name: "Certificates",
-    href: "/certificates",
-  },
-  {
-    id: 6,
-    name: "Partners",
-    href: "/partners",
-  },
-  {
-    id: 7,
-    name: "Socials",
-    href: "https://discord.gg/igcse",
-    external: true,
-  },
-  {
     id: 8,
     name: "Team",
     href: "/team",
   },
-  
 ];
