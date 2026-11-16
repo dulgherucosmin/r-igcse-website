@@ -2,11 +2,13 @@ import type { ComponentProps } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { Discord } from "@/components/ui/svgs/discord";
 import { Reddit } from "@/components/ui/svgs/reddit";
+import { YouTube } from "@/components/ui/svgs/youtube";
 import { cn } from "@/lib/utils";
 
 const BRAND_LOGOS = [
   { pattern: /(^|\.)(discord\.gg|discord\.com)$/, Logo: Discord },
   { pattern: /(^|\.)reddit\.com$/, Logo: Reddit },
+  { pattern: /(^|\.)youtube\.com$/, Logo: YouTube },
 ];
 
 function brandLogo(href?: string) {

@@ -30,4 +30,6 @@ export const footerColumns: FooterColumn[] = [
 export const socials = {
   discord: "https://discord.gg/igcse",
   reddit: "https://www.reddit.com/r/IGCSE/",
+  instagram: "https://www.instagram.com/r_igcse.official/",
+  youtube: "https://www.youtube.com/@rIGCSEResources",
 };
