@@ -5,12 +5,16 @@ import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Discord } from "@/components/ui/svgs/discord";
 import { Reddit } from "@/components/ui/svgs/reddit";
+import { YouTube } from "@/components/ui/svgs/youtube";
+import { Instagram } from "@/components/ui/svgs/instagram";
 import { footerColumns, socials } from "@/data/footer";
 import { cn } from "@/lib/utils";
 
 const socialLinks = [
   { name: "Discord", href: socials.discord, Logo: Discord },
   { name: "Reddit", href: socials.reddit, Logo: Reddit },
+  { name: "YouTube", href: socials.youtube, Logo: YouTube },
+  { name: "Instagram", href: socials.instagram, Logo: Instagram },
 ];
 
 const footerLinkClass = cn(
@@ -45,7 +49,7 @@ export default function Footer() {
           </Link>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
             The largest student-run community for IGCSE, O Level and AS/A Level
-            students. Free resources, made by students, forever.
+            students. Free resources, made by students, for students.
           </p>
           <div className="flex gap-2">
             {socialLinks.map(({ name, href, Logo }) => (

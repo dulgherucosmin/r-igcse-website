@@ -182,6 +182,17 @@ export default function Home() {
               </Card>
             ))}
           </div>
+          <div className="mt-12 flex justify-center">
+            <Link
+                href="/about"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-12 gap-2 px-6 text-xl font-bold",
+                )}
+              >
+                Learn More About r/IGCSE
+              </Link>
+          </div>
         </div>
       </section>
     </main>
