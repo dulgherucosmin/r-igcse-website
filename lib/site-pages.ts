@@ -146,6 +146,30 @@ ${teamRoles
   .join("\n\n")}
 `,
   },
+  {
+    path: "/thebot",
+    title: "r/IGCSE Bot",
+    description:
+      "Learn what the r/IGCSE Discord bot does, explore its features, and meet its contributors.",
+    priority: 0.4,
+    markdown: () => `# r/IGCSE Bot
+
+Bot Description
+
+## Bot stats
+
+- **Users:** To be added
+- **Guilds:** To be added
+
+## Features
+
+Feature screenshots and descriptions are coming soon.
+
+## Contributors
+
+Contributor credits are coming soon.
+`,
+  },
 ];
 
 export const pageUrl = (page: SitePage) => url(page.path);
