@@ -133,7 +133,7 @@ export default async function TheBot() {
   const contributors = await getGitHubContributors();
 
   return (
-    <main className="page-container pt-12 pb-24 md:pt-20">
+    <main className="page-container pt-6 pb-24 md:pt-12">
       <header className="max-w-3xl">
         <h1 className="text-4xl leading-tight font-black tracking-tight underline decoration-primary decoration-3 underline-offset-10 md:text-6xl">
           The r/IGCSE Bot
@@ -220,7 +220,8 @@ export default async function TheBot() {
             r/IGCSE Bot Contributors
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            Our Bot Contributors are volunteers who have dedicated their time to adding new features and submitting PRs for the r/IGCSE Bot. 
+            Our Bot Contributors are volunteers who have dedicated their time to
+            adding new features and submitting PRs for the r/IGCSE Bot.
           </p>
           {contributors.length > 0 ? (
             <ul className="mt-8 grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
@@ -260,7 +261,6 @@ export default async function TheBot() {
             </p>
           )}
         </div>
-        <Separator />
       </section>
     </main>
   );

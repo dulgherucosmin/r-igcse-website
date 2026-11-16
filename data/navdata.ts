@@ -23,8 +23,8 @@ export const navItems: NavItem[] = [
   },
   {
     id: 5,
-    name: "Our Bot",
-    href: "/thebot",
+    name: "Official Bot",
+    href: "/official-bot",
   },
   {
     id: 8,
