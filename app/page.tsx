@@ -130,13 +130,13 @@ export default function Home() {
                 <Item
                   key={stat.label}
                   render={<li />}
-                  className="w-auto rounded-none border-0 border-l-4 border-l-primary py-0 pl-4"
+                  className="line-clamp-none w-auto rounded-none border-0 border-l-4 border-l-primary py-0 pl-4"
                 >
                   <ItemContent className="gap-0">
-                    <ItemTitle className="text-base font-extrabold md:text-xl">
+                    <ItemTitle className="line-clamp-none line-text-base font-extrabold md:text-xl">
                       {stat.label}
                     </ItemTitle>
-                    <ItemDescription className="text-2xl font-extrabold text-highlight md:text-4xl">
+                    <ItemDescription className="line-clamp-none text-2xl font-extrabold text-highlight md:text-4xl">
                       <StatsAnimation value={stat.value} from={stat.from} />
                     </ItemDescription>
                   </ItemContent>
