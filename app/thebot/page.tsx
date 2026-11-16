@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { buttonVariants } from "@/components/ui/button";
@@ -75,9 +76,62 @@ const features: { title: string; description: ReactNode; image: string }[] = [
   },
 ];
 
-const contributors: { name: string; contribution: string }[] = [];
+type GitHubContributor = {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  type: string;
+};
 
-export default function TheBot() {
+function isGitHubContributor(value: unknown): value is GitHubContributor {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "login" in value &&
+    typeof value.login === "string" &&
+    "avatar_url" in value &&
+    typeof value.avatar_url === "string" &&
+    "html_url" in value &&
+    typeof value.html_url === "string" &&
+    "type" in value &&
+    typeof value.type === "string"
+  );
+}
+
+async function getGitHubContributors() {
+  "use cache";
+
+  cacheLife("days");
+
+  const response = await fetch(
+    "https://api.github.com/repos/r-IGCSE/r-igcse-bot/contributors?per_page=100",
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": "r-igcse-website",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `GitHub contributors request failed: ${response.status} ${response.statusText}`,
+    );
+  }
+
+  const data: unknown = await response.json();
+
+  if (!Array.isArray(data) || !data.every(isGitHubContributor)) {
+    throw new Error("GitHub returned an unexpected contributors response");
+  }
+
+  return data.filter((contributor) => contributor.type === "User");
+}
+
+export default async function TheBot() {
+  const contributors = await getGitHubContributors();
+
   return (
     <main className="page-container pt-12 pb-24 md:pt-20">
       <header className="max-w-3xl">
@@ -158,30 +212,51 @@ export default function TheBot() {
 
       <section aria-labelledby="contributors-heading" className="mt-16">
         <Separator />
-        <div className="grid gap-6 py-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-12">
+        <div className="py-10 text-center">
           <h2
             id="contributors-heading"
-            className="text-2xl font-bold tracking-tight"
+            className="text-2xl font-bold tracking-tight underline decoration-primary decoration-3 underline-offset-10"
           >
-            Bot contributors
+            r/IGCSE Bot Contributors
           </h2>
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+            Our Bot Contributors are volunteers who have dedicated their time to adding new features and submitting PRs for the r/IGCSE Bot. 
+          </p>
           {contributors.length > 0 ? (
-            <ul className="grid gap-4 sm:grid-cols-2">
+            <ul className="mt-8 grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
               {contributors.map((contributor) => (
                 <li
-                  key={contributor.name}
-                  className="rounded-xl border border-border bg-card p-4"
+                  key={contributor.login}
+                  className="flex flex-col items-center gap-3"
                 >
-                  <h3 className="font-semibold">{contributor.name}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {contributor.contribution}
-                  </p>
+                  <a
+                    href={contributor.html_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`View ${contributor.login}'s GitHub profile`}
+                  >
+                    <Image
+                      src={contributor.avatar_url}
+                      alt=""
+                      width={96}
+                      height={96}
+                      className="size-24 rounded-full border border-border object-cover"
+                    />
+                  </a>
+                  <a
+                    href={contributor.html_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold text-white no-underline hover:text-white hover:no-underline focus-visible:no-underline"
+                  >
+                    {contributor.login}
+                  </a>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              Contributor credits will be added here.
+            <p className="mt-8 text-muted-foreground">
+              No GitHub contributors found.
             </p>
           )}
         </div>

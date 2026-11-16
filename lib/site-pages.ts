@@ -167,7 +167,7 @@ Feature screenshots and descriptions are coming soon.
 
 ## Contributors
 
-Contributor credits are coming soon.
+Contributors are listed from the public [r/IGCSE Bot GitHub repository](https://github.com/r-IGCSE/r-igcse-bot).
 `,
   },
 ];
