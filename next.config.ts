@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         hostname: "drive.google.com",
         pathname: "/thumbnail",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/u/**",
+      },
     ],
   },
 };

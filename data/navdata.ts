@@ -22,6 +22,11 @@ export const navItems: NavItem[] = [
     href: "/opportunities",
   },
   {
+    id: 5,
+    name: "Official Bot",
+    href: "/official-bot",
+  },
+  {
     id: 8,
     name: "Team",
     href: "/team",
