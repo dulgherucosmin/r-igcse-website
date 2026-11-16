@@ -28,47 +28,22 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata("");
 
-const aboutCards = [
-  {
-    title: "How We Started",
-    icon: "/r.igcse_logo.png",
-    body: (
-      <>
-        Beginning in 2019, the r/IGCSE Community caters to students around the
-        globe, providing IGCSE and AS/A Level notes, subject guides, study
-        sessions, and more. Our{" "}
-        <TextLink href={socials.discord}>Discord Server</TextLink> has
-        subject-specific channels where you can ask our verified Subject Helpers
-        for assistance.
-      </>
-    ),
-  },
-  {
-    title: "Student-Run & Free",
-    icon: "/book1.png",
-    body: (
-      <>
-        We are completely student-run, and all resources displayed have been
-        created by other IGCSE and AS/A Level students.{" "}
-        <TextLink href={socials.reddit}>r/IGCSE</TextLink> is free and will
-        always remain free.
-      </>
-    ),
-  },
-];
-
 const why = [
   {
     title: "Student-Made Resources",
     body: "Our resources are created by volunteer alumni students who have studied for and taken these exams. We aim to keep resources free for all students, always.",
   },
   {
-    title: "Student Well-being",
-    body: "We value student welfare and aim to foster a nurturing environment by understanding and uplifting one another, ensuring that no student feels alone when navigating their academic journey, and that every student has access to support from a like-minded and welcoming community.",
-  },
-  {
-    title: "Peer to Peer Mentorship",
-    body: "We have a wide range of volunteer subject helpers that are active every day in our Discord community helping other students by answering doubts, giving advice, etc.",
+    title: "Group Study Sessions",
+    body: (
+      <>
+        Our community members and helpers regularly host group study sessions where they tackle a variety of subjects going through past papers, tips and tricks, syllabus content, and more!
+        Recordings of these can be found on our{" "}
+        <TextLink href={socials.youtube}>
+          YouTube Channel
+        </TextLink>.
+      </>
+    ),
   },
   {
     title: "Discord Partner Community ",
@@ -83,6 +58,25 @@ const why = [
         recognition from Discord itself.
       </>
     ),
+  },
+  {
+    title: "Peer to Peer Mentorship",
+    body: "We have a wide range of volunteer subject helpers that are active every day in our Discord community helping other students by answering doubts, giving advice, etc.",
+  },
+  {
+    title: "Student Well-being",
+    body: "We value student welfare and aim to foster a nurturing environment by understanding and uplifting one another, ensuring that no student feels alone when navigating their academic journey, and that every student has access to support from a like-minded and welcoming community.",
+  },
+  {
+    title: "Fully Student-Led",
+    body: (
+      <>
+        We are completely student-run, and all resources displayed have been
+        created by other IGCSE and AS/A Level students.{" "}
+        <TextLink href={socials.reddit}>r/IGCSE</TextLink> is free and will
+        always remain free.
+      </>
+    ),  
   },
 ];
 
@@ -168,48 +162,10 @@ export default function Home() {
         <Separator />
       </div>
 
-      <section aria-labelledby="about-us-title" className="py-16">
-        <div className="page-container">
-          <SectionHeading id="about-us-title">About Us</SectionHeading>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {aboutCards.map((card) => (
-              <Card key={card.title}>
-                <CardHeader className="flex items-center gap-3">
-                  <Image
-                    src={card.icon}
-                    alt=""
-                    width={64}
-                    height={64}
-                    className="size-16"
-                  />
-                  <CardTitle className="text-2xl font-bold">
-                    {card.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base leading-relaxed">
-                    {card.body}
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="page-container">
-        <Separator />
-      </div>
 
       <section aria-labelledby="why-title" className="py-16">
         <div className="page-container">
           <SectionHeading id="why-title">Why r/IGCSE?</SectionHeading>
-          <p className="mx-auto mt-4 max-w-2xl text-center leading-relaxed text-muted-foreground">
-            We want every IGCSE and A Level student to have the resources and
-            support they need to do their best in their exams.
-          </p>
-
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             {why.map((reason) => (
               <Card key={reason.title}>
