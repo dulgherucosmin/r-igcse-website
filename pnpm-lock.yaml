@@ -11,21 +11,24 @@ importers:
       '@base-ui/react':
         specifier: ^1.9.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@dualmark/nextjs':
-        specifier: ^0.11.0
-        version: 0.11.0(next@16.4.5(@babel/core@7.29.13)(@types/node@26.6.6)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       '@phosphor-icons/react':
         specifier: ^2.1.10
         version: 2.1.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tanstack/react-query':
         specifier: ^5.107.1
         version: 5.107.1(@types/react@19.3.0)(react@19.3.1)
+      '@usenotra/agentside':
+        specifier: ^0.4.2
+        version: 0.4.2(effect@4.1.4)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
       cn:
         specifier: ^0.5.2
         version: 0.5.2
+      effect:
+        specifier: ^4.1.4
+        version: 4.1.4
       motion:
         specifier: ^14.10.1
         version: 14.10.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -310,20 +313,6 @@ packages:
 
   '@dotenvx/primitives@0.8.0':
     resolution: {integrity: sha512-VYJy0uhFm9zTJ1TxBaW/pA8bjbOM/OttaNMwZ1RHG4JKyRG7DhSdiqD1ipQoAyoD22olUtxbP78W9xY3Wd11bg==}
-
-  '@dualmark/converters@0.11.0':
-    resolution: {integrity: sha512-K0zqj1bPCMfEEFh7ouuy0Jrei+lfqh8x5IYW6ydO2efdxWt8OMBDnLG3wmoz7d4+BdowsCAqRsPF593+tlDG8A==}
-    engines: {node: '>=22.12.0'}
-
-  '@dualmark/core@0.11.0':
-    resolution: {integrity: sha512-cymOrjE6JZShtPB6uv3cw0uJXd+wq4dNUnT7Li7C3coCMTA+uJvIbl1/iNkenBOF5yL3f4bOxLwUH+t40vO+Pg==}
-    engines: {node: '>=22.12.0'}
-
-  '@dualmark/nextjs@0.11.0':
-    resolution: {integrity: sha512-0SDNpgKXkHNqCmsA7/LNgjV36iNrCUkB7KYEje0LV00QVta6Jb9m3cT+4VaLfkq9zesYP0F+9G/z7akyKPtDCQ==}
-    engines: {node: '>=22.12.0'}
-    peerDependencies:
-      next: '>=14.0.0'
 
   '@emnapi/runtime@1.11.3':
     resolution: {integrity: sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==}
@@ -860,6 +849,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@usenotra/agentside@0.4.2':
+    resolution: {integrity: sha512-7akkLq9YUGPqTPJqnkmpMHgoI/uSl37F6GOBvTUf6en8B+pcRlh5/ffARkpIEYUtnWomKh6wGEbgNVD3uhgLHQ==}
+    peerDependencies:
+      effect: ^4.1.0
+
   ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
     peerDependencies:
@@ -1033,6 +1027,9 @@ packages:
   dotenv@17.4.2:
     resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
+
+  effect@4.1.4:
+    resolution: {integrity: sha512-Tgrv/9FN+TZYyOn8XSli+fVqAfwDrDAkiX5Uu9vztINb675VTQdhD0gWI5Kzvhlh9QqzjZvw72iugqw5pwoghQ==}
 
   electron-to-chromium@1.5.478:
     resolution: {integrity: sha512-pftG+ma5Lm8O6/p45bhYT6StBN5ziQymaRzmCZwFl8DwWHKPPD93FdOmP1aqftcepolQYvrcyTLa17kE8Yf+jg==}
@@ -2102,18 +2099,6 @@ snapshots:
 
   '@dotenvx/primitives@0.8.0': {}
 
-  '@dualmark/converters@0.11.0':
-    dependencies:
-      '@dualmark/core': 0.11.0
-
-  '@dualmark/core@0.11.0': {}
-
-  '@dualmark/nextjs@0.11.0(next@16.4.5(@babel/core@7.29.13)(@types/node@26.6.6)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))':
-    dependencies:
-      '@dualmark/converters': 0.11.0
-      '@dualmark/core': 0.11.0
-      next: 16.4.5(@babel/core@7.29.13)(@types/node@26.6.6)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-
   '@emnapi/runtime@1.11.3':
     dependencies:
       tslib: 2.9.1
@@ -2510,6 +2495,10 @@ snapshots:
   '@typescript/typescript-win32-x64@7.0.2':
     optional: true
 
+  '@usenotra/agentside@0.4.2(effect@4.1.4)':
+    dependencies:
+      effect: 4.1.4
+
   ajv-formats@2.1.1(ajv@8.20.0):
     optionalDependencies:
       ajv: 8.20.0
@@ -2640,6 +2629,8 @@ snapshots:
       is-obj: 2.0.0
 
   dotenv@17.4.2: {}
+
+  effect@4.1.4: {}
 
   electron-to-chromium@1.5.478: {}
 

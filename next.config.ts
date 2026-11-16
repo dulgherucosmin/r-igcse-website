@@ -1,6 +1,4 @@
-import { withDualmark } from "@dualmark/nextjs";
 import type { NextConfig } from "next";
-import { SITE_URL } from "./lib/config";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -21,4 +19,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withDualmark(nextConfig, { siteUrl: SITE_URL });
+export default nextConfig;

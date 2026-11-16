@@ -147,7 +147,7 @@ ${teamRoles
 `,
   },
   {
-    path: "/thebot",
+    path: "/official-bot",
     title: "r/IGCSE Bot",
     description:
       "Learn what the r/IGCSE Discord bot does, explore its features, and meet its contributors.",
@@ -173,8 +173,6 @@ Contributors are listed from the public [r/IGCSE Bot GitHub repository](https://
 ];
 
 export const pageUrl = (page: SitePage) => url(page.path);
-export const markdownUrl = (page: SitePage) =>
-  `${SITE_URL}${page.path || "/index"}.md`;
 
 export const community = [
   { title: "Discord", href: socials.discord },
