@@ -1,9 +1,17 @@
+import { ArrowSquareOutIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
 import type { ReactNode } from "react";
+import {
+  InfractionShowcase,
+  RepShowcase,
+  StatsShowcase,
+} from "@/components/bot-showcase";
 import { buttonVariants } from "@/components/ui/button";
+import { DiscordMention } from "@/components/ui/discord/discord-base";
 import { Separator } from "@/components/ui/separator";
+import { GitHub } from "@/components/ui/svgs/github";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +19,11 @@ export const metadata: Metadata = pageMetadata("/official-bot");
 
 const stats = { users: "130,000+", guilds: "550+" };
 
-const features: { title: string; description: ReactNode; image: string }[] = [
+const features: {
+  title: string;
+  description: ReactNode;
+  preview: ReactNode;
+}[] = [
   {
     title: "Reputation Points",
     description: (
@@ -31,7 +43,7 @@ const features: { title: string; description: ReactNode; image: string }[] = [
         </p>
       </>
     ),
-    image: "/bot_examples/bot_rep_showcase.png",
+    preview: <RepShowcase />,
   },
   {
     title: "Moderation Commands",
@@ -50,18 +62,18 @@ const features: { title: string; description: ReactNode; image: string }[] = [
         </p>
       </>
     ),
-    image: "/bot_examples/bot_infraction_showcase.png",
+    preview: <InfractionShowcase />,
   },
   {
     title: "Statistics",
     description: (
       <>
         <p>
-          The <code>/rep user</code> command gives members a snapshot of their
-          reputation: their total points and position on the community
-          leaderboard. It also highlights the channels where they have earned
-          the most reputation, making it easy to see where their help has made
-          an impact.
+          The <DiscordMention type="command">rep user</DiscordMention> command
+          gives members a snapshot of their reputation: their total points and
+          position on the community leaderboard. It also highlights the channels
+          where they have earned the most reputation, making it easy to see
+          where their help has made an impact.
         </p>
         <p>
           A recent activity summary tracks reputation earned over the last 24
@@ -72,7 +84,7 @@ const features: { title: string; description: ReactNode; image: string }[] = [
         </p>
       </>
     ),
-    image: "/bot_examples/bot_stats_showcase.png",
+    preview: <StatsShowcase />,
   },
 ];
 
@@ -163,6 +175,7 @@ export default async function TheBot() {
           className={buttonVariants({ size: "2xl" })}
         >
           Invite Bot
+          <ArrowSquareOutIcon data-icon="inline-end" aria-hidden />
         </a>
         <a
           href="https://github.com/r-IGCSE/r-igcse-bot"
@@ -173,6 +186,7 @@ export default async function TheBot() {
             "bg-[#24292f] text-white hover:bg-[#24292f]/90",
           )}
         >
+          <GitHub data-icon="inline-start" aria-hidden />
           GitHub
         </a>
       </div>
@@ -184,17 +198,11 @@ export default async function TheBot() {
             aria-labelledby={`feature-${index + 1}-heading`}
           >
             <Separator />
-            <div className="grid items-center gap-6 py-10 md:grid-cols-2 md:gap-12">
-              <div className={index % 2 === 1 ? "md:order-2" : undefined}>
-                <Image
-                  src={feature.image}
-                  alt={`Screenshot showing ${feature}`}
-                  width={852}
-                  height={431}
-                  className="h-auto w-full rounded-xl border border-border"
-                />
+            <div className="grid grid-cols-1 items-center gap-6 py-10 md:grid-cols-2 md:gap-12">
+              <div className={cn("min-w-0", index % 2 === 1 && "md:order-2")}>
+                {feature.preview}
               </div>
-              <div className={index % 2 === 1 ? "md:order-1" : undefined}>
+              <div className={cn("min-w-0", index % 2 === 1 && "md:order-1")}>
                 <h2
                   id={`feature-${index + 1}-heading`}
                   className="text-2xl font-bold tracking-tight"
@@ -228,7 +236,7 @@ export default async function TheBot() {
               {contributors.map((contributor) => (
                 <li
                   key={contributor.login}
-                  className="flex flex-col items-center gap-3"
+                  className="flex w-full min-w-0 flex-col items-center gap-3"
                 >
                   <a
                     href={contributor.html_url}
@@ -248,7 +256,7 @@ export default async function TheBot() {
                     href={contributor.html_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="font-semibold text-white no-underline hover:text-white hover:no-underline focus-visible:no-underline"
+                    className="max-w-full text-center font-semibold wrap-anywhere text-white no-underline hover:text-white hover:no-underline focus-visible:no-underline"
                   >
                     {contributor.login}
                   </a>
