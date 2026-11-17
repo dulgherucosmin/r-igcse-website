@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = pageMetadata("/thebot");
+export const metadata: Metadata = pageMetadata("/official-bot");
 
 const stats = { users: "130,000+", guilds: "550+" };
 

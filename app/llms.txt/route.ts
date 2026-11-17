@@ -1,35 +1,33 @@
-import { createLlmsTxtHandler } from "@dualmark/nextjs";
+import { llmsTxt } from "@usenotra/agentside/build";
+import { prerenderedPages } from "@/lib/agentside";
 import { SITE_URL } from "@/lib/config";
-import { community, markdownUrl, sitePages } from "@/lib/site-pages";
+import { community } from "@/lib/site-pages";
 
-const handler = createLlmsTxtHandler({
-  brandName: "r/IGCSE",
-  description:
-    "Free, student-made IGCSE, O Level and AS/A Level study resources from the r/IGCSE community.",
-  sections: [
-    {
-      title: "Pages",
-      links: sitePages.map((page) => ({
-        title: page.title,
-        href: markdownUrl(page),
-        description: page.description,
+export function GET() {
+  const body = llmsTxt(prerenderedPages(), {
+    title: "r/IGCSE",
+    description:
+      "Free, student-made IGCSE, O Level and AS/A Level study resources from the r/IGCSE community.",
+    siteUrl: SITE_URL,
+    links: {
+      Community: community.map((link) => ({
+        title: link.title,
+        url: link.href,
       })),
-    },
-    {
-      title: "Community",
-      links: community,
-    },
-    {
-      title: "Optional",
-      links: [
+      Optional: [
         {
           title: "Full site content",
-          href: `${SITE_URL}/llms-full.txt`,
+          url: `${SITE_URL}/llms-full.txt`,
           description: "Every page above in a single Markdown file.",
         },
       ],
     },
-  ],
-});
+  });
 
-export const GET = handler.GET;
+  return new Response(body, {
+    headers: {
+      "Content-Type": "text/markdown; charset=utf-8",
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
+}
