@@ -188,7 +188,7 @@ To apply, join our [Discord server](${socials.discord}) and message the r/IGCSE 
 },
   {
     path: "/sessions",
-    title: "IGCSE Exam Sessions & Results Dates",
+    title: "Exam Sessions & Results Dates",
     description:
       "Check upcoming CAIE and Pearson Edexcel exam sessions, countdowns and results dates for IGCSE, O Level and AS/A Level. Confirm exam details with your school or exam centre.",
     priority: 0.8,
