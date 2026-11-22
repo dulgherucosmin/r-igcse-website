@@ -11,5 +11,6 @@ export default async function CountdownSection() {
       sessions={examSessions}
       initial={pickSessions(examSessions, Date.now())}
     />
+    
   );
 }

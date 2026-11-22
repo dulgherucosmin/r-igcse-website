@@ -23,17 +23,17 @@ export const navItems: NavItem[] = [
   },
   {
     id: 5,
+    name: "Sessions",
+    href: "/sessions",
+  },
+  {
+    id: 6,
     name: "Official Bot",
     href: "/official-bot",
   },
   {
-    id: 6,
+    id: 7,
     name: "Partners",
     href: "/partners",
-  },
-  {
-    id: 8,
-    name: "Team",
-    href: "/team",
   },
 ];
