@@ -1,20 +1,21 @@
 import {
   ArrowUpRightIcon,
   CheckIcon,
-  DiscordLogoIcon,
   GlobeIcon,
-  HandshakeIcon,
-  InstagramLogoIcon,
-  LinkedinLogoIcon,
+  LinkSimpleIcon,
+  NotePencilIcon,
   StarIcon,
+  TiktokLogoIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
 import type { ComponentType, ReactNode } from "react";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Discord } from "@/components/ui/svgs/discord";
+import { Instagram } from "@/components/ui/svgs/instagram";
+import { LinkedIn } from "@/components/ui/svgs/linkedin";
 import { socials } from "@/data/footer";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
@@ -25,14 +26,20 @@ type PartnerLink = {
   label: string;
   href: string;
   /** Picks the default icon from `linkIcons` below. */
-  kind: "website" | "discord" | "instagram" | "linkedin";
+  kind:
+    | "website"
+    | "discord"
+    | "instagram"
+    | "linkedin"
+    | "tiktok"
+    | "linktree"
+    | "apply";
   /** Optional custom icon from /public, e.g. "/partners/icons/quickmark-site.svg". Overrides `kind`. */
   icon?: string;
 };
 
 type Partner = {
   name: string;
-  tag: string;
   description: string;
   /** Path inside /public, e.g. "/partners/quickmark.png". Falls back to an initial. */
   logo?: string;
@@ -41,11 +48,62 @@ type Partner = {
 
 const partners: Partner[] = [
   {
+    name: "ProjectEnlight",
+    description:
+      "ProjectEnlight is one of Asia's largest youth-led, student-run tutoring initiatives, dedicated to making quality IGCSE education more accessible. Through free academic resources, peer tutoring, and a community of student tutors, ProjectEnlight supports students in achieving stronger academic outcomes regardless of their background.",
+    logo: undefined, // e.g. "/partners/projectenlight.png"
+    links: [
+      {
+        label: "Website",
+        href: "https://www.projectenlight.my/",
+        kind: "website",
+        // icon: "/partners/icons/projectenlight-website.svg",
+      },
+      {
+        label: "Instagram",
+        href: "https://www.instagram.com/projectenlight_/",
+        kind: "instagram",
+        // icon: "/partners/icons/projectenlight-instagram.svg",
+      },
+      {
+        label: "Linktree",
+        href: "https://linktr.ee/projectenlightt",
+        kind: "linktree",
+        // icon: "/partners/icons/projectenlight-linktree.svg",
+      },
+    ],
+  },
+  {
+    name: "SimplifyIGCSE",
+    description:
+      "Established in 2025, SimplifyIGCSE is a global student-led educational platform dedicated to making IGCSE preparation simpler, more accessible, and more collaborative. Built on the philosophy of “By students, for students,” SimplifyIGCSE provides free, high-quality revision resources for 16+ subjects, created by a team of 30 student contributors from over 20 countries who understand the challenges of exam preparation. Today, as the platform continues to expand globally, it has gained over 7,400 active IGCSE learners from 130+ countries and over 109K total audience views across TikTok and Instagram. As quality education should not be limited by cost or geography, SimplifyIGCSE welcomes students, educators, and educational platforms interested in contributing resources, partnering, and creating a stronger global legacy of free education.",
+    logo: "/partners/SimplifyIGCSE.png",
+    links: [
+      {
+        label: "Website",
+        href: "https://www.simplifyigcse.org/",
+        kind: "website",
+        // icon: "/partners/icons/simplifyigcse-website.svg",
+      },
+      {
+        label: "Instagram",
+        href: "https://www.instagram.com/simplify_igcse/",
+        kind: "instagram",
+        // icon: "/partners/icons/simplifyigcse-instagram.svg",
+      },
+      {
+        label: "TikTok",
+        href: "https://www.tiktok.com/@simplifyigcse?_r=1&_t=ZS-94AqpmdgGOY",
+        kind: "tiktok",
+        // icon: "/partners/icons/simplifyigcse-tiktok.svg",
+      },
+    ],
+  },
+  {
     name: "QuickMark",
-    tag: "Practice tool",
     description:
       "A free practice tool for Cambridge IGCSE, O Level and A Level multiple choice. Pick any past paper, answer it on your phone or laptop, and it's marked the moment you finish, with an explanation for every question you got wrong. Topical drills let you attack one weak chapter at a time, and ranked mode puts you head to head with other students for a place on the leaderboard. No account needed.",
-    logo: undefined, // e.g. "/partners/quickmark.png"
+    logo: "/partners/quickmark.webp",
     links: [
       {
         label: "Website",
@@ -69,10 +127,9 @@ const partners: Partner[] = [
   },
   {
     name: "Markern",
-    tag: "Revision platform",
     description:
       "A completely free, student-built revision platform for IGCSE and AS/A Level students, built around a clean and minimalistic UI. It brings past papers, syllabuses, revision resources and progress tracking together in one organised place, with Cambridge resources available now and Edexcel coverage continuing to expand. There are no ads, subscriptions or required sign-ups.",
-    logo: undefined, // e.g. "/partners/markern.png"
+    logo: "/partners/markern.webp",
     links: [
       {
         label: "Website",
@@ -91,6 +148,20 @@ const partners: Partner[] = [
         href: "https://www.linkedin.com/company/igcsefy/",
         kind: "linkedin",
         // icon: "/partners/icons/markern-linkedin.svg",
+      },
+    ],
+  },
+  {
+    name: "The Teachers' Garden",
+    description:
+      "Built by a team of volunteer teachers, The Teachers' Garden is a language learning community of students, teachers and enthusiasts. We provide free language classes, activities and support to fulfil our ambition of cultivating a welcoming, encouraging environment for students and language lovers worldwide. Whether you are a language student, budding polyglot or just want to make some new friends, The Teachers' Garden is the perfect community for you. Pop in, say hi and explore our classes and community. We can't wait to meet you!",
+    logo: "/partners/tg.webp",
+    links: [
+      {
+        label: "Discord",
+        href: "https://discord.gg/MPfmxR4DJX",
+        kind: "discord",
+        // icon: "/partners/icons/teachers-garden-discord.svg",
       },
     ],
   },
@@ -144,26 +215,30 @@ const benefits: { text: string; note?: string }[] = [
     text: "An announcement ping in #announcements",
     note: "Detailing what your website or server is, plus links.",
   },
-  { text: "A direct communication channel with r/IGCSE staff" },
+  { text: "Direct communication with r/IGCSE",
+    note: "We'll set up your own personal channel with our staff team.",
+  },
   {
     text: "Opportunities to collaborate on future events",
     note: "Study sessions, workshops, MUNs, etc.",
   },
-  { text: "The r/IGCSE Partner role" },
+  { text: "The r/IGCSE Partner role",
+    note: "A special role on our server to stand out!"
+   },
 ];
 
-/* -------------------------------------------------------------------------- */
-/*  DEFAULT LINK ICONS: edit here to change the icon used for each `kind`.    */
-/*  Swap any of these for another Phosphor icon (or your own component).      */
-/* -------------------------------------------------------------------------- */
+
 const linkIcons: Record<
   PartnerLink["kind"],
   ComponentType<{ className?: string }>
 > = {
   website: GlobeIcon,
-  discord: DiscordLogoIcon,
-  instagram: InstagramLogoIcon,
-  linkedin: LinkedinLogoIcon,
+  discord: Discord,
+  instagram: Instagram,
+  linkedin: LinkedIn,
+  tiktok: TiktokLogoIcon,
+  linktree: LinkSimpleIcon,
+  apply: NotePencilIcon,
 };
 
 function PartnerLogo({ partner }: { partner: Partner }) {
@@ -190,14 +265,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
           {partner.name.charAt(0)}
         </span>
       )}
-      <span className="absolute -right-px -bottom-px grid size-8 place-items-center rounded-tl-2xl bg-primary text-primary-foreground">
-        <StarIcon
-          weight="fill"
-          aria-label="Official partner"
-          className="size-4"
-        />
-      </span>
-    </div>
+    </div>  
   );
 }
 
@@ -221,9 +289,6 @@ function PartnerRow({ partner, index }: { partner: Partner; index: number }) {
               >
                 {partner.name}
               </h3>
-              <Badge variant="outline" className="h-6 text-sm">
-                {partner.tag}
-              </Badge>
             </div>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
               {partner.description}
@@ -317,7 +382,7 @@ export default function Partners() {
     <main className="page-container pt-12 pb-24 md:pt-20">
       <header className="max-w-3xl">
         <h1 className="text-4xl leading-tight font-black tracking-tight underline decoration-primary decoration-3 underline-offset-10 md:text-6xl">
-          Partners
+          Our Partners
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
           These are the websites, apps and communities we've officially teamed
@@ -341,13 +406,8 @@ export default function Partners() {
       <section aria-labelledby="apply-heading" className="mt-20">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3 text-brand">
-            <HandshakeIcon
-              weight="bold"
-              aria-hidden="true"
-              className="size-6"
-            />
             <span className="text-sm font-bold tracking-widest uppercase">
-              Partnership program
+              r/IGCSE Partnership Program
             </span>
           </div>
           <h2
@@ -389,7 +449,7 @@ export default function Partners() {
             <div>
               <h3 className="flex items-center gap-2 text-2xl font-bold tracking-tight">
                 <GlobeIcon aria-hidden="true" className="size-6 text-brand" />
-                Website or app
+                Websites & Apps
               </h3>
               <p className="mt-2 leading-relaxed text-muted-foreground">
                 For study tools, resource platforms and applications.
@@ -407,11 +467,8 @@ export default function Partners() {
           <div className="grid gap-6 py-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-12">
             <div>
               <h3 className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-                <DiscordLogoIcon
-                  aria-hidden="true"
-                  className="size-6 text-brand"
-                />
-                Discord server
+                <Discord aria-hidden="true" className="size-6 text-brand" />
+                Discord Servers
               </h3>
               <p className="mt-2 leading-relaxed text-muted-foreground">
                 For study communities and student-run servers.
@@ -434,7 +491,7 @@ export default function Partners() {
                   aria-hidden="true"
                   className="size-6 text-highlight"
                 />
-                Partner benefits
+                Partner Benefits
               </h3>
               <p className="mt-2 leading-relaxed text-muted-foreground">
                 What you get once you're on board.
@@ -476,7 +533,7 @@ export default function Partners() {
             rel="noreferrer"
             className={cn(buttonVariants({ size: "lg" }), "font-bold")}
           >
-            <DiscordLogoIcon aria-hidden="true" data-icon="inline-start" />
+            <Discord aria-hidden="true" data-icon="inline-start" />
             Join the Discord
             <ArrowUpRightIcon aria-hidden="true" data-icon="inline-end" />
           </a>
