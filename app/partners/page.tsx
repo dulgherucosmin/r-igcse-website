@@ -49,6 +49,20 @@ type Partner = {
 
 const partners: Partner[] = [
   {
+    name: "StudyHaven",
+    description:
+      "StudyHaven is your one-stop site for topical worksheets. With over 90,000 questions across multiple IGCSE and A Level subjects, it is your best practice partner whether you need it for maths, sciences, or humanities.",
+    logo: undefined, // e.g. "/partners/projectenlight.png"
+    links: [
+      {
+        label: "Website",
+        href: "https://studyhaven.org/",
+        kind: "website",
+        // icon: "/partners/icons/projectenlight-website.svg",
+      },
+    ],
+  },
+  {
     name: "ProjectEnlight",
     description:
       "ProjectEnlight is one of Asia's largest youth-led, student-run tutoring initiatives, dedicated to making quality IGCSE education more accessible. Through free academic resources, peer tutoring, and a community of student tutors, ProjectEnlight supports students in achieving stronger academic outcomes regardless of their background.",
@@ -380,16 +394,16 @@ function RequirementList({
 
 export default function Partners() {
   return (
-    <main className="page-container pt-12 pb-24 md:pt-20">
+    <main className="page-container pt-12 pb-4 md:pt-20">
       <header className="max-w-3xl">
         <h1 className="text-4xl leading-tight font-black tracking-tight underline decoration-primary decoration-3 underline-offset-10 md:text-6xl">
           Our Partners
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-          These are the websites, apps and communities we've officially teamed
+          These are the websites, apps and communities we've officially partnered
           up with. Every one of them is built to make studying easier for
           students, and we only partner with projects we'd happily recommend
-          ourselves.
+          ourselves and believe you should use. 
         </p>
         <a
             href="#partner-with-us"
@@ -429,15 +443,17 @@ export default function Partners() {
             Want to partner with us?
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            If you're looking to partner with r/IGCSE, you've come to the right
-            place. To be eligible you must meet{" "}
+            To be eligible to partner with us, you must meet{" "}
             <strong className="font-bold text-foreground">
               all the requirements
             </strong>{" "}
-            for the type of organisation you're trying to partner with, and then
+            for the type of organisation you are representing, and then
             send a message to <Mention>@r/IGCSE Bot</Mention> on Discord
             detailing who you are, your role at said organisation, why you would
-            like to partner with us, and details about your organisation.
+            like to partner with us, and details about your organisation. Alternatively, you can email us at: {" "}
+            <a href={socials.email} className="font-bold text-foreground">
+            igcseresources.1@gmail.com
+            </a>{" "}.
           </p>
 
           <div className="mt-6 flex gap-3 rounded-xl border border-highlight/25 bg-highlight/5 p-4">
@@ -464,7 +480,7 @@ export default function Partners() {
                 Websites & Apps
               </h3>
               <p className="mt-2 leading-relaxed text-muted-foreground">
-                For study tools, resource platforms and applications.
+                For study tools, resource platforms and other applications.
               </p>
             </div>
             <div className="max-w-2xl">
@@ -483,7 +499,7 @@ export default function Partners() {
                 Discord Servers
               </h3>
               <p className="mt-2 leading-relaxed text-muted-foreground">
-                For study communities and student-run servers.
+                For educational communities and other student-run servers.
               </p>
             </div>
             <div className="max-w-2xl">
@@ -529,26 +545,35 @@ export default function Partners() {
         </div>
 
         {/* CTA */}
-        <div className="mt-16 flex flex-col items-center gap-6 py-6 text-center">
+        <div className="mt-8 flex flex-col items-center gap-6 py-6 text-center">
           <div className="max-w-xl">
             <h3 className="text-2xl font-bold tracking-tight">
-              Ready to apply?
+              Ready to partner?
             </h3>
             <p className="mt-2 leading-relaxed text-muted-foreground">
-              Join our Discord server and send a message to the r/IGCSE Bot to
-              get started.
+              Contact us with the details above via Discord or Email.
             </p>
           </div>
-          <a
+          <div className="flex flex-row gap-2">
+            <a
             href={socials.discord}
             target="_blank"
             rel="noreferrer"
             className={cn(buttonVariants({ size: "lg" }), "font-bold")}
           >
-            <Discord aria-hidden="true" data-icon="inline-start" />
             Join the Discord
             <ArrowUpRightIcon aria-hidden="true" data-icon="inline-end" />
           </a>
+          <a
+            href={socials.email}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(buttonVariants({ size: "lg" }), "font-bold")}
+          >
+            Send us an Email
+            <ArrowUpRightIcon aria-hidden="true" data-icon="inline-end" />
+          </a>
+          </div>
         </div>
       </section>
     </main>

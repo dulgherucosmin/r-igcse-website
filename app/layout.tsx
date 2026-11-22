@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("dark h-full font-sans antialiased", dmSans.variable)}
+      className={cn("dark h-full font-sans antialiased motion-safe:scroll-smooth", dmSans.variable)}
     >
       <body className="flex min-h-full flex-col">
         <Providers>
