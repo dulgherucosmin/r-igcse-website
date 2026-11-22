@@ -172,9 +172,9 @@ Contributors are listed from the public [r/IGCSE Bot GitHub repository](https://
   },
   {
   path: "/partners",
-  title: "Partners",
+  title: "IGCSE & A Level Study Partners",
   description:
-    "The websites, apps and Discord servers officially partnered with r/IGCSE, plus how to apply.",
+    "Explore trusted IGCSE, O Level and AS/A Level revision tools and student communities partnered with r/IGCSE. See partner benefits and application requirements.",
   priority: 0.5,
   markdown: () => `# Partners
 
@@ -186,6 +186,19 @@ r/IGCSE's official partners are free, student-focused websites and communities.
 To apply, join our [Discord server](${socials.discord}) and message the r/IGCSE Bot.
 `,
 },
+  {
+    path: "/sessions",
+    title: "IGCSE Exam Sessions & Results Dates",
+    description:
+      "Check upcoming CAIE and Pearson Edexcel exam sessions, countdowns and results dates for IGCSE, O Level and AS/A Level. Confirm exam details with your school or exam centre.",
+    priority: 0.8,
+    markdown: () => `# IGCSE Exam Sessions & Results Dates
+
+View upcoming Cambridge International (CAIE) and Pearson Edexcel exam sessions, live countdowns and results dates for IGCSE, O Level and AS/A Level.
+
+Dates can change. Check your exam timetable and results details with your school or exam centre, and consult the official exam-board timetables.
+`,
+  },
 ];
 
 export const pageUrl = (page: SitePage) => url(page.path);

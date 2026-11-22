@@ -1,7 +1,10 @@
 "use client";
 
+import { ArrowUpRightIcon, CalendarDotsIcon } from "@phosphor-icons/react/ssr";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -18,6 +21,7 @@ import {
   type SessionState,
   sessionStart,
 } from "@/lib/exam-sessions";
+import { cn } from "@/lib/utils";
 
 function getTimeLeft(target: number, now: number) {
   const totalSeconds = Math.max(0, Math.floor((target - now) / 1000));
@@ -136,6 +140,22 @@ export default function Countdown({
             </>
           )
         )}
+        <CardContent className="flex justify-center mt-4 pt-0 md:px-10">
+          <Link
+            href="/sessions"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "bg-[#ff1a1a] text-white hover:bg-[#ff1a1a]/90",
+            )}
+          >
+            More Session Information
+            <ArrowUpRightIcon
+              aria-hidden="true"
+              data-icon="inline-end"
+              className="text-foreground"
+            />
+          </Link>
+        </CardContent>
       </Card>
     </section>
   );

@@ -324,14 +324,20 @@ function NextStrip({ session, now }: { session: Session; now: number }) {
   );
 }
 
-function resultsSummary(session: Session) {
-  return session.results
-    .map((result) =>
-      result.at
-        ? `${result.label}: ${shortDayYear.format(new Date(result.at))}`
-        : `${result.label}: to be announced`,
-    )
-    .join(" · ");
+/** One line per results day, e.g. "AS & A Level Results: 7 Jan 2027". */
+function resultLines(session: Session) {
+  return session.results.map((result) => {
+    // "All qualifications" / "Results" just read as "Results: <date>"
+    const generic =
+      result.label === "All qualifications" || result.label === "Results";
+    return {
+      key: result.label,
+      label: generic ? "Results" : `${result.label} Results`,
+      date: result.at
+        ? shortDayYear.format(new Date(result.at))
+        : "To be announced",
+    };
+  });
 }
 
 function BoardLinks({ board }: { board: Board }) {
@@ -353,9 +359,9 @@ function BoardLinks({ board }: { board: Board }) {
             target="_blank"
             rel="noreferrer"
             className={cn(
-            buttonVariants({ size: "lg" }),
-            "bg-[#ff1a1a] text-white hover:bg-[#ff1a1a]/90",
-          )}
+                buttonVariants({ size: "lg" }),
+                "bg-[#ff1a1a] text-white hover:bg-[#ff1a1a]/90",
+            )}
           >
             <Icon aria-hidden="true" />
             {label}
@@ -399,9 +405,13 @@ function SessionList({ board, now }: { board: Board; now: number | null }) {
                     {formatRange(session)}
                   </p>
                 </div>
-                <p className="flex-1 text-sm text-muted-foreground">
-                  {resultsSummary(session)}
-                </p>
+                <ul className="flex-1 space-y-0.5 text-sm text-muted-foreground">
+                  {resultLines(session).map((line) => (
+                    <li key={line.key}>
+                      {line.label}: {line.date}
+                    </li>
+                  ))}
+                </ul>
                 {status && (
                   <Badge
                     variant={status === "Underway" ? "default" : "outline"}

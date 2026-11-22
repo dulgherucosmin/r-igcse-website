@@ -1,20 +1,7 @@
-import type { Metadata } from "next";
 import Countdowns, { type Board } from "@/components/Countdowns";
+import { pageMetadata } from "@/lib/metadata";
 
-/* Inline so this page works on its own. Once /countdowns is in lib/site-pages.ts
-   you can swap this for: export const metadata = pageMetadata("/countdowns"); */
-export const metadata: Metadata = {
-  title: "Countdowns",
-  description:
-    "Live countdowns to the next CAIE and Edexcel exam sessions and results days, so you always know what's coming up.",
-  alternates: { canonical: "/countdowns" },
-  openGraph: {
-    title: "Countdowns",
-    description:
-      "Live countdowns to the next CAIE and Edexcel exam sessions and results days.",
-    url: "/countdowns",
-  },
-};
+export const metadata = pageMetadata("/sessions");
 
 /* -------------------------------------------------------------------------- */
 /*  DATES: edit here when boards announce or change anything.                 */
@@ -113,17 +100,18 @@ const boards: Board[] = [
   },
 ];
 
-export default function CountdownsPage() {
+export default function SessionsPage() {
   return (
-    <main className="page-container pt-12 pb-24 md:pt-20">
+    <main className="page-container pt-12 pb-4 md:pt-20">
       <header className="max-w-3xl">
         <h1 className="text-4xl leading-tight font-black tracking-tight underline decoration-primary decoration-3 underline-offset-10 md:text-6xl">
-          Countdowns
+          Exam Sessions
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
           Exam sessions and results days for CAIE and Edexcel, all in one place.
           When a session is underway we&rsquo;ll say so, and once it&rsquo;s
-          over the countdown switches to results day.
+          over the countdown switches to results day. We will update this page regularly with
+          confirmed dates every session.
         </p>
       </header>
 
