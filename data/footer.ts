@@ -32,4 +32,5 @@ export const socials = {
   reddit: "https://www.reddit.com/r/IGCSE/",
   instagram: "https://www.instagram.com/r_igcse.official/",
   youtube: "https://www.youtube.com/@rIGCSEResources",
+  email: "mailto:igcseresources.1@gmail.com",
 };
