@@ -27,6 +27,11 @@ export const navItems: NavItem[] = [
     href: "/official-bot",
   },
   {
+    id: 6,
+    name: "Partners",
+    href: "/partners",
+  },
+  {
     id: 8,
     name: "Team",
     href: "/team",

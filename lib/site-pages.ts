@@ -170,6 +170,22 @@ Feature screenshots and descriptions are coming soon.
 Contributors are listed from the public [r/IGCSE Bot GitHub repository](https://github.com/r-IGCSE/r-igcse-bot).
 `,
   },
+  {
+  path: "/partners",
+  title: "Partners",
+  description:
+    "The websites, apps and Discord servers officially partnered with r/IGCSE, plus how to apply.",
+  priority: 0.5,
+  markdown: () => `# Partners
+
+r/IGCSE's official partners are free, student-focused websites and communities.
+
+- **QuickMark:** Free multiple choice practice tool for IGCSE, O Level and A Level. [Website](https://www.quickmark.co/)
+- **Markern:** Free revision platform for IGCSE and AS/A Level. [Website](https://markern.com/)
+
+To apply, join our [Discord server](${socials.discord}) and message the r/IGCSE Bot.
+`,
+},
 ];
 
 export const pageUrl = (page: SitePage) => url(page.path);
