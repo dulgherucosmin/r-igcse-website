@@ -6,6 +6,7 @@ import {
   NotePencilIcon,
   StarIcon,
   TiktokLogoIcon,
+  ArrowDownIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
@@ -390,10 +391,17 @@ export default function Partners() {
           students, and we only partner with projects we'd happily recommend
           ourselves.
         </p>
+        <a
+            href="#partner-with-us"
+            className={cn(buttonVariants({ size: "xlg" }), "mt-4 font-bold")}
+        >
+            Partner With Us
+        <ArrowDownIcon aria-hidden="true" data-icon="inline-end" />
+        </a>
       </header>
 
       {/* Partner list */}
-      <section aria-label="Official partners" className="mt-14">
+      <section aria-label="Official partners" className="mt-8">
         <ul>
           {partners.map((partner, index) => (
             <PartnerRow key={partner.name} partner={partner} index={index} />
@@ -403,7 +411,11 @@ export default function Partners() {
       </section>
 
       {/* Want to partner with us? */}
-      <section aria-labelledby="apply-heading" className="mt-20">
+      <section
+        id="partner-with-us"
+        aria-labelledby="apply-heading"
+        className="mt-20 scroll-mt-24"
+        >
         <div className="max-w-3xl">
           <div className="flex items-center gap-3 text-brand">
             <span className="text-sm font-bold tracking-widest uppercase">
