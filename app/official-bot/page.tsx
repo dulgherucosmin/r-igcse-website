@@ -172,7 +172,10 @@ export default async function TheBot() {
           href="https://discord.com/oauth2/authorize?client_id=861445044790886467"
           target="_blank"
           rel="noreferrer"
-          className={buttonVariants({ size: "2xl" })}
+          className={cn(
+            buttonVariants({ size: "xlg" }),
+            "bg-[#ff1a1a] text-white hover:bg-[#ff1a1a]/90",
+          )}
         >
           Invite Bot
           <ArrowSquareOutIcon data-icon="inline-end" aria-hidden />
@@ -182,7 +185,7 @@ export default async function TheBot() {
           target="_blank"
           rel="noreferrer"
           className={cn(
-            buttonVariants({ size: "2xl" }),
+            buttonVariants({ size: "xlg" }),
             "bg-[#24292f] text-white hover:bg-[#24292f]/90",
           )}
         >
