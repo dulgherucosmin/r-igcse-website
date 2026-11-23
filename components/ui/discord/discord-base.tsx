@@ -63,7 +63,7 @@ function DiscordMessageContent({
 }: React.ComponentProps<"div">) {
 	return (
 		<div
-			className={cn("relative px-4 pb-1 pl-14 hover:bg-black/10", className)}
+			className={cn("relative px-4 pb-1 pl-14 hover:bg-black/[0.03] dark:hover:bg-black/10", className)}
 			data-slot="discord-message-content"
 			{...props}
 		>
