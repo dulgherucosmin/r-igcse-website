@@ -33,7 +33,7 @@ export function TextLink({
       className={cn(
         buttonVariants({ variant: "link" }),
         cn(
-          "inline h-auto p-0 align-baseline text-[length:inherit] font-[inherit] whitespace-normal text-blue-300 underline underline-offset-4",
+          "inline h-auto p-0 align-baseline text-[length:inherit] font-[inherit] whitespace-normal text-blue-700 underline dark:text-blue-300 underline-offset-4",
           className,
         ),
       )}
