@@ -19,7 +19,7 @@ export function ResourceGrid({
             rel="noreferrer"
             className="group block rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
-            <div className="aspect-[1024/1448] overflow-hidden rounded-lg bg-card shadow-lg shadow-black/40 ring-1 ring-border transition-shadow group-hover:ring-primary/60">
+            <div className="aspect-[1024/1448] overflow-hidden rounded-lg bg-card shadow-md shadow-black/10 ring-1 dark:shadow-lg dark:shadow-black/40 ring-border transition-shadow group-hover:ring-primary/60">
               <ResourceThumbnail
                 id={resource.id}
                 subjectName={subject.name}

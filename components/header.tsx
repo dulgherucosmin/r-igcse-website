@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, Suspense, useState } from "react";
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -141,6 +142,8 @@ export default function Header() {
             <BooksIcon weight="fill" aria-hidden="true" />
             Browse Resources
           </Link>
+
+          <ModeToggle />
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger

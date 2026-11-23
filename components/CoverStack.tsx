@@ -120,7 +120,7 @@ function FeaturedCover({
     <motion.button
       type="button"
       aria-label={`Open ${cover.subject} (${cover.code}) ${cover.title} by ${cover.author}`}
-      className="relative size-full cursor-grab touch-pan-y overflow-hidden rounded-md shadow-2xl shadow-black/60 outline-none focus-visible:ring-3 focus-visible:ring-ring active:cursor-grabbing"
+      className="relative size-full cursor-grab touch-pan-y overflow-hidden rounded-md shadow-xl shadow-black/15 outline-none dark:shadow-2xl dark:shadow-black/60 focus-visible:ring-3 focus-visible:ring-ring active:cursor-grabbing"
       style={{ rotateX: tiltX, rotateY: tiltY, transformPerspective: 900 }}
       drag="x"
       dragSnapToOrigin
@@ -263,7 +263,7 @@ export default function CoverStack() {
                 <motion.button
                   type="button"
                   aria-label={`Bring ${cover.subject} (${cover.code}) ${cover.title} to the front`}
-                  className="relative size-full overflow-hidden rounded-md shadow-2xl shadow-black/60 outline-none focus-visible:ring-3 focus-visible:ring-ring"
+                  className="relative size-full overflow-hidden rounded-md shadow-xl shadow-black/15 outline-none dark:shadow-2xl dark:shadow-black/60 focus-visible:ring-3 focus-visible:ring-ring"
                   variants={floatVariants}
                   custom={3 + slot * 0.35}
                   initial={false}
