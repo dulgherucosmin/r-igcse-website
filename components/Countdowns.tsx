@@ -137,12 +137,12 @@ function Digits({
     >
       {units.map((unit) => (
         <div key={unit.label} aria-hidden="true">
-          <div className="relative overflow-hidden rounded-xl bg-linear-to-b from-black/80 to-black/50 px-1 py-2 text-center shadow-inner ring-1 ring-border sm:py-3">
+          <div className="relative overflow-hidden rounded-xl bg-linear-to-b from-card to-secondary px-1 py-2 text-center shadow-sm ring-1 ring-border sm:py-3 dark:from-black/80 dark:to-black/50 dark:shadow-inner">
             <span className="block text-3xl font-extrabold text-highlight tabular-nums sm:text-4xl md:text-5xl">
               {pad(unit.value)}
             </span>
             {/* thin split line across the middle, like a flip clock */}
-            <span className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-background/70" />
+            <span className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-border dark:bg-background/70" />
           </div>
           <span className="mt-1.5 block text-center text-[10px] font-semibold tracking-wide text-muted-foreground uppercase sm:text-xs">
             {unit.label}
@@ -359,8 +359,8 @@ function BoardLinks({ board }: { board: Board }) {
             target="_blank"
             rel="noreferrer"
             className={cn(
-                buttonVariants({ size: "lg" }),
-                "bg-[#ff1a1a] text-white hover:bg-[#ff1a1a]/90",
+              buttonVariants({ size: "lg" }),
+              "bg-[#ff1a1a] text-white hover:bg-[#ff1a1a]/90",
             )}
           >
             <Icon aria-hidden="true" />

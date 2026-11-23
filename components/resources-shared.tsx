@@ -14,7 +14,7 @@ export function BackgroundArt() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 bottom-0 -z-10 h-[min(75vh,760px)] bg-[url('/bg-vector.png')] bg-cover bg-bottom bg-no-repeat opacity-[0.12]"
+      className="pointer-events-none fixed inset-x-0 bottom-0 -z-10 h-[min(75vh,760px)] bg-[url('/bg-vector.png')] bg-cover bg-bottom bg-no-repeat opacity-[0.04] dark:opacity-[0.12]"
     />
   );
 }
