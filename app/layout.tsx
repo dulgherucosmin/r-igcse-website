@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import { JsonLd } from "@/components/json-ld";
 import Providers from "@/components/providers";
 import { SITE_URL } from "@/lib/config";
+import { siteJsonLd } from "@/lib/structured-data";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -46,6 +48,7 @@ export default function RootLayout({
       className={cn("dark h-full font-sans antialiased motion-safe:scroll-smooth", dmSans.variable)}
     >
       <body className="flex min-h-full flex-col">
+        <JsonLd data={siteJsonLd()} />
         <Providers>
           <Header />
           <div className="flex-1">{children}</div>

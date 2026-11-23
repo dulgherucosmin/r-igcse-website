@@ -1,5 +1,7 @@
 import Countdowns, { type Board } from "@/components/Countdowns";
+import { JsonLd } from "@/components/json-ld";
 import { pageMetadata } from "@/lib/metadata";
+import { sessionsJsonLd } from "@/lib/structured-data";
 
 export const metadata = pageMetadata("/sessions");
 
@@ -103,6 +105,7 @@ const boards: Board[] = [
 export default function SessionsPage() {
   return (
     <main className="page-container pt-12 pb-4 md:pt-20">
+      <JsonLd data={sessionsJsonLd(boards)} />
       <header className="max-w-3xl">
         <h1 className="text-4xl leading-tight font-black tracking-tight underline decoration-primary decoration-3 underline-offset-10 md:text-6xl">
           Exam Sessions

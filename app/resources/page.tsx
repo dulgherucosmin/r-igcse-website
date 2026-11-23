@@ -6,11 +6,13 @@ import {
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { Suspense } from "react";
+import { JsonLd } from "@/components/json-ld";
 import ResourcesDisplay from "@/components/ResourcesDisplay";
 import { Skeleton } from "@/components/ui/skeleton";
-import { listSubjects } from "@/lib/drive";
+import { type DriveSubject, listSubjects } from "@/lib/drive";
 import { pageMetadata } from "@/lib/metadata";
 import { subjectsQueryKey } from "@/lib/queries";
+import { resourcesJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = pageMetadata("/resources");
 
@@ -35,14 +37,21 @@ async function prefetchedSubjects() {
     queryKey: subjectsQueryKey,
     queryFn: listSubjects,
   });
-  return dehydrate(queryClient);
+  return {
+    state: dehydrate(queryClient),
+    subjects: queryClient.getQueryData<DriveSubject[]>(subjectsQueryKey) ?? [],
+  };
 }
 
 async function PrefetchedResources() {
+  const { state, subjects } = await prefetchedSubjects();
   return (
-    <HydrationBoundary state={await prefetchedSubjects()}>
-      <ResourcesDisplay />
-    </HydrationBoundary>
+    <>
+      <JsonLd data={resourcesJsonLd(subjects)} />
+      <HydrationBoundary state={state}>
+        <ResourcesDisplay />
+      </HydrationBoundary>
+    </>
   );
 }
 

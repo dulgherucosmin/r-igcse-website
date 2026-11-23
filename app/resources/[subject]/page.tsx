@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { JsonLd } from "@/components/json-ld";
 import {
   BackgroundArt,
   pageClassName,
@@ -9,6 +10,7 @@ import {
 import SubjectResources, { subjectTitle } from "@/components/SubjectResources";
 import { SubjectSkeleton } from "@/components/subject-skeleton";
 import { DriveApiError } from "@/lib/drive";
+import { subjectJsonLd } from "@/lib/structured-data";
 import { loadSubject, subjectParams } from "@/lib/subject-data";
 
 type Props = { params: Promise<{ subject: string }> };
@@ -36,7 +38,10 @@ async function Subject({ params }: Props) {
     const data = await loadSubject(id);
     if (!data) notFound();
     return (
-      <SubjectResources subject={data.subject} resources={data.resources} />
+      <>
+        <JsonLd data={subjectJsonLd(data.subject, data.resources)} />
+        <SubjectResources subject={data.subject} resources={data.resources} />
+      </>
     );
   } catch (error) {
     if (!(error instanceof DriveApiError)) throw error;
