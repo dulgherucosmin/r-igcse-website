@@ -144,7 +144,7 @@ export default function About() {
               "font-bold",
             )}
           >
-            <BooksIcon weight="fill" />
+            <BooksIcon weight="fill" aria-hidden="true" />
             Browse resources
           </Link>
           <Link
@@ -152,7 +152,7 @@ export default function About() {
             className={cn(buttonVariants({ size: "lg" }), "font-bold")}
           >
             See opportunities
-            <ArrowRightIcon />
+            <ArrowRightIcon aria-hidden="true" />
           </Link>
         </div>
       </section>

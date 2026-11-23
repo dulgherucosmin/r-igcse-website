@@ -103,7 +103,7 @@ export default function ResourcesDisplay() {
   const searchInput = (
     <InputGroup className="h-10">
       <InputGroupAddon>
-        <MagnifyingGlassIcon className="size-[18px]" />
+        <MagnifyingGlassIcon aria-hidden="true" className="size-[18px]" />
       </InputGroupAddon>
       <InputGroupInput
         type="search"
@@ -144,7 +144,7 @@ export default function ResourcesDisplay() {
               <SheetTrigger
                 render={<Button variant="outline" className="h-10 md:hidden" />}
               >
-                <FunnelSimpleIcon />
+                <FunnelSimpleIcon aria-hidden="true" />
                 Filters
                 {activeFilterCount > 0 && (
                   <span className="text-brand tabular-nums">
@@ -194,45 +194,47 @@ export default function ResourcesDisplay() {
                   <h2 className="mb-3 text-xl font-bold" id={`track-${track}`}>
                     {label}
                   </h2>
-                  <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,240px),1fr))] gap-3">
+                  <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,240px),1fr))] gap-3">
                     {group.map((subject) => (
-                      <Item
-                        key={subject.id}
-                        variant="muted"
-                        className="min-h-[76px] min-w-0 flex-nowrap bg-card p-2.5 hover:bg-muted"
-                        render={
-                          <NextLink
-                            href={`/resources/${subject.id}`}
-                            scroll={false}
-                          />
-                        }
-                      >
-                        <ItemMedia
-                          className={`size-[46px] rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
+                      <li key={subject.id} className="flex min-w-0">
+                        <Item
+                          variant="muted"
+                          data-ai-content={`${subject.codes.join(" / ")} ${subject.name} (${subject.board} ${subject.levels.join(" / ")}), ${subject.resourceCount} ${subject.resourceCount === 1 ? "resource" : "resources"}`}
+                          className="min-h-[76px] min-w-0 flex-nowrap bg-card p-2.5 hover:bg-muted"
+                          render={
+                            <NextLink
+                              href={`/resources/${subject.id}`}
+                              scroll={false}
+                            />
+                          }
                         >
-                          <CategoryIcon category={subject.category} />
-                        </ItemMedia>
-                        <ItemContent className="min-w-0 gap-0.5">
-                          <span className="text-xs font-semibold">
-                            {subject.board} |{" "}
-                            {subject.track === "IGCSE"
-                              ? "IGCSE"
-                              : subject.levels.join(" · ")}
-                          </span>
-                          <ItemTitle className="line-clamp-2 w-full text-base leading-tight font-bold [overflow-wrap:anywhere]">
-                            {subject.codes.join(" / ")} {subject.name}
-                          </ItemTitle>
-                          <ItemDescription className="text-xs">
-                            {subject.resourceCount}{" "}
-                            {subject.resourceCount === 1
-                              ? "resource"
-                              : "resources"}{" "}
-                            available
-                          </ItemDescription>
-                        </ItemContent>
-                      </Item>
+                          <ItemMedia
+                            className={`size-[46px] rounded ${SUBJECT_COLOR_CLASSES[subjectColorOf(subject.name)]}`}
+                          >
+                            <CategoryIcon category={subject.category} />
+                          </ItemMedia>
+                          <ItemContent className="min-w-0 gap-0.5">
+                            <span className="text-xs font-semibold">
+                              {subject.board} |{" "}
+                              {subject.track === "IGCSE"
+                                ? "IGCSE"
+                                : subject.levels.join(" · ")}
+                            </span>
+                            <ItemTitle className="line-clamp-2 w-full text-base leading-tight font-bold [overflow-wrap:anywhere]">
+                              {subject.codes.join(" / ")} {subject.name}
+                            </ItemTitle>
+                            <ItemDescription className="text-xs">
+                              {subject.resourceCount}{" "}
+                              {subject.resourceCount === 1
+                                ? "resource"
+                                : "resources"}{" "}
+                              available
+                            </ItemDescription>
+                          </ItemContent>
+                        </Item>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </section>
               );
             })}

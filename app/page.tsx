@@ -145,7 +145,7 @@ export default function Home() {
                 "mt-8 h-12 gap-2 px-6 text-xl font-bold",
               )}
             >
-              <BooksIcon weight="fill" className="size-6" />
+              <BooksIcon weight="fill" aria-hidden="true" className="size-6" />
               Browse Resources
             </Link>
           </div>

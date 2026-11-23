@@ -38,7 +38,7 @@ function MemberAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={cn("ring-1 ring-border", className)}>
+    <Avatar data-ai-ignore className={cn("ring-1 ring-border", className)}>
       {member.avatar && <AvatarImage src={member.avatar} alt="" />}
       <AvatarFallback className="bg-secondary font-bold text-foreground">
         {getInitials(member.name)}
@@ -65,7 +65,10 @@ export default function Team() {
           community, build the website and bots, and write the resources you
           study from.
         </p>
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div
+          className="mt-6 flex flex-wrap gap-2"
+          data-ai-content={`${volunteerCount} volunteers across ${teamRoles.length} teams.`}
+        >
           <Badge variant="secondary" className="text-sm">
             {volunteerCount} volunteers
           </Badge>
@@ -169,7 +172,7 @@ export default function Team() {
             className={cn(buttonVariants({ size: "lg" }), "font-bold")}
           >
             See opportunities
-            <ArrowRightIcon />
+            <ArrowRightIcon aria-hidden="true" />
           </Link>
           <a
             href={socials.discord}

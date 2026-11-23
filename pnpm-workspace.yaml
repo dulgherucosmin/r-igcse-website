@@ -2,4 +2,4 @@ allowBuilds:
   sharp: false
   unrs-resolver: false
 minimumReleaseAgeExclude:
-  - "@usenotra/agentside@0.4.2"
+  - "@usenotra/agentside@0.4.4"

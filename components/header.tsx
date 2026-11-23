@@ -138,7 +138,7 @@ export default function Header() {
             href="/resources"
             className={cn(buttonVariants(), "max-sm:hidden")}
           >
-            <BooksIcon weight="fill" />
+            <BooksIcon weight="fill" aria-hidden="true" />
             Browse Resources
           </Link>
 
@@ -153,7 +153,7 @@ export default function Header() {
                 />
               }
             >
-              <ListIcon className="size-5" />
+              <ListIcon aria-hidden="true" className="size-5" />
             </SheetTrigger>
             <SheetContent side="right" className="w-[min(78vw,310px)]">
               <SheetHeader>
