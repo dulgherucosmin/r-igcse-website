@@ -10,6 +10,7 @@ import {
   type Variants,
 } from "motion/react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 import { type PointerEvent, useEffect, useRef, useState } from "react";
 import { type Cover, covers } from "@/data/covers";
 
@@ -165,6 +166,11 @@ export default function CoverStack() {
   const [order, setOrder] = useState(() => covers.map((_, index) => index));
   const [hovered, setHovered] = useState<number | null>(null);
   const [active, setActive] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const dim =
+    resolvedTheme === "light"
+      ? { active: 0.97, idle: 0.92 }
+      : { active: 0.85, idle: 0.7 };
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const hoverCard = (coverIndex: number) => {
@@ -246,8 +252,8 @@ export default function CoverStack() {
                   isFeatured || isHovered
                     ? "brightness(1)"
                     : active
-                      ? "brightness(0.85)"
-                      : "brightness(0.7)",
+                      ? `brightness(${dim.active})`
+                      : `brightness(${dim.idle})`,
               }}
               transition={transition}
             >
