@@ -48,6 +48,7 @@ async function PrefetchedResources() {
   // The list reads its filters from the URL, so render it per request. A static
   // prerender leaves only the skeleton in the HTML until the client hydrates.
   await connection();
+  const { state, subjects } = await prefetchedSubjects();
   return (
     <>
       <JsonLd data={resourcesJsonLd(subjects)} />
