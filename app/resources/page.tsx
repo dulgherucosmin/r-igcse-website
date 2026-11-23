@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { JsonLd } from "@/components/json-ld";
 import ResourcesDisplay from "@/components/ResourcesDisplay";
@@ -44,7 +45,9 @@ async function prefetchedSubjects() {
 }
 
 async function PrefetchedResources() {
-  const { state, subjects } = await prefetchedSubjects();
+  // The list reads its filters from the URL, so render it per request. A static
+  // prerender leaves only the skeleton in the HTML until the client hydrates.
+  await connection();
   return (
     <>
       <JsonLd data={resourcesJsonLd(subjects)} />

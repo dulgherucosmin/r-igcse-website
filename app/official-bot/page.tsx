@@ -202,7 +202,10 @@ export default async function TheBot() {
           >
             <Separator />
             <div className="grid grid-cols-1 items-center gap-6 py-10 md:grid-cols-2 md:gap-12">
-              <div className={cn("min-w-0", index % 2 === 1 && "md:order-2")}>
+              <div
+                data-ai-ignore
+                className={cn("min-w-0", index % 2 === 1 && "md:order-2")}
+              >
                 {feature.preview}
               </div>
               <div className={cn("min-w-0", index % 2 === 1 && "md:order-1")}>

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { AvatarDecoration } from "@/components/ui/discord/avatar-decoration";
 import {
   DiscordChat,
   DiscordMention,
@@ -17,12 +18,16 @@ import {
   DiscordEmbedTitle,
 } from "@/components/ui/discord/discord-embeds";
 import { Twemoji } from "@/components/ui/discord/twemoji";
+import { isWinter } from "@/lib/season";
 import { cn } from "@/lib/utils";
 
-/** A role icon: either an uploaded image (`src`) or a unicode emoji. */
+/**
+ * A role icon: either an uploaded image (`src`) or a unicode emoji. An image
+ * can have a winter version (`winterSrc`), shown from November to January.
+ */
 type RoleIcon = { name: string } & (
-  | { src: string; emoji?: never }
-  | { emoji: string; src?: never }
+  | { src: string; winterSrc?: string; emoji?: never }
+  | { emoji: string; src?: never; winterSrc?: never }
 );
 
 /**
@@ -88,6 +93,12 @@ type Author = {
   verified?: boolean;
   roleIcon?: RoleIcon;
   tag?: ServerTag;
+  /**
+   * Avatar decoration: the file name (no extension) of a pair saved under
+   * `public/discord/avatar-decorations/`: `<name>.png`, the still frame, and
+   * `<name>-animated.png`, the APNG played while the message is hovered.
+   */
+  decoration?: string;
 };
 
 const bot: Author = {
@@ -106,20 +117,28 @@ const users = {
     roleIcon: {
       name: "Staff",
       src: "/discord/role-icons/mockingbird.webp",
+      winterSrc: "/discord/role-icons/mockingbird-winter.webp",
     },
     tag: { src: "/discord/clan-badges/chkn.png", text: "CHKN" },
+    decoration: "sparkles",
   },
   zizi: {
     name: "zizi ✿🎀",
     avatar: "/discord/avatars/zizi.webp",
     color: "#b6dca9",
-    roleIcon: { name: "Chat Moderator", src: "/discord/role-icons/zizi.webp" },
+    roleIcon: {
+      name: "Chat Moderator",
+      src: "/discord/role-icons/zizi.webp",
+      winterSrc: "/discord/role-icons/zizi-winter.webp",
+    },
     tag: { src: "/discord/clan-badges/oe.png", text: "˖ ꪮꫀ" },
+    decoration: "hearts",
   },
   cosmo: {
     name: "cosmo 💜",
     avatar: "/discord/avatars/cosmo.webp",
     color: "#a78bfa",
+    decoration: "robin",
     tag: {
       src: "/discord/clan-badges/r-ig.png",
       text: "r/ig",
@@ -132,6 +151,7 @@ const users = {
     roleIcon: {
       name: "100+ Rep Club",
       src: "/discord/role-icons/ayyan.webp",
+      winterSrc: "/discord/role-icons/ayyan-winter.webp",
     },
   },
 } satisfies Record<string, Author>;
@@ -193,14 +213,19 @@ function AppTag({ verified = false }: { verified?: boolean }) {
   );
 }
 
-function RoleIconBadge({ icon }: { icon: RoleIcon }) {
+async function RoleIconBadge({ icon }: { icon: RoleIcon }) {
+  const winter = icon.winterSrc !== undefined && (await isWinter());
   return (
     <Tooltip label={icon.name}>
       {icon.emoji !== undefined ? (
         <Twemoji emoji={icon.emoji} label={icon.name} className="size-5" />
       ) : (
         // biome-ignore lint/performance/noImgElement: tiny role icon
-        <img src={icon.src} alt={icon.name} className="size-5" />
+        <img
+          src={winter ? icon.winterSrc : icon.src}
+          alt={icon.name}
+          className="size-5"
+        />
       )}
     </Tooltip>
   );
@@ -273,6 +298,7 @@ function Message({
             alt=""
             fallback={author.name.slice(0, 2).toUpperCase()}
           />
+          {author.decoration && <AvatarDecoration name={author.decoration} />}
           <DiscordMessageAuthorName
             timestamp={time}
             hr24

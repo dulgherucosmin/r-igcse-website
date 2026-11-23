@@ -19,7 +19,7 @@ export default function Opportunities() {
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
-            <HandHeartIcon />
+            <HandHeartIcon aria-hidden="true" />
           </EmptyMedia>
           <EmptyTitle>Opportunities are coming soon</EmptyTitle>
           <EmptyDescription>

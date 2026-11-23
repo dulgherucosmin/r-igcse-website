@@ -22,7 +22,7 @@ export function BackgroundArt() {
 export function StatusAlert({ children }: { children: string }) {
   return (
     <Alert variant="destructive">
-      <WarningCircleIcon />
+      <WarningCircleIcon aria-hidden="true" />
       <AlertDescription>{children}</AlertDescription>
     </Alert>
   );

@@ -49,6 +49,7 @@ function TimelineItem({
           )}
         >
           <Icon
+            aria-hidden="true"
             className={cn(
               "size-5 transition-[filter,opacity] duration-500",
               !shown && "opacity-50 grayscale",

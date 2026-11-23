@@ -42,7 +42,7 @@ export function SubjectBackLink() {
         "mb-8 -ml-2.5 text-muted-foreground",
       )}
     >
-      <ArrowLeftIcon />
+      <ArrowLeftIcon aria-hidden="true" />
       All subjects
     </Link>
   );
@@ -75,7 +75,10 @@ export function SubjectDetails({
           </div>
           <div className="min-w-0">
             {title}
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div
+              className="mt-3 flex flex-wrap gap-2"
+              data-ai-content={`${metadata?.code ?? subject.codes.join(" / ")} · ${subject.board} · ${resources.length} ${resources.length === 1 ? "resource" : "resources"}`}
+            >
               <Badge variant="secondary">
                 {metadata?.code ?? subject.codes.join(" / ")}
               </Badge>
@@ -95,7 +98,7 @@ export function SubjectDetails({
             href="mailto:igcseresources.1@gmail.com"
             className={buttonVariants({ variant: "outline" })}
           >
-            <EnvelopeSimpleIcon />
+            <EnvelopeSimpleIcon aria-hidden="true" />
             Report a mistake
           </a>
         </div>

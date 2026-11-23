@@ -17,9 +17,13 @@ export async function loadAllResources() {
   return listDriveResources();
 }
 
-export async function subjectParams() {
+export async function loadSubjects() {
   "use cache";
   cacheLife("hours");
-  const subjects = await listSubjects().catch(() => []);
+  return listSubjects().catch(() => []);
+}
+
+export async function subjectParams() {
+  const subjects = await loadSubjects();
   return subjects.map((subject) => ({ subject: subject.id }));
 }
