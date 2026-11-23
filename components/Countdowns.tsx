@@ -142,7 +142,7 @@ function Digits({
               {pad(unit.value)}
             </span>
             {/* thin split line across the middle, like a flip clock */}
-            <span className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-border dark:bg-background/70" />
+            <span className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-foreground/5 dark:bg-background/70" />
           </div>
           <span className="mt-1.5 block text-center text-[10px] font-semibold tracking-wide text-muted-foreground uppercase sm:text-xs">
             {unit.label}
