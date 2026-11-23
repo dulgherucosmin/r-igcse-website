@@ -3,6 +3,7 @@
 import { ArrowUpRightIcon, CalendarDotsIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FixedDigits } from "@/components/fixed-digits";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -128,7 +129,11 @@ export default function Countdown({
                       className="gap-1 bg-background px-1 md:py-6"
                     >
                       <span className="text-3xl font-extrabold text-highlight tabular-nums sm:text-4xl md:text-6xl">
-                        {unit.value === undefined ? "--" : pad(unit.value)}
+                        <FixedDigits
+                          value={
+                            unit.value === undefined ? "--" : pad(unit.value)
+                          }
+                        />
                       </span>
                       <span className="text-[10px] font-semibold tracking-wide text-muted-foreground uppercase sm:text-xs md:text-sm">
                         {unit.label}

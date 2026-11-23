@@ -6,6 +6,7 @@ import {
   ChartBarIcon,
 } from "@phosphor-icons/react/ssr";
 import { useEffect, useState } from "react";
+import { FixedDigits } from "@/components/fixed-digits";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -139,7 +140,7 @@ function Digits({
         <div key={unit.label} aria-hidden="true">
           <div className="relative overflow-hidden rounded-xl bg-linear-to-b from-card to-secondary px-1 py-2 text-center shadow-sm ring-1 ring-border sm:py-3 dark:from-black/80 dark:to-black/50 dark:shadow-inner">
             <span className="block text-3xl font-extrabold text-highlight tabular-nums sm:text-4xl md:text-5xl">
-              {pad(unit.value)}
+              <FixedDigits value={pad(unit.value)} />
             </span>
             {/* thin split line across the middle, like a flip clock */}
             <span className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-foreground/5 dark:bg-background/70" />
