@@ -150,9 +150,9 @@ export default function Countdown({
           >
             More Session Information
             <ArrowUpRightIcon
+              weight="bold"
               aria-hidden="true"
               data-icon="inline-end"
-              className="text-foreground"
             />
           </Link>
         </CardContent>

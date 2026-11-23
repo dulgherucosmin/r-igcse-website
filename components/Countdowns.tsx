@@ -363,12 +363,12 @@ function BoardLinks({ board }: { board: Board }) {
               "bg-[#ff1a1a] text-white hover:bg-[#ff1a1a]/90",
             )}
           >
-            <Icon aria-hidden="true" />
+            <Icon weight="fill" aria-hidden="true" />
             {label}
             <ArrowUpRightIcon
+              weight="bold"
               aria-hidden="true"
               data-icon="inline-end"
-              className="text-foreground"
             />
           </a>
         </li>
