@@ -52,7 +52,7 @@ const partners: Partner[] = [
     name: "StudyHaven",
     description:
       "StudyHaven is your one-stop site for topical worksheets. With over 90,000 questions across multiple IGCSE and A Level subjects, it is your best practice partner whether you need it for maths, sciences, or humanities.",
-    logo: undefined, // e.g. "/partners/projectenlight.png"
+    logo: "/partners/studyhaven.png",
     links: [
       {
         label: "Website",
@@ -66,7 +66,7 @@ const partners: Partner[] = [
     name: "ProjectEnlight",
     description:
       "ProjectEnlight is one of Asia's largest youth-led, student-run tutoring initiatives, dedicated to making quality IGCSE education more accessible. Through free academic resources, peer tutoring, and a community of student tutors, ProjectEnlight supports students in achieving stronger academic outcomes regardless of their background.",
-    logo: undefined, // e.g. "/partners/projectenlight.png"
+    logo: "/partners/projectenlight.webp",
     links: [
       {
         label: "Website",
