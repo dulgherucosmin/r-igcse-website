@@ -51,7 +51,7 @@ export default function NotFoundView({
             href={backHref}
             className={cn(buttonVariants({ size: "lg" }), "font-bold")}
           >
-            <ArrowLeftIcon />
+            <ArrowLeftIcon aria-hidden="true" />
             {backLabel}
           </Link>
           {backHref !== "/resources" && (
@@ -62,7 +62,7 @@ export default function NotFoundView({
                 "font-bold",
               )}
             >
-              <BooksIcon weight="fill" />
+              <BooksIcon weight="fill" aria-hidden="true" />
               Browse resources
             </Link>
           )}

@@ -1,18 +1,12 @@
-import type { PrerenderedPage } from "@usenotra/agentside";
+import type { LocalSource } from "@usenotra/agentside";
 import { agentside } from "@usenotra/agentside";
-import { sitePages } from "@/lib/site-pages";
+import { pageMarkdown } from "@/lib/markdown";
+
+const fromRenderedPage: LocalSource = ({ path, request }) =>
+  pageMarkdown(new URL(request.url).origin, path);
 
 export const markdown = agentside({
-  routes: Object.fromEntries(
-    sitePages.map((page) => [page.path || "/", () => page.markdown()]),
-  ),
+  routes: { "/": fromRenderedPage, "/[...path]": fromRenderedPage },
   skip: ["/api", "/llms.txt", "/llms-full.txt", "/robots.txt", "/sitemap.xml"],
+  timeoutMs: 10_000,
 });
-
-export const prerenderedPages = (): PrerenderedPage[] =>
-  sitePages.map((page) => ({
-    path: page.path || "/",
-    title: page.title,
-    description: page.description,
-    markdown: page.markdown(),
-  }));

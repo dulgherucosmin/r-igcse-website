@@ -69,7 +69,7 @@ function SheetContent({
               />
             }
           >
-            <XIcon strokeWidth={2} />
+            <XIcon strokeWidth={2} aria-hidden="true" />
             <span className="sr-only">Close</span>
           </SheetPrimitive.Close>
         )}

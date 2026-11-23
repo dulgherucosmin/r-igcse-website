@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import ResourcesDisplay from "@/components/ResourcesDisplay";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -39,6 +40,9 @@ async function prefetchedSubjects() {
 }
 
 async function PrefetchedResources() {
+  // The list reads its filters from the URL, so render it per request. A static
+  // prerender leaves only the skeleton in the HTML until the client hydrates.
+  await connection();
   return (
     <HydrationBoundary state={await prefetchedSubjects()}>
       <ResourcesDisplay />

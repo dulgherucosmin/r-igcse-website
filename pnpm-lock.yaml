@@ -18,8 +18,8 @@ importers:
         specifier: ^5.107.1
         version: 5.107.1(@types/react@19.3.0)(react@19.3.1)
       '@usenotra/agentside':
-        specifier: ^0.4.2
-        version: 0.4.2(effect@4.1.4)
+        specifier: ^0.4.4
+        version: 0.4.4(effect@4.1.4)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -849,8 +849,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@usenotra/agentside@0.4.2':
-    resolution: {integrity: sha512-7akkLq9YUGPqTPJqnkmpMHgoI/uSl37F6GOBvTUf6en8B+pcRlh5/ffARkpIEYUtnWomKh6wGEbgNVD3uhgLHQ==}
+  '@usenotra/agentside@0.4.4':
+    resolution: {integrity: sha512-3lPQ4DIikRJ+GiMads1ITg/eRf0sabH6GhmB3PKeMSgV/pu7SYrBmJ9F/VMPPp27AOISZVc+h539cpLy8qLoTw==}
     peerDependencies:
       effect: ^4.1.0
 
@@ -1553,6 +1553,7 @@ packages:
   postcss-selector-parser@7.2.0:
     resolution: {integrity: sha512-Khh/tERVBn0I1499dvBSHY0pWJloMJWUxDsOBM0CCDPAcVZ10Jl2L1qy1f19uEX22spa8Mv7DCdEQJc0cGwBhQ==}
     engines: {node: '>=4'}
+    deprecated: Double-escapes CSS Modules class names (#362). Use 7.2.1.
 
   postcss@8.5.23:
     resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
@@ -2495,7 +2496,7 @@ snapshots:
   '@typescript/typescript-win32-x64@7.0.2':
     optional: true
 
-  '@usenotra/agentside@0.4.2(effect@4.1.4)':
+  '@usenotra/agentside@0.4.4(effect@4.1.4)':
     dependencies:
       effect: 4.1.4
 
