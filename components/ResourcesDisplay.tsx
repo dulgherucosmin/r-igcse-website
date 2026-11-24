@@ -216,12 +216,10 @@ export default function ResourcesDisplay() {
                           <ItemContent className="min-w-0 gap-0.5">
                             <span className="text-xs font-semibold">
                               {subject.board} |{" "}
-                              {subject.track === "IGCSE"
-                                ? "IGCSE"
-                                : subject.levels.join(" · ")}
+                              {subject.codes.join(" / ")}
                             </span>
                             <ItemTitle className="line-clamp-2 w-full text-base leading-tight font-bold [overflow-wrap:anywhere]">
-                              {subject.codes.join(" / ")} {subject.name}
+                              {subject.name}
                             </ItemTitle>
                             <ItemDescription className="text-xs">
                               {subject.resourceCount}{" "}
