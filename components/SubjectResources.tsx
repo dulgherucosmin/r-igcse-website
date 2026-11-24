@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, EnvelopeSimpleIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
+import PaperStructure from "@/components/PaperStructure";
 import { ResourceGrid } from "@/components/resource-grid";
 import {
   BackgroundArt,
@@ -18,6 +19,7 @@ import {
 } from "@/lib/categories";
 import type { DriveResource, DriveSubject, SubjectLevel } from "@/lib/drive";
 import { LEVEL_NAMES } from "@/lib/drive-urls";
+import { findSubjectAssessment } from "@/lib/subject-assessments";
 import { GLOBAL_LINKS, SUBJECT_META } from "@/lib/subject-meta";
 import { cn } from "@/lib/utils";
 
@@ -60,6 +62,22 @@ export function SubjectDetails({
   const metadata = SUBJECT_META[subject.name];
   const links = [...(metadata?.links ?? []), ...GLOBAL_LINKS];
   const groups = groupByLevel(resources);
+  const assessments = subject.levels
+    .map((level) => findSubjectAssessment(subject.board, subject.name, level))
+    .filter(
+      (
+        assessment,
+        index,
+        entries,
+      ): assessment is NonNullable<(typeof entries)[number]> =>
+        assessment !== undefined &&
+        entries.findIndex(
+          (entry) =>
+            entry?.board === assessment.board &&
+            entry.subject === assessment.subject &&
+            entry.track === assessment.track,
+        ) === index,
+    );
 
   return (
     <>
@@ -108,32 +126,101 @@ export function SubjectDetails({
         Every resource is written by volunteer students who sat the exam.
       </p>
 
+      <nav
+        aria-label="Subject page sections"
+        className="mt-5 flex flex-wrap gap-2"
+      >
+        <a
+          href="#resources"
+          className={cn(
+            buttonVariants({ variant: "outline", size: "sm" }),
+            "h-9 px-4",
+          )}
+        >
+          Resources
+        </a>
+        {links.length > 0 && (
+          <a
+            href="#study-tools"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "h-9 px-4",
+            )}
+          >
+            Study Tools
+          </a>
+        )}
+        {assessments.length > 0 && (
+          <a
+            href="#papers-info"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "h-9 px-4",
+            )}
+          >
+            Papers Info
+          </a>
+        )}
+      </nav>
+
       <Separator className="my-10" />
 
-      {groups.length === 0 ? (
-        <EmptyState title="No resources for this subject yet." />
-      ) : (
-        <div className="space-y-12">
-          {groups.map((group) => (
-            <section key={group.level} aria-labelledby={`level-${group.level}`}>
-              <h2
-                id={`level-${group.level}`}
-                className="mb-5 text-xl font-bold tracking-tight"
+      {assessments.map((assessment, index) => (
+        <Fragment
+          key={`${assessment.board}-${assessment.subject}-${assessment.track}`}
+        >
+          <PaperStructure
+            assessment={assessment}
+            id={
+              index === 0
+                ? "papers-info"
+                : `papers-info-${assessment.track.toLowerCase()}`
+            }
+          />
+          <Separator className="my-10" />
+        </Fragment>
+      ))}
+
+      <section
+        id="resources"
+        aria-labelledby="resources-heading"
+        className="scroll-mt-[calc(var(--site-header-height)+1.5rem)]"
+      >
+        <h2 id="resources-heading" className="sr-only">
+          Resources
+        </h2>
+        {groups.length === 0 ? (
+          <EmptyState title="No resources for this subject yet." />
+        ) : (
+          <div className="space-y-12">
+            {groups.map((group) => (
+              <section
+                key={group.level}
+                aria-labelledby={`level-${group.level}`}
               >
-                {LEVEL_NAMES[group.level] ?? group.level}
-              </h2>
-              <ResourceGrid subject={subject} resources={group.resources} />
-            </section>
-          ))}
-        </div>
-      )}
+                <h3
+                  id={`level-${group.level}`}
+                  className="mb-5 text-xl font-bold tracking-tight"
+                >
+                  {LEVEL_NAMES[group.level] ?? group.level}
+                </h3>
+                <ResourceGrid subject={subject} resources={group.resources} />
+              </section>
+            ))}
+          </div>
+        )}
+      </section>
 
       {links.length > 0 && (
         <>
           <Separator className="my-10" />
-          <section aria-labelledby="study-tools">
+          <section
+            id="study-tools"
+            aria-labelledby="study-tools-heading"
+            className="scroll-mt-[calc(var(--site-header-height)+1.5rem)]"
+          >
             <h2
-              id="study-tools"
+              id="study-tools-heading"
               className="mb-3 text-xl font-bold tracking-tight"
             >
               Study tools
