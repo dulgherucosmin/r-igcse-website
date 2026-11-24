@@ -14,7 +14,7 @@ export type PaperAssessment = {
 };
 
 export type AssessmentRoute = {
-  name: "Core" | "Extended" | "Standard" | "Higher" | "Papers";
+  name: "Core" | "Extended" | "Standard" | "Higher" | "General";
   description?: string;
   papers: PaperAssessment[];
 };
@@ -168,7 +168,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Paper 1 and Paper 2. Candidates are assessed on their understanding and application of accounting principles, double-entry bookkeeping, and the preparation and interpretation of financial statements.",
         papers: [
@@ -211,7 +211,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Paper 1 and Paper 2. Both papers contain compulsory questions covering pure mathematics concepts such as functions, coordinate geometry, trigonometry, calculus, and vectors.",
         papers: [
@@ -370,7 +370,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Paper 1 and Paper 2, covering business concepts, marketing, operations, human resources, and financial decision-making.",
         papers: [
@@ -529,7 +529,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "Candidates for First Language Chinese take Paper 1 and Paper 2, assessing reading comprehension, summary, classical prose, and argumentative or creative writing.",
         papers: [
@@ -572,7 +572,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Paper 1 and Paper 2, covering computer hardware, networking, cybersecurity, pseudocode, flowchart logic, and programming concepts.",
         papers: [
@@ -615,7 +615,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates complete Paper 1 (Product Design), one specialist theory option (Paper 2, 3, or 4), and Component 5 (School-based Project).",
         papers: [
@@ -669,7 +669,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates sit Paper 1 and Paper 2, assessing microeconomic and macroeconomic theories, market equilibrium, government policy, and international trade.",
         papers: [
@@ -712,7 +712,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "Candidates take Paper 1 (Reading & Writing), Paper 2 (Listening), and Paper 3 (Speaking exam).",
         papers: [
@@ -766,7 +766,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "Candidates take Paper 1 (Poetry and Prose) and Paper 2 (Drama), or Paper 1 along with Paper 3 (Drama Open Book) and Paper 4 (Unseen).",
         papers: [
@@ -831,7 +831,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Papers 1, 2, 3, and 4 testing the four key language competencies: Listening, Reading, Speaking, and Writing.",
         papers: [
@@ -896,7 +896,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "Candidates are assessed through a written exam, an individual research report, and a collaborative team project.",
         papers: [
@@ -950,7 +950,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "Candidates sit Paper 1, Paper 2, and either Paper 3 (Coursework) or Paper 4 (Alternative to Coursework).",
         papers: [
@@ -1004,7 +1004,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Papers 1, 2, 3, and 4 testing Listening, Reading, Speaking, and Writing skills.",
         papers: [
@@ -1069,7 +1069,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "Candidates complete Component 1 (Listening exam), Component 2 (Performing), and Component 3 (Composing).",
         papers: [
@@ -1123,7 +1123,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Paper 1 (History and Culture) and Paper 2 (Environment of Pakistan).",
         papers: [
@@ -1166,7 +1166,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Papers 1, 2, 3, and 4 testing Listening, Reading, Speaking, and Writing proficiency in Spanish.",
         papers: [
@@ -1231,7 +1231,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "All candidates take Paper 1 and Paper 2, covering tourism industries, destination marketing, and tour management.",
         papers: [
@@ -1274,7 +1274,7 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
     },
     routes: [
       {
-        name: "Papers",
+        name: "General",
         description:
           "Candidates take Paper 1 (Reading & Writing) and Paper 2 (Listening), alongside optional speaking assessment.",
         papers: [
