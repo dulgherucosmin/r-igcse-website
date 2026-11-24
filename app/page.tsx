@@ -1,9 +1,9 @@
 import { BooksIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import CountdownSection from "@/components/CountdownSection";
 import CoverStack from "@/components/CoverStack";
+import FAQSection from "@/components/faq-section";
 import StatsAnimation from "@/components/StatsAnimation";
 import { TextLink } from "@/components/text-link";
 import { buttonVariants } from "@/components/ui/button";
@@ -37,11 +37,10 @@ const why = [
     title: "Group Study Sessions",
     body: (
       <>
-        Our community members and helpers regularly host group study sessions where they tackle a variety of subjects going through past papers, tips and tricks, syllabus content, and more!
-        Recordings of these can be found on our{" "}
-        <TextLink href={socials.youtube}>
-          YouTube Channel
-        </TextLink>.
+        Our community members and helpers regularly host group study sessions
+        where they tackle a variety of subjects going through past papers, tips
+        and tricks, syllabus content, and more! Recordings of these can be found
+        on our <TextLink href={socials.youtube}>YouTube Channel</TextLink>.
       </>
     ),
   },
@@ -76,7 +75,7 @@ const why = [
         <TextLink href={socials.reddit}>r/IGCSE</TextLink> is free and will
         always remain free.
       </>
-    ),  
+    ),
   },
 ];
 
@@ -162,6 +161,11 @@ export default function Home() {
         <Separator />
       </div>
 
+      <FAQSection />
+
+      <div className="page-container">
+        <Separator />
+      </div>
 
       <section aria-labelledby="why-title" className="py-16">
         <div className="page-container">
@@ -184,14 +188,14 @@ export default function Home() {
           </div>
           <div className="mt-12 flex justify-center">
             <Link
-                href="/about"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 gap-2 px-6 text-xl font-bold",
-                )}
-              >
-                Learn More About r/IGCSE
-              </Link>
+              href="/about"
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "h-12 gap-2 px-6 text-xl font-bold",
+              )}
+            >
+              Learn More About r/IGCSE
+            </Link>
           </div>
         </div>
       </section>
