@@ -77,7 +77,8 @@ export default function PaperStructure({
     <section
       id={id}
       aria-labelledby="paper-structure-heading"
-      className="my-10 scroll-mt-[calc(var(--site-header-height)+1.5rem)]"
+      tabIndex={-1}
+      className="my-10 scroll-mt-[calc(var(--site-header-height)+1.5rem)] rounded-xl outline-none"
     >
       <h2
         id="paper-structure-heading"
