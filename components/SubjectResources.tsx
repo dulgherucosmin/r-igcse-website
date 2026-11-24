@@ -8,6 +8,7 @@ import {
   EmptyState,
   pageClassName,
 } from "@/components/resources-shared";
+import { type PageSection, SectionNav } from "@/components/section-nav";
 import { TextLink } from "@/components/text-link";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -24,6 +25,9 @@ import { GLOBAL_LINKS, SUBJECT_META } from "@/lib/subject-meta";
 import { cn } from "@/lib/utils";
 
 const LEVEL_ORDER: SubjectLevel[] = ["IGCSE", "AS", "IAS", "AL", "IAL"];
+
+const sectionClassName =
+  "scroll-mt-[calc(var(--site-header-height)+1.5rem)] rounded-xl outline-none";
 
 function groupByLevel(resources: DriveResource[]) {
   return LEVEL_ORDER.map((level) => ({
@@ -78,6 +82,14 @@ export function SubjectDetails({
             entry.track === assessment.track,
         ) === index,
     );
+  // Only sections that are rendered below get a jump button.
+  const sections: PageSection[] = [
+    { id: "resources", label: "Resources" },
+    ...(links.length > 0 ? [{ id: "study-tools", label: "Study Tools" }] : []),
+    ...(assessments.length > 0
+      ? [{ id: "papers-info", label: "Papers Info" }]
+      : []),
+  ];
 
   return (
     <>
@@ -126,49 +138,15 @@ export function SubjectDetails({
         Every resource is written by volunteer students who sat the exam.
       </p>
 
-      <nav
-        aria-label="Subject page sections"
-        className="mt-5 flex flex-wrap gap-2"
-      >
-        <a
-          href="#resources"
-          className={cn(
-            buttonVariants({ variant: "outline", size: "sm" }),
-            "h-9 px-4",
-          )}
-        >
-          Resources
-        </a>
-        {links.length > 0 && (
-          <a
-            href="#study-tools"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "sm" }),
-              "h-9 px-4",
-            )}
-          >
-            Study Tools
-          </a>
-        )}
-        {assessments.length > 0 && (
-          <a
-            href="#papers-info"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "sm" }),
-              "h-9 px-4",
-            )}
-          >
-            Papers Info
-          </a>
-        )}
-      </nav>
+      <SectionNav sections={sections} />
 
       <Separator className="my-10" />
 
       <section
         id="resources"
         aria-labelledby="resources-heading"
-        className="scroll-mt-[calc(var(--site-header-height)+1.5rem)]"
+        tabIndex={-1}
+        className={sectionClassName}
       >
         <h2 id="resources-heading" className="sr-only">
           Resources
@@ -201,7 +179,8 @@ export function SubjectDetails({
           <section
             id="study-tools"
             aria-labelledby="study-tools-heading"
-            className="scroll-mt-[calc(var(--site-header-height)+1.5rem)]"
+            tabIndex={-1}
+            className={sectionClassName}
           >
             <h2
               id="study-tools-heading"
