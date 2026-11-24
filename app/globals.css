@@ -7,6 +7,41 @@
 :root {
   --site-header-height: 60px;
   --page-gutter: 1.5rem;
+  --background: #ffffff;
+  --foreground: #1a1414;
+  --card: #faf8f8;
+  --card-foreground: #1a1414;
+  --popover: #ffffff;
+  --popover-foreground: #1a1414;
+  --primary: #e62317;
+  --brand: #d01f14;
+  --primary-foreground: #ffffff;
+  --secondary: #f3efef;
+  --secondary-foreground: #1a1414;
+  --muted: #f3efef;
+  --muted-foreground: #6b6060;
+  --accent: #f3efef;
+  --accent-foreground: #1a1414;
+  --destructive: #dc2626;
+  --border: #e7e1e1;
+  --input: #ddd5d5;
+  --ring: #ea352a;
+  --highlight: #b45309;
+  --radius: 0.625rem;
+
+  /* Discord components (Would-You-Bot/discord-components) */
+  --discord-foreground: #313338;
+  --discord-background: #fbfbfb;
+  --discord-header: #060607;
+  --discord-link: #006ce7;
+  --discord-mention: rgb(88 101 242 / 15%);
+  --discord-mention-foreground: #505cdc;
+  --discord-mention-hover: #5865f2;
+  --discord-mention-foreground-hover: #ffffff;
+  --discord-embed-background: #f2f3f5;
+}
+
+.dark {
   --background: #121010;
   --foreground: #ffffff;
   --card: #1a1717;
@@ -27,9 +62,7 @@
   --input: #3e3737;
   --ring: #ea352a;
   --highlight: #fefb88;
-  --radius: 0.625rem;
 
-  /* Discord components (Would-You-Bot/discord-components) */
   --discord-foreground: oklch(0.9065 0.0029 264.54);
   --discord-background: oklch(0.22 0.0077 285.74);
   --discord-header: oklch(0.9897 0.0042 271.37);
@@ -110,6 +143,9 @@
   html {
     @apply font-sans;
     min-width: 280px;
+    color-scheme: light;
+  }
+  html.dark {
     color-scheme: dark;
   }
   body {

@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { JsonLd } from "@/components/json-ld";
 import Providers from "@/components/providers";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_URL } from "@/lib/config";
 import { siteJsonLd } from "@/lib/structured-data";
 import { cn } from "@/lib/utils";
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#e62317",
-  colorScheme: "dark",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -45,15 +46,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("dark h-full font-sans antialiased motion-safe:scroll-smooth", dmSans.variable)}
+      suppressHydrationWarning
+      className={cn(
+        "h-full font-sans antialiased motion-safe:scroll-smooth",
+        dmSans.variable,
+      )}
     >
       <body className="flex min-h-full flex-col">
         <JsonLd data={siteJsonLd()} />
-        <Providers>
-          <Header />
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            <Header />
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

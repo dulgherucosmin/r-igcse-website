@@ -262,7 +262,7 @@ export default async function TheBot() {
                     href={contributor.html_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="max-w-full text-center font-semibold wrap-anywhere text-white no-underline hover:text-white hover:no-underline focus-visible:no-underline"
+                    className="max-w-full text-center font-semibold wrap-anywhere text-foreground no-underline hover:text-foreground hover:no-underline focus-visible:no-underline"
                   >
                     {contributor.login}
                   </a>

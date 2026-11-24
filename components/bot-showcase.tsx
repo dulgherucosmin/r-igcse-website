@@ -184,7 +184,7 @@ function Tooltip({
       {children}
       <span
         role="tooltip"
-        className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden -translate-x-1/2 rounded-md bg-[#111214] px-3 py-2 text-sm leading-none font-semibold whitespace-nowrap text-[#dbdee1] shadow-lg group-hover/tooltip:block after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:border-transparent after:border-t-[#111214]"
+        className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden -translate-x-1/2 rounded-md border border-black/10 bg-white px-3 py-2 text-sm leading-none font-semibold whitespace-nowrap text-[#313338] shadow-lg dark:border-transparent dark:bg-[#111214] dark:text-[#dbdee1] group-hover/tooltip:block after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:border-transparent after:border-t-white dark:after:border-t-[#111214]"
       >
         {label}
       </span>
@@ -451,7 +451,7 @@ export function StatsShowcase() {
             />
           </DiscordEmbedFieldWrapper>
         </DiscordEmbed>
-        <span className="mt-2 inline-flex h-8 cursor-pointer items-center rounded-lg bg-[#4e5058] px-4 text-sm font-medium text-white transition-colors hover:bg-[#6d6f78]">
+        <span className="mt-2 inline-flex h-8 cursor-pointer items-center rounded-lg bg-[#6d6f78] px-4 text-sm font-medium text-white transition-colors hover:bg-[#4e5058] dark:bg-[#4e5058] dark:hover:bg-[#6d6f78]">
           More Statistics
         </span>
       </Message>
