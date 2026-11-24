@@ -42,12 +42,62 @@ import {
   SUBJECT_COLOR_CLASSES,
   subjectColorOf,
 } from "@/lib/categories";
+import type { DriveSubject } from "@/lib/drive";
 import { subjectsQueryOptions } from "@/lib/queries";
 import { filterParsers, searchQueryParser } from "@/lib/search-params";
 
 const LEGACY_SUBJECT_HASH = "#/subject/";
-const match = (value: string, query: string) =>
-  value.toLowerCase().includes(query.toLowerCase());
+const LEVEL_ALIASES: Record<string, readonly string[]> = {
+  AS: ["as", "as level", "a level year 1", "year 12"],
+  AL: ["al", "a2", "a level", "a level year 2", "year 13"],
+  IAS: ["ias", "international as", "international a level year 1"],
+  IAL: ["ial", "international al", "international a level", "a level"],
+};
+
+const normalizeSearch = (value: string) =>
+  value
+    .toLowerCase()
+    .replaceAll("&", "and")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+const matchSubject = (subject: DriveSubject, query: string) => {
+  const normalizedQuery = normalizeSearch(query);
+  if (!normalizedQuery) return true;
+
+  const levelTerms = subject.levels.flatMap((level) => [
+    level,
+    LEVEL_ALIASES[level] ?? [],
+  ]);
+  const searchable = normalizeSearch(
+    [
+      subject.name,
+      subject.board,
+      subject.track,
+      subject.category,
+      ...subject.codes,
+      ...levelTerms,
+    ].join(" "),
+  );
+
+  const rawCodeTerms = subject.codes.flatMap((code) =>
+    code
+      .split(/[\\/_\s-]+/)
+      .map(normalizeSearch)
+      .filter(Boolean),
+  );
+  const searchableTerms = new Set([...searchable.split(" "), ...rawCodeTerms]);
+
+  return normalizedQuery
+    .split(" ")
+    .every(
+      (term) =>
+        searchableTerms.has(term) ||
+        [...searchableTerms].some((searchableTerm) =>
+          searchableTerm.includes(term),
+        ),
+    );
+};
 const SUBJECT_SKELETONS = Array.from(
   { length: 9 },
   (_, index) => `subject-skeleton-${index}`,
@@ -67,10 +117,7 @@ export default function ResourcesDisplay() {
   const router = useRouter();
 
   const searchedSubjects = useMemo(
-    () =>
-      subjects.filter((subject) =>
-        match(`${subject.name} ${subject.board}`, query),
-      ),
+    () => subjects.filter((subject) => matchSubject(subject, query)),
     [query, subjects],
   );
   const visibleSubjects = useMemo(
@@ -78,8 +125,7 @@ export default function ResourcesDisplay() {
       subjects
         .filter(
           (subject) =>
-            match(`${subject.name} ${subject.board}`, query) &&
-            matchesFilters(subject, filters),
+            matchSubject(subject, query) && matchesFilters(subject, filters),
         )
         .sort(
           (a, b) =>
@@ -215,8 +261,7 @@ export default function ResourcesDisplay() {
                           </ItemMedia>
                           <ItemContent className="min-w-0 gap-0.5">
                             <span className="text-xs font-semibold">
-                              {subject.board} |{" "}
-                              {subject.codes.join(" / ")}
+                              {subject.board} | {subject.codes.join(" / ")}
                             </span>
                             <ItemTitle className="line-clamp-2 w-full text-base leading-tight font-bold [overflow-wrap:anywhere]">
                               {subject.name}
