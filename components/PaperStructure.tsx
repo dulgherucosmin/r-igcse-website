@@ -1,9 +1,10 @@
-import { TextLink } from "@/components/text-link";
+import { buttonVariants } from "@/components/ui/button";
 import type {
   PaperAssessment,
   SubjectAssessment,
   SyllabusLink,
 } from "@/lib/subject-assessments";
+import { cn } from "@/lib/utils";
 
 function durationLabel(minutes: number) {
   const hours = Math.floor(minutes / 60);
@@ -21,17 +22,17 @@ function PaperDetails({ paper }: { paper: PaperAssessment }) {
     <article className="rounded-xl border border-border/70 bg-background/30 p-4">
       <h4 className="font-bold">{paper.name}</h4>
       {paper.description && (
-        <p className="mt-1.5 text-sm text-foreground">
-          {paper.description}
-        </p>
+        <p className="mt-1.5 text-sm text-foreground">{paper.description}</p>
       )}
       {paper.durationMinutes !== undefined && (
-        <p className="mt-1.5 text-sm text-muted-foreground">Duration: {durationLabel(paper.durationMinutes)}</p>
-      )}
-      {paper.marks !== undefined && paper.weightPercentage != undefined && (
         <p className="mt-1.5 text-sm text-muted-foreground">
-        {paper.marks} Marks | {paper.weightPercentage}% Weightage
-      </p>
+          Duration: {durationLabel(paper.durationMinutes)}
+        </p>
+      )}
+      {paper.marks !== undefined && paper.weightPercentage !== undefined && (
+        <p className="mt-1.5 text-sm text-muted-foreground">
+          {paper.marks} Marks | {paper.weightPercentage}% Weightage
+        </p>
       )}
     </article>
   );
@@ -42,26 +43,24 @@ function SyllabusLinks({
 }: {
   syllabus: SubjectAssessment["syllabus"];
 }) {
-  const links = [
-    syllabus.current && { ...syllabus.current, kind: "Current syllabus" },
-    syllabus.new && { ...syllabus.new, kind: "New syllabus" },
-  ].filter(
-    (
-      link,
-    ): link is SyllabusLink & {
-      kind: "Current syllabus" | "New syllabus";
-    } => Boolean(link),
+  const links = [syllabus.current, syllabus.new].filter(
+    (link): link is SyllabusLink => Boolean(link),
   );
 
   if (links.length === 0) return null;
 
   return (
-    <div className="mb-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+    <div className="mb-6 flex flex-wrap gap-2">
       {links.map((link) => (
-        <TextLink key={`${link.kind}-${link.url}`} href={link.url}>
-          {link.kind}: {link.label}
-          {link.effectiveFrom ? ` (${link.effectiveFrom})` : ""}
-        </TextLink>
+        <a
+          key={link.url}
+          href={link.url}
+          target="_blank"
+          rel="noreferrer"
+          className={cn(buttonVariants({ size: "lg" }), "gap-2")}
+        >
+          Syllabus Information
+        </a>
       ))}
     </div>
   );
@@ -88,23 +87,6 @@ export default function PaperStructure({
       </h2>
 
       <SyllabusLinks syllabus={assessment.syllabus} />
-
-      {assessment.routes && assessment.routes.length > 1 && (
-        <nav
-          aria-label={`${assessment.track} paper routes`}
-          className="mb-6 flex flex-wrap gap-2"
-        >
-          {assessment.routes.map((route) => (
-            <a
-              key={route.name}
-              href={`#${assessment.track}-${route.name}`.toLowerCase()}
-              className="rounded-lg border border-border bg-secondary px-3 py-1.5 text-sm font-semibold no-underline hover:border-primary"
-            >
-              {route.name}
-            </a>
-          ))}
-        </nav>
-      )}
 
       {assessment.routes?.map((route) => (
         <section
