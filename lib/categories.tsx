@@ -80,18 +80,18 @@ export const subjectColorOf = (name: string): SubjectColor =>
   CATEGORY_COLORS[categoryOf(name)];
 
 export const SUBJECT_COLOR_CLASSES: Record<SubjectColor, string> = {
-  biology: "bg-[#36a853] text-white",
-  mathematics: "bg-[#ff4747] text-[#29252b]",
-  physics: "bg-[#8966d6] text-white",
-  chemistry: "bg-[#ed922f] text-white",
-  computing: "bg-[#a9d2f3] text-[#29252b]",
+  biology: "bg-[#5BC95B] text-white",
+  mathematics: "bg-[#F94144] text-white",
+  physics: "bg-[#3377E8] text-white",
+  chemistry: "bg-[#F8961E] text-white",
+  computing: "bg-[#277DA1] text-[#29252b]",
   sciences: "bg-[#5aafff] text-white",
-  languages: "bg-[#fff564] text-[#29252b]",
-  humanities: "bg-[#88ff84] text-[#29252b]",
-  business: "bg-[#ff688e] text-[#29252b]",
-  technology: "bg-[#9365e2] text-white",
-  arts: "bg-[#e5b5e8] text-[#29252b]",
-  other: "bg-[#d1d1d6] text-[#29252b]",
+  languages: "bg-[#90BE6D] text-[#29252b]",
+  humanities: "bg-[#F9844A] text-[#29252b]",
+  business: "bg-[#F9C74F] text-[#29252b]",
+  technology: "bg-[#6CB7D9] text-white",
+  arts: "bg-[#C95B9D] text-[#29252b]",
+  other: "bg-[#] text-[#29252b]",
 };
 
 const ICONS: Record<Category, Icon> = {
