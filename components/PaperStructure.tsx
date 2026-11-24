@@ -20,34 +20,19 @@ function PaperDetails({ paper }: { paper: PaperAssessment }) {
   return (
     <article className="rounded-xl border border-border/70 bg-background/30 p-4">
       <h4 className="font-bold">{paper.name}</h4>
-      {paper.durationMinutes !== undefined && (
-        <p className="mt-1.5 text-sm">{durationLabel(paper.durationMinutes)}</p>
-      )}
-      {paper.marks !== undefined && (
-        <p className="text-sm">
-          {paper.marks} marks
-          {paper.weightPercentage !== undefined && (
-            <span className="float-right font-medium text-muted-foreground">
-              {paper.weightPercentage}%
-            </span>
-          )}
-        </p>
-      )}
       {paper.description && (
-        <p className="mt-1.5 text-sm text-muted-foreground">
+        <p className="mt-1.5 text-sm text-foreground">
           {paper.description}
         </p>
       )}
-      <p className="mt-1.5 text-sm text-muted-foreground">
-        {paper.assessmentType === "practical"
-          ? "Practical assessment"
-          : paper.assessmentType === "coursework"
-            ? "Coursework"
-            : paper.assessmentType === "oral"
-              ? "Oral assessment"
-              : "Written assessment"}
-        {paper.externallyAssessed ? " · Externally assessed" : ""}
+      {paper.durationMinutes !== undefined && (
+        <p className="mt-1.5 text-sm text-muted-foreground">Duration: {durationLabel(paper.durationMinutes)}</p>
+      )}
+      {paper.marks !== undefined && paper.weightPercentage != undefined && (
+        <p className="mt-1.5 text-sm text-muted-foreground">
+        {paper.marks} Marks | {paper.weightPercentage}% Weightage
       </p>
+      )}
     </article>
   );
 }
@@ -99,7 +84,7 @@ export default function PaperStructure({
         id="paper-structure-heading"
         className="mb-4 text-xl font-bold tracking-tight"
       >
-        Paper structure and grade weightage
+        Exam Papers Information & Weightage
       </h2>
 
       <SyllabusLinks syllabus={assessment.syllabus} />
@@ -132,7 +117,7 @@ export default function PaperStructure({
             id={`${assessment.track}-${route.name}-heading`.toLowerCase()}
             className="mb-1 text-lg font-bold text-primary"
           >
-            {route.name} assessment
+            {route.name} Route
           </h3>
           {route.description && (
             <p className="mb-4 max-w-3xl leading-relaxed text-muted-foreground">

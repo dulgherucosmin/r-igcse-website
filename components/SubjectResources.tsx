@@ -165,22 +165,6 @@ export function SubjectDetails({
 
       <Separator className="my-10" />
 
-      {assessments.map((assessment, index) => (
-        <Fragment
-          key={`${assessment.board}-${assessment.subject}-${assessment.track}`}
-        >
-          <PaperStructure
-            assessment={assessment}
-            id={
-              index === 0
-                ? "papers-info"
-                : `papers-info-${assessment.track.toLowerCase()}`
-            }
-          />
-          <Separator className="my-10" />
-        </Fragment>
-      ))}
-
       <section
         id="resources"
         aria-labelledby="resources-heading"
@@ -238,6 +222,22 @@ export function SubjectDetails({
           </section>
         </>
       )}
+
+      {assessments.map((assessment, index) => (
+        <Fragment
+          key={`${assessment.board}-${assessment.subject}-${assessment.track}`}
+        >
+          <Separator className="my-10" />
+          <PaperStructure
+            assessment={assessment}
+            id={
+              index === 0
+                ? "papers-info"
+                : `papers-info-${assessment.track.toLowerCase()}`
+            }
+          />
+        </Fragment>
+      ))}
     </>
   );
 }
