@@ -26,6 +26,13 @@ export const sitePages: SitePage[] = [
     priority: 0.9,
   },
   {
+    path: "/faq",
+    title: "Frequently Asked Questions",
+    description:
+      "Answers to common questions about exam variants, grade thresholds, syllabuses, AS/A Level routes and r/IGCSE resources.",
+    priority: 0.7,
+  },
+  {
     path: "/about",
     title: "About r/IGCSE",
     description:
