@@ -9,7 +9,11 @@ import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryState, useQueryStates } from "nuqs";
 import { useEffect, useMemo } from "react";
-import { matchesFilters, ResourceFilters } from "@/components/resource-filters";
+import {
+  matchesFilters,
+  ResourceFilters,
+  type ResourceFilterValues,
+} from "@/components/resource-filters";
 import {
   BackgroundArt,
   EmptyState,
@@ -103,17 +107,26 @@ const SUBJECT_SKELETONS = Array.from(
   (_, index) => `subject-skeleton-${index}`,
 );
 
-export default function ResourcesDisplay() {
-  const {
-    data: subjects = [],
-    isPending: loading,
-    error: queryError,
-  } = useQuery(subjectsQueryOptions);
-  const error = queryError?.message ?? "";
-  const [query, setQuery] = useQueryState("q", searchQueryParser);
-  const [filters, setFilters] = useQueryStates(filterParsers, {
-    clearOnDefault: true,
-  });
+const NO_FILTERS: ResourceFilterValues = { level: [], board: [], category: [] };
+const ignore = () => {};
+
+function ResourcesView({
+  subjects,
+  loading,
+  error,
+  query,
+  filters,
+  onQueryChange,
+  onFiltersChange,
+}: {
+  subjects: DriveSubject[];
+  loading: boolean;
+  error: string;
+  query: string;
+  filters: ResourceFilterValues;
+  onQueryChange: (query: string) => void;
+  onFiltersChange: (filters: Partial<ResourceFilterValues> | null) => void;
+}) {
   const router = useRouter();
 
   const searchedSubjects = useMemo(
@@ -156,7 +169,7 @@ export default function ResourcesDisplay() {
         aria-label="Search subjects"
         placeholder="Search subjects"
         value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        onChange={(event) => onQueryChange(event.target.value)}
       />
     </InputGroup>
   );
@@ -165,7 +178,7 @@ export default function ResourcesDisplay() {
       allSubjects={subjects}
       subjects={searchedSubjects}
       filters={filters}
-      onChange={setFilters}
+      onChange={onFiltersChange}
     />
   );
 
@@ -291,5 +304,49 @@ export default function ResourcesDisplay() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ResourcesDisplay() {
+  const {
+    data: subjects = [],
+    isPending,
+    error,
+  } = useQuery(subjectsQueryOptions);
+  const [query, setQuery] = useQueryState("q", searchQueryParser);
+  const [filters, setFilters] = useQueryStates(filterParsers, {
+    clearOnDefault: true,
+  });
+  return (
+    <ResourcesView
+      subjects={subjects}
+      loading={isPending}
+      error={error?.message ?? ""}
+      query={query}
+      filters={filters}
+      onQueryChange={setQuery}
+      onFiltersChange={setFilters}
+    />
+  );
+}
+
+// ResourcesDisplay reads the URL and the query cache, which a prerender has to
+// leave for the browser. This is the same list with nothing applied and the
+// subjects passed in, so the build can render it as the Suspense fallback.
+export function UnfilteredResources({
+  subjects,
+}: {
+  subjects: DriveSubject[];
+}) {
+  return (
+    <ResourcesView
+      subjects={subjects}
+      loading={subjects.length === 0}
+      error=""
+      query=""
+      filters={NO_FILTERS}
+      onQueryChange={ignore}
+      onFiltersChange={ignore}
+    />
   );
 }
