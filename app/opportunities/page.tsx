@@ -55,17 +55,13 @@ type Section = {
   roles: Role[];
 };
 
-/* -------------------------------------------------------------------------- */
-/*  DATA: edit roles, requirements and links here.                            */
-/* -------------------------------------------------------------------------- */
-
 // TODO: replace each `url` below with the real application form link.
 const APPLICATION_PLACEHOLDER = socials.discord;
 
 const sections: Section[] = [
   {
     id: "helpers",
-    title: "Helpers",
+    title: "Subject Helpers",
     blurb: "Answer questions and support students in the subject channels.",
     roles: [
       {
@@ -202,13 +198,13 @@ const sections: Section[] = [
   },
   {
     id: "moderation",
-    title: "Moderation",
+    title: "Community Moderation",
     blurb: "Help keep the community safe and friendly.",
     roles: [
       {
         id: "chat-moderator",
         title: "Chat Moderator",
-        color: "#ef4444",
+        color: "#47a676",
         description:
           "{@Chat Moderator} are trusted members that have been given moderation permissions in order to help keep order and uphold the rules. You may apply any time and be eligible for the next month's application cycle, as Chat Moderators refresh on the 1st of every month.",
         requirements: [
@@ -220,8 +216,24 @@ const sections: Section[] = [
         note: "We choose the most active and trustworthy applicants. This may include picking the same person for multiple cycles. No announcements are made when the new Chat Moderators are chosen.",
         apply: { type: "command", command: "/apply" },
       },
+      {
+        id: "staff-moderator",
+        title: "Staff Moderator",
+        color: "#5478fa",
+        description:
+          "{@Moderator} are trusted members that are responsible for managing the r/IGCSE Discord Server and overseeing moderation, resource creation, applications, and more. Applications for Staff Moderator open around twice a year depending on the demand for new members.",
+        requirements: [
+          "Must be at least 16 years old.",
+          "Must be a member for at least 6 months.",
+          "Contribute and be an active member of the server.",
+          "Have a clean recent infraction history.",
+        ],
+        note: "Applications for this position are not open at this time.",
+        apply: { type: "closed" },
+      },
     ],
   },
+  
 ];
 
 const certificates = [
@@ -323,9 +335,8 @@ function ApplyAction({ apply, title }: { apply: Apply; title: string }) {
       );
     case "command":
       return (
-        <Badge variant="outline" className="shrink-0 text-sm">
-          Apply with{" "}
-          <code className="font-mono font-semibold">{apply.command}</code>
+        <Badge variant="outline" className="shrink-0 text-sm pt-2 pb-2">
+          Apply on the Discord{" "}
         </Badge>
       );
     case "closed":
@@ -397,10 +408,6 @@ function Mention({ children }: { children: ReactNode }) {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Page                                                                      */
-/* -------------------------------------------------------------------------- */
-
 export default function Opportunities() {
   return (
     <main className="page-container pt-12 pb-24 md:pt-20">
@@ -412,7 +419,7 @@ export default function Opportunities() {
           r/IGCSE is run by student volunteers. Whether you want to help answer
           questions, create resources, build things or keep the community
           running smoothly, there&rsquo;s a role for you. Find one that fits
-          below, check the requirements and apply.
+          below, check the requirements and apply. All chats listed below can be found on our discord server.
         </p>
         <a
           href="#certificates"
@@ -503,84 +510,77 @@ export default function Opportunities() {
           <div className="grid gap-6 py-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-12">
             <div>
               <h3 className="text-2xl font-bold tracking-tight">
-                How to request
-              </h3>
-              <p className="mt-2 leading-relaxed text-muted-foreground">
-                Choose whichever is easiest for you.
-              </p>
-            </div>
-            <div className="grid max-w-3xl gap-4 sm:grid-cols-2">
-              <div className="flex flex-col rounded-lg border border-border bg-card p-5">
-                <h4 className="flex items-center gap-2 text-lg font-bold">
-                  <Discord aria-hidden="true" className="size-5" />
-                  Modmail
-                </h4>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  Join the Discord server and send a message to{" "}
-                  <Mention>@r/IGCSE Bot</Mention> with the details below.
-                </p>
-                <a
-                  href={socials.discord}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "mt-4 font-bold",
-                  )}
-                >
-                  <Discord aria-hidden="true" data-icon="inline-start" />
-                  Join the Discord
-                </a>
-              </div>
-              <div className="flex flex-col rounded-lg border border-border bg-card p-5">
-                <h4 className="flex items-center gap-2 text-lg font-bold">
-                  <EnvelopeSimpleIcon aria-hidden="true" className="size-5" />
-                  Email
-                </h4>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  Email{" "}
-                  <a
-                    href={socials.email}
-                    className="font-semibold text-foreground underline underline-offset-4"
-                  >
-                    igcseresources.1@gmail.com
-                  </a>{" "}
-                  with the details below.
-                </p>
-                <a
-                  href={socials.email}
-                  className={cn(
-                    buttonVariants({ variant: "outline", size: "lg" }),
-                    "mt-4 font-bold",
-                  )}
-                >
-                  <EnvelopeSimpleIcon
-                    aria-hidden="true"
-                    data-icon="inline-start"
-                  />
-                  Send an email
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <Separator />
-          <div className="grid gap-6 py-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-12">
-            <div>
-              <h3 className="text-2xl font-bold tracking-tight">
                 What to include
               </h3>
               <p className="mt-2 leading-relaxed text-muted-foreground">
-                So we can get it right the first time.
+                Make sure all the information is correct and up to date.
               </p>
             </div>
-            <ul className="max-w-2xl list-disc space-y-2 pl-5 text-muted-foreground marker:text-brand">
-              {certificateDetails.map((detail) => (
-                <li key={detail} className="pl-1 leading-relaxed">
-                  {detail}
-                </li>
-              ))}
-            </ul>
+            <div className="max-w-3xl">
+              <ul className="max-w-2xl list-disc space-y-2 pl-5 text-muted-foreground marker:text-brand">
+                {certificateDetails.map((detail) => (
+                  <li key={detail} className="pl-1 leading-relaxed">
+                    {detail}
+                  </li>
+                ))}
+              </ul>
+
+              <p className="mt-10 font-semibold">
+                Send these details to us via:
+              </p>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div className="flex flex-col rounded-lg border border-border bg-card p-5">
+                  <h4 className="flex items-center gap-2 text-lg font-bold">
+                    <Discord aria-hidden="true" className="size-5" />
+                    Modmail
+                  </h4>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    Join the Discord server and send a message to{" "}
+                    <Mention>@r/IGCSE Bot</Mention> with the details above.
+                  </p>
+                  <a
+                    href={socials.discord}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cn(
+                      buttonVariants({ size: "lg" }),
+                      "mt-4 font-bold",
+                    )}
+                  >
+                    Join the Discord
+                  </a>
+                </div>
+                <div className="flex flex-col rounded-lg border border-border bg-card p-5">
+                  <h4 className="flex items-center gap-2 text-lg font-bold">
+                    <EnvelopeSimpleIcon aria-hidden="true" className="size-5" />
+                    Email
+                  </h4>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    Email{" "}
+                    <a
+                      href={socials.email}
+                      className="font-semibold text-foreground underline underline-offset-4"
+                    >
+                      igcseresources.1@gmail.com
+                    </a>{" "}
+                    with the details above. You can also get the certificate verified via this email.
+                  </p>
+                  <a
+                    href={socials.email}
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "lg" }),
+                      "mt-4 font-bold",
+                    )}
+                  >
+                    <EnvelopeSimpleIcon
+                      aria-hidden="true"
+                      data-icon="inline-start"
+                    />
+                    Send an email
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
           <Separator />
         </div>
