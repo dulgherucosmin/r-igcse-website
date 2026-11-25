@@ -3,6 +3,7 @@ import {
   ArrowDownIcon,
   CertificateIcon,
   EnvelopeSimpleIcon,
+  ArrowUpRightIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -507,6 +508,7 @@ export default function Opportunities() {
                   )}
                 >
                   Join the Discord
+                <ArrowUpRightIcon aria-hidden="true" data-icon="inline-end" />
                 </a>
               </div>
               <div className="flex flex-col rounded-lg border border-border bg-card p-5">

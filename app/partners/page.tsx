@@ -7,6 +7,7 @@ import {
   StarIcon,
   TiktokLogoIcon,
   ArrowDownIcon,
+  EnvelopeSimpleIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
@@ -450,7 +451,7 @@ export default function Partners() {
             for the type of organisation you are representing, and then
             send a message to <Mention>@r/IGCSE Bot</Mention> on Discord
             detailing who you are, your role at said organisation, why you would
-            like to partner with us, and details about your organisation. Alternatively, you can email us at: {" "}
+            like to partner with us, what the mutual benefit of the partnership would be, and details about your organisation. Alternatively, you can email us at: {" "}
             <a href={socials.email} className="font-bold text-foreground">
             igcseresources.1@gmail.com
             </a>{" "}.
@@ -544,35 +545,61 @@ export default function Partners() {
           <Separator />
         </div>
 
-        {/* CTA */}
-        <div className="mt-8 flex flex-col items-center gap-6 py-6 text-center">
-          <div className="max-w-xl">
+        <div className="mt-8 max-w-3xl">
+          <div className="mb-6 max-w-xl">
             <h3 className="text-2xl font-bold tracking-tight">
               Ready to partner?
             </h3>
             <p className="mt-2 leading-relaxed text-muted-foreground">
-              Contact us with the details above via Discord or Email.
+              If you meet the requirements above, contact us with your
+              partnership proposal and the requested details about you and your
+              organisation.
             </p>
           </div>
-          <div className="flex flex-row gap-2">
-            <a
-            href={socials.discord}
-            target="_blank"
-            rel="noreferrer"
-            className={cn(buttonVariants({ size: "lg" }), "font-bold")}
-          >
-            Join the Discord
-            <ArrowUpRightIcon aria-hidden="true" data-icon="inline-end" />
-          </a>
-          <a
-            href={socials.email}
-            target="_blank"
-            rel="noreferrer"
-            className={cn(buttonVariants({ size: "lg" }), "font-bold")}
-          >
-            Send us an Email
-            <ArrowUpRightIcon aria-hidden="true" data-icon="inline-end" />
-          </a>
+          <p className="font-semibold">Contact us via:</p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="flex flex-col rounded-lg border border-border bg-card p-5">
+              <h3 className="flex items-center gap-2 text-lg font-bold">
+                <Discord aria-hidden="true" className="size-5" />
+                Modmail
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                Join the Discord server and send a message to{" "}
+                <Mention>@r/IGCSE Bot</Mention> with your partnership proposal.
+              </p>
+              <a
+                href={socials.discord}
+                target="_blank"
+                rel="noreferrer"
+                className={cn(buttonVariants({ size: "lg" }), "mt-4 font-bold")}
+              >
+                Join the Discord
+                <ArrowUpRightIcon aria-hidden="true" data-icon="inline-end" />
+              </a>
+            </div>
+            <div className="flex flex-col rounded-lg border border-border bg-card p-5">
+              <h3 className="flex items-center gap-2 text-lg font-bold">
+                <EnvelopeSimpleIcon aria-hidden="true" className="size-5" />
+                Email
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                Email us your partnership proposal and the details requested
+                above.
+              </p>
+              <a
+                href={socials.email}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "mt-4 font-bold",
+                )}
+              >
+                <EnvelopeSimpleIcon
+                  aria-hidden="true"
+                  data-icon="inline-start"
+                />
+                Send an email
+              </a>
+            </div>
           </div>
         </div>
       </section>
