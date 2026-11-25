@@ -236,27 +236,11 @@ const sections: Section[] = [
   
 ];
 
-const certificates = [
-  {
-    id: "subject-helper-certificate",
-    title: "Subject Helper",
-    color: "#2ecc71",
-    text: "Recognises your help in the subject channels. It names the subject(s) you help with and their syllabus code, for example Chemistry (0620).",
-  },
-  {
-    id: "resource-creator-certificate",
-    title: "Resource Creator",
-    color: "#f5a04a",
-    text: "Recognises the resources you created for students. It names the resource(s) you contributed.",
-  },
-];
-
 const certificateDetails = [
-  "Which certificate you are requesting (Subject Helper or Resource Creator).",
+  "Your eligible role: Subject Helper, Resource Creator, Community Team member, Developer, or Discord/Reddit staff.",
   "Your name, exactly as you want it to appear on the certificate.",
-  "Subject Helpers: the subject(s) and syllabus code(s) to list.",
-  "Resource Creators: the title(s) of the resource(s) to list.",
-  "Your Discord username, so we can check your role.",
+  "Details of your contribution, such as the subjects and syllabus codes you help with, resources you created, or your team/staff role.",
+  "Your Discord or Reddit username, so we can verify your role.",
 ];
 
 function RoleChip({ color, children }: { color: string; children: ReactNode }) {
@@ -410,7 +394,7 @@ function Mention({ children }: { children: ReactNode }) {
 
 export default function Opportunities() {
   return (
-    <main className="page-container pt-12 pb-24 md:pt-20">
+    <main className="page-container pt-12 pb-2 md:pt-20">
       <header className="max-w-3xl">
         <h1 className="text-4xl leading-tight font-black tracking-tight underline decoration-primary decoration-3 underline-offset-10 md:text-6xl">
           Opportunities
@@ -481,108 +465,82 @@ export default function Opportunities() {
             Request a certificate
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            Subject Helpers and Resource Creators can receive a Certificate of
-            Appreciation from r/IGCSE for their contribution to the community.
-            Each certificate is signed by the Community Lead and has an issuing
-            date and certificate number.
+            We give Certificates of Appreciation only to Subject Helpers,
+            Resource Creators, the Community Team, Developers, and Discord or
+            Reddit staff. Each certificate is signed by the Community Lead and
+            has an issuing date and certificate number.
           </p>
         </div>
 
-        <ul className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
-          {certificates.map((certificate) => (
-            <li
-              key={certificate.id}
-              style={{ borderLeftColor: certificate.color }}
-              className="rounded-lg border border-l-4 border-border bg-card p-5"
-            >
-              <h3 className="text-xl font-black tracking-tight">
-                {certificate.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {certificate.text}
-              </p>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-14">
+        <div className="mt-8 max-w-3xl">
           <Separator />
-          <div className="grid gap-6 py-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-12">
-            <div>
-              <h3 className="text-2xl font-bold tracking-tight">
-                What to include
-              </h3>
-              <p className="mt-2 leading-relaxed text-muted-foreground">
-                Make sure all the information is correct and up to date.
-              </p>
-            </div>
-            <div className="max-w-3xl">
-              <ul className="max-w-2xl list-disc space-y-2 pl-5 text-muted-foreground marker:text-brand">
-                {certificateDetails.map((detail) => (
-                  <li key={detail} className="pl-1 leading-relaxed">
-                    {detail}
-                  </li>
-                ))}
-              </ul>
+          <div className="py-8">
+            <p className="font-semibold">
+              Include the following information in your request:
+            </p>
+            <ul className="mt-3 max-w-2xl list-disc space-y-2 pl-5 text-muted-foreground marker:text-brand">
+              {certificateDetails.map((detail) => (
+                <li key={detail} className="pl-1 leading-relaxed">
+                  {detail}
+                </li>
+              ))}
+            </ul>
 
-              <p className="mt-10 font-semibold">
-                Send these details to us via:
-              </p>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div className="flex flex-col rounded-lg border border-border bg-card p-5">
-                  <h4 className="flex items-center gap-2 text-lg font-bold">
-                    <Discord aria-hidden="true" className="size-5" />
-                    Modmail
-                  </h4>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                    Join the Discord server and send a message to{" "}
-                    <Mention>@r/IGCSE Bot</Mention> with the details above.
-                  </p>
-                  <a
-                    href={socials.discord}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      buttonVariants({ size: "lg" }),
-                      "mt-4 font-bold",
-                    )}
-                  >
-                    Join the Discord
-                  </a>
-                </div>
-                <div className="flex flex-col rounded-lg border border-border bg-card p-5">
-                  <h4 className="flex items-center gap-2 text-lg font-bold">
-                    <EnvelopeSimpleIcon aria-hidden="true" className="size-5" />
-                    Email
-                  </h4>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                    Email{" "}
-                    <a
-                      href={socials.email}
-                      className="font-semibold text-foreground underline underline-offset-4"
-                    >
-                      igcseresources.1@gmail.com
-                    </a>{" "}
-                    with the details above. You can also get the certificate verified via this email.
-                  </p>
+            <p className="mt-10 font-semibold">Send your request via:</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div className="flex flex-col rounded-lg border border-border bg-card p-5">
+                <h4 className="flex items-center gap-2 text-lg font-bold">
+                  <Discord aria-hidden="true" className="size-5" />
+                  Modmail
+                </h4>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  Join the Discord server and send a message to{" "}
+                  <Mention>@r/IGCSE Bot</Mention> with the details above.
+                </p>
+                <a
+                  href={socials.discord}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "mt-4 font-bold",
+                  )}
+                >
+                  Join the Discord
+                </a>
+              </div>
+              <div className="flex flex-col rounded-lg border border-border bg-card p-5">
+                <h4 className="flex items-center gap-2 text-lg font-bold">
+                  <EnvelopeSimpleIcon aria-hidden="true" className="size-5" />
+                  Email
+                </h4>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  Email{" "}
                   <a
                     href={socials.email}
-                    className={cn(
-                      buttonVariants({ variant: "outline", size: "lg" }),
-                      "mt-4 font-bold",
-                    )}
+                    className="font-semibold text-foreground underline underline-offset-4"
                   >
-                    <EnvelopeSimpleIcon
-                      aria-hidden="true"
-                      data-icon="inline-start"
-                    />
-                    Send an email
-                  </a>
-                </div>
+                    igcseresources.1@gmail.com
+                  </a>{" "}
+                  with the details above. You can also get the certificate
+                  verified via this email.
+                </p>
+                <a
+                  href={socials.email}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "lg" }),
+                    "mt-4 font-bold",
+                  )}
+                >
+                  <EnvelopeSimpleIcon
+                    aria-hidden="true"
+                    data-icon="inline-start"
+                  />
+                  Send an email
+                </a>
               </div>
             </div>
           </div>
-          <Separator />
         </div>
       </section>
     </main>
