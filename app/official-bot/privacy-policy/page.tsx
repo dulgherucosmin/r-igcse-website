@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { CustomLink } from "@/components/ui/customlink";
 import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = pageMetadata("/official-bot");
+export const metadata: Metadata = pageMetadata("/official-bot/privacy-policy");
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
