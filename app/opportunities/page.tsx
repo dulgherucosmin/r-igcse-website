@@ -158,12 +158,13 @@ const sections: Section[] = [
           "Must have some experience in TypeScript.",
           "Must have some experience with Discord bot development.",
         ],
+        note: "Applications for this position are not open at this time.",
         apply: { type: "closed" },
       },
       {
         id: "website-developer",
         title: "Website Developer",
-        color: "#e62317",
+        color: "#b2ecff",
         description:
           "Website Developers are members from our Development Team who help maintain and develop the official r/IGCSE website.",
         note: "Applications for this position are not open at this time.",
@@ -172,7 +173,7 @@ const sections: Section[] = [
       {
         id: "events-team",
         title: "Events Team",
-        color: "#1abc9c",
+        color: "#ec29c4",
         description:
           "{@Events Team} are members from our Community Team who host and manage events on the r/IGCSE Discord server.",
         note: "Applications for this position are not open at this time.",
@@ -181,7 +182,7 @@ const sections: Section[] = [
       {
         id: "media-team",
         title: "Media Team",
-        color: "#00b8d9",
+        color: "#f8d59e",
         description:
           "{@Content Team} and {@Graphics Team} are members from our Community Team who create graphics and content for the r/IGCSE Discord server and other social media accounts.",
         note: "Applications for this position are not open at this time.",
