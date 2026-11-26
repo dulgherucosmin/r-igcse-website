@@ -11,6 +11,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { DiscordMention } from "@/components/ui/discord/discord-base";
 import { Separator } from "@/components/ui/separator";
+import { CustomLink } from "@/components/ui/customlink";
 import { GitHub } from "@/components/ui/svgs/github";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
@@ -156,7 +157,7 @@ export default async function TheBot() {
           communities to use. We feature a fully fledged moderation system for
           admins and moderators to take advantage of, a reputation system for
           rewarding active members, functionality to search for resources and
-          keywords, and more.
+          keywords, and more. View the privacy policy <CustomLink href="official-bot/privacy-policy"> here.</CustomLink>
         </p>
       </header>
 

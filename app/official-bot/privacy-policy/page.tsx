@@ -42,7 +42,7 @@ function B({ children }: { children: ReactNode }) {
 
 export default function BotPrivacyPolicy() {
   return (
-    <main className="page-container pt-6 pb-24 md:pt-12">
+    <main className="page-container pt-6 pb-2 md:pt-12">
       <header className="max-w-3xl">
         <h1 className="text-4xl leading-tight font-black tracking-tight underline decoration-primary decoration-3 underline-offset-10 md:text-6xl">
           r/IGCSE Bot Privacy Policy
