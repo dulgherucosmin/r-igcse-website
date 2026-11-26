@@ -61,8 +61,24 @@ const APPLICATION_PLACEHOLDER = socials.discord;
 
 const sections: Section[] = [
   {
+    id: "resources",
+    title: "Resources",
+    blurb: "Create or share study resources for other students.",
+    roles: [
+      {
+        id: "resource-creator",
+        title: "Resource Creator",
+        color: "#f5a04a",
+        description:
+          "A {@Resource Creator} is a member who has created custom resources for the students of r/IGCSE. They are given freedom on what subject(s) they want to create resources for and what they will cover.",
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/resource-contribution" },
+      },
+      
+    ],
+  },
+  {
     id: "helpers",
-    title: "Subject Helpers",
+    title: "Community Helpers",
     blurb: "Answer questions and support students in the subject channels.",
     roles: [
       {
@@ -125,22 +141,6 @@ const sections: Section[] = [
         ],
         apply: { type: "link", url: "https://forms.r-igcse.com/f/helper-application" },
       },
-    ],
-  },
-  {
-    id: "resources",
-    title: "Resources",
-    blurb: "Create or share study resources for other students.",
-    roles: [
-      {
-        id: "resource-creator",
-        title: "Resource Creator",
-        color: "#f5a04a",
-        description:
-          "A {@Resource Creator} is a member who has created custom resources for the students of r/IGCSE. They are given freedom on what subject(s) they want to create resources for and what they will cover.",
-        apply: { type: "link", url: "https://forms.r-igcse.com/f/resource-contribution" },
-      },
-      
     ],
   },
   {
