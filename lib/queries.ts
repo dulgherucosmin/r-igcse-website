@@ -14,4 +14,8 @@ async function fetchSubjects(): Promise<DriveSubject[]> {
 export const subjectsQueryOptions = queryOptions({
   queryKey: subjectsQueryKey,
   queryFn: fetchSubjects,
+  // The resources page hydrates this with the subjects from the build. With a
+  // finite stale time they go stale before the page is rebuilt, and every visit
+  // after that refetches /api/subjects, which crawls Drive again.
+  staleTime: Number.POSITIVE_INFINITY,
 });

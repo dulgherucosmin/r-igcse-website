@@ -5,10 +5,11 @@ import {
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
-import { connection } from "next/server";
 import { Suspense } from "react";
 import { JsonLd } from "@/components/json-ld";
-import ResourcesDisplay from "@/components/ResourcesDisplay";
+import ResourcesDisplay, {
+  UnfilteredResources,
+} from "@/components/ResourcesDisplay";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type DriveSubject, listSubjects } from "@/lib/drive";
 import { pageMetadata } from "@/lib/metadata";
@@ -45,16 +46,18 @@ async function prefetchedSubjects() {
 }
 
 async function PrefetchedResources() {
-  // The list reads its filters from the URL, so render it per request. A static
-  // prerender leaves only the skeleton in the HTML until the client hydrates.
-  await connection();
   const { state, subjects } = await prefetchedSubjects();
   return (
     <>
       <JsonLd data={resourcesJsonLd(subjects)} />
-      <HydrationBoundary state={state}>
-        <ResourcesDisplay />
-      </HydrationBoundary>
+      {/* The list reads its filters from the URL, which a prerender does not
+          have. Falling back to the unfiltered list keeps the page static, so
+          the subjects are fetched at build time and are already in the HTML. */}
+      <Suspense fallback={<UnfilteredResources subjects={subjects} />}>
+        <HydrationBoundary state={state}>
+          <ResourcesDisplay />
+        </HydrationBoundary>
+      </Suspense>
     </>
   );
 }
