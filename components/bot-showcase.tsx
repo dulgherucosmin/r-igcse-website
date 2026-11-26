@@ -144,6 +144,16 @@ const users = {
       text: "r/ig",
     },
   },
+  cosmo_modmail: {
+    name: "c_osmo",
+    avatar: "/discord/avatars/cosmo.webp",
+    color: "#fffff",
+    decoration: "robin",
+    tag: {
+      src: "/discord/clan-badges/r-ig.png",
+      text: "r/ig",
+    },
+  },
   ayyan: {
     name: "ayyan",
     avatar: "/discord/avatars/ayyan.webp",
@@ -326,6 +336,83 @@ function Chat({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
+/** A row of reactions under a message. */
+function Reactions({ children }: { children: ReactNode }) {
+  return <div className="mt-1 flex flex-wrap gap-1">{children}</div>;
+}
+
+/** Twemoji SVG for a unicode emoji, loaded straight from the CDN. */
+function twemojiUrl(emoji: string) {
+  const codePoints = Array.from(emoji)
+    .map((char) => char.codePointAt(0)?.toString(16))
+    .filter((cp): cp is string => cp !== undefined && cp !== "fe0f");
+  return `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${codePoints.join("-")}.svg`;
+}
+
+function Reaction({ emoji, count }: { emoji: string; count: number }) {
+  return (
+    <span className="inline-flex h-6 cursor-pointer items-center gap-1.5 rounded-lg border border-discord-foreground/20 bg-discord-foreground/10 px-2 text-[0.875rem] font-medium text-discord-foreground">
+      {/* biome-ignore lint/performance/noImgElement: tiny static emoji */}
+      <img
+        src={twemojiUrl(emoji)}
+        alt={emoji}
+        draggable={false}
+        className="size-4 shrink-0"
+      />
+      {count}
+    </span>
+  );
+}
+
+/** Discord's "Add Reaction" button, the grey smiley shown next to reactions. */
+function AddReaction() {
+  return (
+    <span
+      role="img"
+      aria-label="Add reaction"
+      className="inline-flex h-6 w-9 cursor-pointer items-center justify-center rounded-lg border border-discord-foreground/20 bg-discord-foreground/10 text-discord-foreground/70"
+    >
+      <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden>
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M12 2a10 10 0 100 20 10 10 0 000-20zM8 9.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm5 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM12 18c-2.2 0-4.1-1.2-5-3h10c-.9 1.8-2.8 3-5 3z"
+        />
+      </svg>
+    </span>
+  );
+}
+
+/** The author line at the top of an embed: a small avatar and a name. */
+function EmbedAuthor({ avatar, name }: { avatar: string; name: string }) {
+  return (
+    <div className="col-[1/1] mb-2 flex items-center gap-2 text-[0.875rem] font-semibold text-discord-header">
+      {/* biome-ignore lint/performance/noImgElement: tiny decorative avatar */}
+      <img src={avatar} alt="" className="size-6 rounded-full" />
+      {name}
+    </div>
+  );
+}
+
+function EmbedFooter({ children }: { children: ReactNode }) {
+  return (
+    <div className="col-[1/1] mt-2 text-[0.75rem] font-medium text-discord-foreground/70">
+      {children}
+    </div>
+  );
+}
+
+/** The thread breadcrumb at the top of a staff modmail thread. */
+function ThreadHeader({ name }: { name: string }) {
+  return (
+    <div className="flex items-center gap-2 border-b border-border px-4 py-3 text-sm text-discord-foreground/70">
+      <span>threads</span>
+      <span aria-hidden>›</span>
+      <span className="font-semibold text-discord-header">{name}</span>
+    </div>
+  );
+}
+
 export function RepShowcase() {
   return (
     <Chat label="Discord chat where the r/IGCSE Bot gives a member reputation for answering a question">
@@ -457,6 +544,66 @@ export function StatsShowcase() {
       </Message>
       <Message author={users.ayyan} time={at(14, 16)}>
         Woah that&apos;s peak!!
+      </Message>
+    </Chat>
+  );
+}
+
+/** Modmail as a member sees it: a DM with the bot. */
+export function ModmailUserShowcase() {
+  return (
+    <Chat label="Discord direct message where a member writes to server staff through the r/IGCSE Bot and receives a reply">
+      <Message author={users.cosmo_modmail} time={at(18, 19)}>
+        Hi! This is a message to the r/IGCSE Server Staff!
+        <Reactions>
+          <Reaction emoji="📨" count={1} />
+          <AddReaction />
+        </Reactions>
+      </Message>
+      <Message author={bot} time={at(18, 20)}>
+        <DiscordEmbed color="#57f287" className="mt-1">
+          <EmbedAuthor avatar={users.cosmo.avatar} name="c_osmo" />
+          <DiscordEmbedTitle>Message from r/IGCSE Staff</DiscordEmbedTitle>
+          <DiscordEmbedDescription>
+            Hi! Thank you for your message. This is a message to the user.
+          </DiscordEmbedDescription>
+          <EmbedFooter>Today at 18:20</EmbedFooter>
+        </DiscordEmbed>
+      </Message>
+    </Chat>
+  );
+}
+
+/** Modmail as staff see it: a thread per member inside the server. */
+export function ModmailStaffShowcase() {
+  return (
+    <Chat label="Discord thread where server staff read a member's modmail and reply through the r/IGCSE Bot">
+      <ThreadHeader name="c_osmo (123456789012345678)" />
+      <Message author={bot} time={at(18, 19)}>
+        <DiscordEmbed color="#ed4245" className="mt-1">
+          <EmbedAuthor avatar={users.cosmo.avatar} name="c_osmo" />
+          <DiscordEmbedTitle>New DM Received</DiscordEmbedTitle>
+          <DiscordEmbedDescription>
+            Hi! This is a message to the r/IGCSE Server Staff!
+          </DiscordEmbedDescription>
+          <EmbedFooter>Today at 18:19</EmbedFooter>
+        </DiscordEmbed>
+      </Message>
+      <Message author={users.cosmo} time={at(18, 20)}>
+        <div>
+          This is a staff-only message. Users will not be able to see it.
+          <Reactions>
+            <Reaction emoji="👀" count={1} />
+            <AddReaction />
+          </Reactions>
+        </div>
+        <div className="mt-2">
+          {"// Hi! Thank you for your message. This is a message to the user."}
+          <Reactions>
+            <Reaction emoji="✅" count={1} />
+            <AddReaction />
+          </Reactions>
+        </div>
       </Message>
     </Chat>
   );
