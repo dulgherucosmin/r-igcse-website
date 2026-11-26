@@ -14,6 +14,7 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { name: "Browse resources", href: "/resources" },
       { name: "Contribute a resource", href: "/opportunities" },
+      { name: "Exam Sessions information", href: "/sessions" },
       { name: "Report a mistake", href: "mailto:igcseresources.1@gmail.com" },
     ],
   },
@@ -21,8 +22,9 @@ export const footerColumns: FooterColumn[] = [
     title: "Community",
     links: [
       { name: "About", href: "/about" },
-      { name: "Team", href: "/team" },
       { name: "Opportunities", href: "/opportunities" },
+      { name: "Partners", href: "/partners" },
+      { name: "Official Bot", href: "/official-bot" },
     ],
   },
 ];
