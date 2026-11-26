@@ -76,7 +76,7 @@ const sections: Section[] = [
           "Be a member for at least **2 months** on the server.",
           "Have a clean recent infraction history.",
         ],
-        apply: { type: "link", url: APPLICATION_PLACEHOLDER },
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/helper-application" },
       },
       {
         id: "ib-helper",
@@ -88,7 +88,7 @@ const sections: Section[] = [
           "Be a current DP2 student or have completed your IBDP.",
           "Have a clean recent infraction history.",
         ],
-        apply: { type: "link", url: APPLICATION_PLACEHOLDER },
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/helper-application" },
       },
       {
         id: "sat-ap-helper",
@@ -100,7 +100,7 @@ const sections: Section[] = [
           "Be either an SAT or AP alumni.",
           "Have a clean recent infraction history.",
         ],
-        apply: { type: "link", url: APPLICATION_PLACEHOLDER },
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/helper-application" },
       },
       {
         id: "ielts-toefl-helper",
@@ -112,7 +112,7 @@ const sections: Section[] = [
           "Be either an IELTS or TOEFL alumni.",
           "Have a clean recent infraction history.",
         ],
-        apply: { type: "link", url: APPLICATION_PLACEHOLDER },
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/helper-application" },
       },
       {
         id: "university-applications-helper",
@@ -123,7 +123,7 @@ const sections: Section[] = [
         requirements: [
           "Must have completed the university application process, however a decision is not required.",
         ],
-        apply: { type: "link", url: APPLICATION_PLACEHOLDER },
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/helper-application" },
       },
     ],
   },
@@ -138,17 +138,9 @@ const sections: Section[] = [
         color: "#f5a04a",
         description:
           "A {@Resource Creator} is a member who has created custom resources for the students of r/IGCSE. They are given freedom on what subject(s) they want to create resources for and what they will cover.",
-        apply: { type: "link", url: APPLICATION_PLACEHOLDER },
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/resource-contribution" },
       },
-      {
-        id: "resource-donator",
-        title: "Resource Donator",
-        color: "#f1c40f",
-        description:
-          "If you have created any resources during your IGCSE or AS/A Level preparation, feel free to share them with others! Submit your resources via {@r/IGCSE Bot}, and we will review them with our Subject Helpers for validity.",
-        note: "You do not need to apply for this position. All resources will be featured on the r/IGCSE website.",
-        apply: { type: "none" },
-      },
+      
     ],
   },
   {
@@ -166,7 +158,7 @@ const sections: Section[] = [
           "Must have some experience in TypeScript.",
           "Must have some experience with Discord bot development.",
         ],
-        apply: { type: "link", url: APPLICATION_PLACEHOLDER },
+        apply: { type: "closed" },
       },
       {
         id: "website-developer",
