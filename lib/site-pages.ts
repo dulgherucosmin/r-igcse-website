@@ -72,6 +72,12 @@ export const sitePages: SitePage[] = [
       "Check upcoming CAIE and Pearson Edexcel exam sessions, countdowns and results dates for IGCSE, O Level and AS/A Level. Confirm exam details with your school or exam centre.",
     priority: 0.8,
   },
+  {
+    path: "/official-bot/privacy-policy",
+    title: "r/IGCSE Bot Privacy Policy",
+    description: "Privacy Policy of the r/IGCSE Bot. Learn what data we store and how we use it.",
+    priority: 0.3,
+  },
 ];
 
 export const pageUrl = (page: SitePage) => url(page.path);

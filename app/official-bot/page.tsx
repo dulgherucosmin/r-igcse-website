@@ -5,12 +5,15 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import {
   InfractionShowcase,
+  ModmailStaffShowcase,
+  ModmailUserShowcase,
   RepShowcase,
   StatsShowcase,
 } from "@/components/bot-showcase";
 import { buttonVariants } from "@/components/ui/button";
 import { DiscordMention } from "@/components/ui/discord/discord-base";
 import { Separator } from "@/components/ui/separator";
+import { CustomLink } from "@/components/ui/customlink";
 import { GitHub } from "@/components/ui/svgs/github";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
@@ -86,6 +89,42 @@ const features: {
     ),
     preview: <StatsShowcase />,
   },
+  {
+    title: "Modmail for Members",
+    description: (
+      <>
+        <p>
+          Members can send the bot a direct message to the bot to reach server staff
+          privately, whether they want to report a user, appeal an infraction,
+          arrange a study session, or ask a question about the server.
+        </p>
+        <p>
+          The bot confirms with a reaction once the message has been passed on so that the user always knows if a message was sent,
+          and staff replies arrive in the same conversation, so members never
+          have to leave their DMs.
+        </p>
+      </>
+    ),
+    preview: <ModmailUserShowcase />,
+  },
+  {
+    title: "Modmail for Staff",
+    description: (
+      <>
+        <p>
+          Every conversation gets its own thread in a private staff channel,
+          titled with the member's username and ID. Each new DM is posted there
+          as an embed, so staff can see the full history in one place.
+        </p>
+        <p>
+          Staff can discuss a case in the thread without the member seeing it.
+          Messages that start with // are sent on to the member, and the bot
+          reacts to show what happened to each one. Staff members are also able to send anonymous messages by adding //! at the start of their message.
+        </p>
+      </>
+    ),
+    preview: <ModmailStaffShowcase />,
+  },
 ];
 
 type GitHubContributor = {
@@ -156,7 +195,7 @@ export default async function TheBot() {
           communities to use. We feature a fully fledged moderation system for
           admins and moderators to take advantage of, a reputation system for
           rewarding active members, functionality to search for resources and
-          keywords, and more.
+          keywords, and more. View the privacy policy <CustomLink href="official-bot/privacy-policy"> here.</CustomLink>
         </p>
       </header>
 
