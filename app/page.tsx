@@ -30,19 +30,8 @@ export const metadata: Metadata = pageMetadata("");
 
 const why = [
   {
-    title: "Student-Made Resources",
-    body: "Our resources are created by volunteer alumni students who have studied for and taken these exams. We aim to keep resources free for all students, always.",
-  },
-  {
-    title: "Group Study Sessions",
-    body: (
-      <>
-        Our community members and helpers regularly host group study sessions
-        where they tackle a variety of subjects going through past papers, tips
-        and tricks, syllabus content, and more! Recordings of these can be found
-        on our <TextLink href={socials.youtube}>YouTube Channel</TextLink>.
-      </>
-    ),
+    title: "Student-Led & Free Resources",
+    body: "Our resources are created by volunteer alumni students who have studied for and taken these exams. We are completely student-run, and all resources displayed have been created by other IGCSE and AS/A Level students. We aim to keep resources free for all students, always.",
   },
   {
     title: "Discord Partner Community ",
@@ -59,23 +48,19 @@ const why = [
     ),
   },
   {
-    title: "Peer to Peer Mentorship",
-    body: "We have a wide range of volunteer subject helpers that are active every day in our Discord community helping other students by answering doubts, giving advice, etc.",
+    title: "Peer-to-Peer Mentorship",
+    body: (
+      <>
+      Our community members and helpers regularly host group study sessions where they tackle a variety of subjects, 
+      past papers, tips and tricks, syllabus content, & more! Recordings of these sessions can 
+      be found on our <TextLink href={socials.youtube}>YouTube Channel</TextLink> they are 
+      active daily in our Discord community, helping other students by answering any questions or doubts that arise.
+      </>
+    ),
   },
   {
     title: "Student Well-being",
     body: "We value student welfare and aim to foster a nurturing environment by understanding and uplifting one another, ensuring that no student feels alone when navigating their academic journey, and that every student has access to support from a like-minded and welcoming community.",
-  },
-  {
-    title: "Fully Student-Led",
-    body: (
-      <>
-        We are completely student-run, and all resources displayed have been
-        created by other IGCSE and AS/A Level students.{" "}
-        <TextLink href={socials.reddit}>r/IGCSE</TextLink> is free and will
-        always remain free.
-      </>
-    ),
   },
 ];
 
