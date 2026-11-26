@@ -53,14 +53,14 @@ export const sitePages: SitePage[] = [
   },
   {
     path: "/official-bot",
-    title: "r/IGCSE Bot",
+    title: "r/IGCSE Official Bot",
     description:
       "Learn what the r/IGCSE Discord bot does, explore its features, and meet its contributors.",
     priority: 0.4,
   },
   {
     path: "/partners",
-    title: "IGCSE & A Level Study Partners",
+    title: "r/IGCSE Partners",
     description:
       "Explore trusted IGCSE, O Level and AS/A Level revision tools and student communities partnered with r/IGCSE. See partner benefits and application requirements.",
     priority: 0.5,
