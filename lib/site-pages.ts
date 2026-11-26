@@ -15,7 +15,7 @@ export const sitePages: SitePage[] = [
     path: "",
     title: "r/IGCSE Resource Repository",
     description:
-      "Free, student-made IGCSE, O Level and AS/A Level study resources from the r/IGCSE community.",
+      "Free, student-made IGCSE, O Level and AS/A Level study resources curated for CAIE & Edexcel from the r/IGCSE community.",
     priority: 1,
   },
   {
