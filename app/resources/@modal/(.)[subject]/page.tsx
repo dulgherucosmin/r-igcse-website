@@ -8,7 +8,10 @@ import { SubjectDialog } from "@/components/subject-dialog";
 import { DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { StatusAlert } from "@/components/resources-shared";
+import { DriveApiError } from "@/lib/drive";
 import { loadSubject, subjectParams } from "@/lib/subject-data";
+import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ subject: string }> };
 
@@ -20,9 +23,17 @@ const COVER_SKELETONS = Array.from(
 export const generateStaticParams = subjectParams;
 
 async function SubjectModal({ params }: Props) {
-  const { subject: id } = await params;
-  const data = await loadSubject(id).catch(() => null);
-  if (!data) return null;
+  const { subject: routeSubject } = await params;
+  // The intercepted route marker is included in this dynamic param.
+  const id = routeSubject.replace(/^(?:\(\.\))+/, "");
+  let data: Awaited<ReturnType<typeof loadSubject>>;
+  try {
+    data = await loadSubject(id);
+  } catch (error) {
+    if (!(error instanceof DriveApiError)) throw error;
+    return <StatusAlert>{error.message}</StatusAlert>;
+  }
+  if (!data) notFound();
   const { subject, resources } = data;
 
   return (
