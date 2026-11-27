@@ -10,42 +10,9 @@ import { FixedDigits } from "@/components/fixed-digits";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import type { Board, Session } from "@/data/events";
+import { deriveBoard, isoDay } from "@/lib/exam-sessions";
 import { cn } from "@/lib/utils";
-
-/* -------------------------------------------------------------------------- */
-/*  Types (the data itself lives in app/countdowns/page.tsx)                  */
-/* -------------------------------------------------------------------------- */
-
-export type SessionResult = {
-  /** e.g. "AS & A Level". */
-  label: string;
-  /** ISO timestamp with offset. Leave out if the date hasn't been announced. */
-  at?: string;
-  /** Set to true only when the official release time is known. */
-  exactTime?: boolean;
-};
-
-export type Session = {
-  title: string;
-  /** ISO timestamp with offset, e.g. "2027-02-03T08:00:00+00:00". */
-  start: string;
-  /** ISO timestamp with offset. Use the end of the last exam day. */
-  end: string;
-  note?: string;
-  results: SessionResult[];
-};
-
-export type Board = {
-  id: string;
-  name: string;
-  fullName: string;
-  blurb: string;
-  /** Official page with exam timetables. */
-  timetablesUrl: string;
-  /** Official page with grade thresholds / boundaries. */
-  gradesUrl: string;
-  sessions: Session[];
-};
 
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
@@ -86,28 +53,6 @@ const shortDayYear = new Intl.DateTimeFormat("en-GB", {
 const formatLong = (iso: string) => longDay.format(new Date(iso));
 const formatRange = (session: Session) =>
   `${shortDay.format(new Date(session.start))} – ${shortDayYear.format(new Date(session.end))}`;
-
-const isoDay = (iso: string) => new Date(iso).toISOString().slice(0, 10);
-
-type BoardState = {
-  ongoing: Session[];
-  awaiting: Session[];
-  next: Session | undefined;
-};
-
-function deriveBoard(board: Board, now: number): BoardState {
-  const ongoing = board.sessions.filter(
-    (session) => ts(session.start) <= now && now <= ts(session.end),
-  );
-  // Over, but at least one results day is still to come.
-  const awaiting = board.sessions.filter(
-    (session) =>
-      ts(session.end) < now &&
-      session.results.some((result) => result.at && ts(result.at) > now),
-  );
-  const next = board.sessions.find((session) => ts(session.start) > now);
-  return { ongoing, awaiting, next };
-}
 
 /* -------------------------------------------------------------------------- */
 /*  Pieces                                                                    */

@@ -1,4 +1,4 @@
-import type { Board as ExamBoard } from "@/components/Countdowns";
+import type { Board as ExamBoard } from "@/data/events";
 import { socials } from "@/data/footer";
 import { SITE_URL } from "@/lib/config";
 import type { DriveResource, DriveSubject } from "@/lib/drive";
