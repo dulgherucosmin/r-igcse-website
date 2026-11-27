@@ -23,10 +23,15 @@ export type AssessmentRoute = {
     | "Core"
     | "Extended"
     | "Standard"
+    | "Foundation Tier"
+    | "Higher Tier"
     | "Higher"
     | "General"
     | "A Level"
-    | "AS Level";
+    | "AS Level"
+    | "International GCSE"
+    | "International Advanced Subsidiary (IAS)"
+    | "International Advanced Level (IAL)";
   description?: string;
   papers: PaperAssessment[];
 };
@@ -2379,6 +2384,673 @@ export const SUBJECT_ASSESSMENTS: SubjectAssessment[] = [
             externallyAssessed: true,
             description:
               "Applied case study analysis and research planning on chosen specialist options.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Biology",
+    track: "IAL",
+    code: "YBI11",
+    syllabus: {
+      current: {
+        label: "IAL Biology Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/biology-2018.html"
+      },
+    },
+    routes: [
+      {
+        name: "International Advanced Subsidiary (IAS)",
+        description: "The International Advanced Subsidiary (IAS) is the first half of the International Advanced Level (IAL) qualification and consists of three IAS units, Units 1, 2 and 3. This qualification may be taken on it's own or may contribute 50% towards the International Advanced Level (IAL) qualification.",
+        papers: [
+          {
+            name: "Unit 1: Molecules, Diet, Transport and Health",
+            code: "WBI11/01",
+            durationMinutes: 90,
+            marks: 80,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Molecules, Transport and Health, Membranes, Proteins, DNA and Gene Expression.",
+          },
+          {
+            name: "Unit 2: Cells, Development, Biodiversity and Conservation",
+            code: "WBI12/02",
+            durationMinutes: 90,
+            marks: 80,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Cells, Development, Biodiversity and Conservation Cell Structure, Reproduction and Development Plant Structure and Function, Biodiversity and Conservation.",
+          },
+          {
+            name: "Unit 3: Practical Skills in Biology I",
+            code: "WBI13/03",
+            durationMinutes: 80,
+            marks: 50,
+            weightPercentage: 10,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include short-open, open-response and calculation questions focusing on experimental procedures and techniques learned in Units 1 and 2.",
+          },
+        ],
+      },
+      {
+        name: "International Advanced Level (IAL)",
+        description: "The International Advanced Level (IAL) consists of the three IAS units (Units 1, 2 and 3) plus three IA2 units (Units 4, 5 and 6). Candidates wishing to take the International Advanced Level must, therefore, complete all six units.",
+        papers: [
+          {
+            name: "Unit 4: Energy, Environment, Microbiology and Immunity",
+            code: "WBI14/04",
+            durationMinutes: 105,
+            marks: 90,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Energy Flow, Ecosystems and the Environment, Microbology, Immunity and Forensics.",
+          },
+          {
+            name: "Unit 5: Respiration, Internal Environment, Coordination and Gene Technology",
+            code: "WBI15/05",
+            durationMinutes: 105,
+            marks: 90,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Respiration, Muscles and the Internal Environment Coordination, Response and Gene Technology.",
+          },
+          {
+            name: "Unit 6: Practical Skills in Biology II",
+            code: "WBI16/06",
+            durationMinutes: 80,
+            marks: 50,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include short-open, open-response and calculation questions focusing on experimental procedures and techniques acquired in Units 1 and 2 by carrying out a range of practical experiments and investigations while they study Units 4 and 5.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Chemistry",
+    track: "IAL",
+    code: "YCH11",
+    syllabus: {
+      current: {
+        label: "IAL Chemistry Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/chemistry-2018.html"
+      },
+    },
+    routes: [
+      {
+        name: "International Advanced Subsidiary (IAS)",
+        description: "The International Advanced Subsidiary (IAS) is the first half of the International Advanced Level (IAL) qualification and consists of three IAS units, Units 1, 2 and 3. This qualification may be taken on it's own or may contribute 50% towards the International Advanced Level (IAL) qualification.",
+        papers: [
+          {
+            name: "Unit 1: Structure, Bonding and Introduction to Organic Chemistry",
+            code: "WCH11/01",
+            durationMinutes: 90,
+            marks: 80,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "This paper has two sections: (A) Multiple choice questions, (B) Mixture of short-open, open-response, and calculation questions focusing on Formulae, Equations and Amount of Substabce, Atomic Structure and the Periodic Table, Bonding and Structure, Introductory Organic Chemistry and Alkanes, Alkenes.",
+          },
+          {
+            name: "Unit 2:  Energetics, Group Chemistry, Halogenoalkanes and Alcohol",
+            code: "WCH12/02",
+            durationMinutes: 90,
+            marks: 80,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "This paper has three sections: (A) Multiple choice questions, (B) Mixture of short-open, open-response, and calculation questions, and (C) Contemporary context questions focusing on Energetics Intermolecular Forces Redox Chemistry and Groups 1, 2 and 7 Introduction to Kinetics and Equilibria Organic Chemistry: Alcohols, Halogenoalkanes and Spectra.",
+          },
+          {
+            name: "Unit 3: Practical Skills in Chemistry I",
+            code: "WCH13/03",
+            durationMinutes: 90,
+            marks: 50,
+            weightPercentage: 10,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "This paper may include short-open, open-response and calculation questions focusing on experimental procedures and techniques learned in Units 1 and 2.",
+          },
+        ],
+      },
+      {
+        name: "International Advanced Level (IAL)",
+        description: "The International Advanced Level (IAL) consists of the three IAS units (Units 1, 2 and 3) plus three IA2 units (Units 4, 5 and 6). Candidates wishing to take the International Advanced Level must, therefore, complete all six units.",
+        papers: [
+          {
+            name: "Unit 4: Rates, Equilibria and Further Organic Chemistry",
+            code: "WCH14/04",
+            durationMinutes: 105,
+            marks: 90,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "This paper has three sections: (A) Multiple choice questions, (B) Mixture of short-open, open-response, calculations and extended-writing questions, and (C) Data or calculation questions focusing on Kinetics, Entropy and Energetics, Chemical Equilibria, Acid-base Equilibria, Organic Chemistry: Carbonyls, Carboxylic Acids and Chirality.",
+          },
+          {
+            name: "Unit 5: Transition Metals and Organic Nitrogen Chemistry",
+            code: "WCH15/05",
+            durationMinutes: 105,
+            marks: 90,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "This paper has two sections: (A) Multiple choice questions, (B) Mixture of short-open, open-response, and calculation questions focusing on Redox Equilibria, Transition Metals and their Chemistry, Organic Chemistry: Arenes, Organic Nitrogen Compounds, Organic Synthesis.",
+          },
+          {
+            name: "Unit 6: Practical Skills in Chemistry II",
+            code: "WCH16/06",
+            durationMinutes: 80,
+            marks: 50,
+            weightPercentage: 10,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include short-open, open-response and calculation questions focusing on experimental procedures and techniques acquired in Units 1 and 2 by carrying out a range of practical experiments and investigations while they study Units 4 and 5.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Physics",
+    track: "IAL",
+    code: "YPH11",
+    syllabus: {
+      current: {
+        label: "IAL Physics Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/physics-2018.html"
+      },
+    },
+    routes: [
+      {
+        name: "International Advanced Subsidiary (IAS)",
+        description: "The International Advanced Subsidiary (IAS) is the first half of the International Advanced Level (IAL) qualification and consists of three IAS units, Units 1, 2 and 3. This qualification may be taken on it's own or may contribute 50% towards the International Advanced Level (IAL) qualification.",
+        papers: [
+          {
+            name: "Unit 1: Mechanics and Materials",
+            code: "WPH11/01",
+            durationMinutes: 90,
+            marks: 80,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Mechanics and Materials.",
+          },
+          {
+            name: "Unit 2: Waves and Electricity",
+            code: "WPH12/01",
+            durationMinutes: 90,
+            marks: 80,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Waves and Particle Nature of Light, and Electric Circuits.",
+          },
+          {
+            name: "Unit 3: Practical Skills in Physics I",
+            code: "WPH13/01",
+            durationMinutes: 80,
+            marks: 50,
+            weightPercentage: 10,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include short-open, open-response, calculations and extended-writing questions focusing on experimental procedures and techniques learned in Units 1 and 2.",
+          },
+        ],
+      },
+      {
+        name: "International Advanced Level (IAL)",
+        description: "The International Advanced Level (IAL) consists of the three IAS units (Units 1, 2 and 3) plus three IA2 units (Units 4, 5 and 6). Candidates wishing to take the International Advanced Level must, therefore, complete all six units.",
+        papers: [
+          {
+            name: "Unit 4: Further Mechanics, Fields and Particles",
+            code: "WPH14/01",
+            durationMinutes: 105,
+            marks: 90,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Further Mechanics, Electric and Magnetic Fields, and Nuclear and Particle Physics.",
+          },
+          {
+            name: "Unit 5: Thermodynamics, Radiation, Oscillations and Cosmology",
+            code: "WPH15/01",
+            durationMinutes: 105,
+            marks: 90,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-open, open-response, calculations and extended-writing questions focusing on Thermodynamics, Nuclear Decay, Oscillations, and Astrophysics and Cosmology.",
+          },
+          {
+            name: "Unit 6: Practical Skills in Physics II",
+            code: "WPH16/01",
+            durationMinutes: 80,
+            marks: 50,
+            weightPercentage: 10,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include short-open, open-response, calculations and extended-writing questions focusing on experimental procedures and techniques developed in Units 4 and 5.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Psychology",
+    track: "IAL",
+    code: "YPS01",
+    syllabus: {
+      current: {
+        label: "IAL Psychology Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/psychology-2015.html"
+      },
+    },
+    routes: [
+      {
+        name: "International Advanced Subsidiary (IAS)",
+        description: "The International Advanced Subsidiary (IAS) is the first half of the International Advanced Level (IAL) qualification and consists of two IAS units, Units 1 and 2. This qualification may be taken on it's own or may contribute 50% towards the International Advanced Level (IAL) qualification.",
+        papers: [
+          {
+            name: "Unit 1: Social and Cognitive Psychology",
+            code: "WPS01/01",
+            durationMinutes: 90,
+            marks: 64,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper has three sections: (A) Social psychology, (B) Cognitive psychology, and (C) one 12-mark extended open-response question on either social or cognitive psychology. Sections A and B each comprise short-answer questions and one eight-mark extended open-response question.",
+          },
+          {
+            name: "Unit 2: Biological Psychology, Learning Theories and Development",
+            code: "WPS02/01",
+            durationMinutes: 120,
+            marks: 96,
+            weightPercentage: 30,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper has three sections: (A) Biological psychology, (B) Learning theories and development, and (C) one 12-mark and one 16-mark extended open-response question. Sections A and B each comprise short-answer questions and one eight-mark extended open-response question.",
+          },
+        ],
+      },
+      {
+        name: "International Advanced Level (IAL)",
+        description: "The International Advanced Level (IAL) consists of the two IAS units (Units 1 and 2) plus two IA2 units (Units 3 and 4). Candidates wishing to take the International Advanced Level must, therefore, complete all four units.",
+        papers: [
+          {
+            name: "Unit 3: Applications of Psychology",
+            code: "WPS03/01",
+            durationMinutes: 90,
+            marks: 64,
+            weightPercentage: 20,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper has two sections: (A) Developmental psychology, and (B) a choice of either Criminological psychology or Health psychology. Each section totals 32 marks and comprises short-answer questions and two eight-mark extended open-response questions.",
+          },
+          {
+            name: "Unit 4: Clinical Psychology and Psychological Skills",
+            code: "WPS04/01",
+            durationMinutes: 120,
+            marks: 96,
+            weightPercentage: 30,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper has five sections: (A) Clinical psychology short-answer questions, (B) one 16-mark extended open-response question on clinical psychology, (C) Psychological skills short-answer questions on research methods, (D) one eight-mark extended open-response question, and (E) one 20-mark synoptic question on issues and debates.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Mathematics",
+    track: "IAL",
+    code: "YMA01",
+    syllabus: {
+      current: {
+        label: "IAL Mathematics Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/mathematics-2018.html"
+      },
+    },
+    routes: [
+      {
+        name: "International Advanced Subsidiary (IAS)",
+        description: "The International Advanced Subsidiary (IAS) is the first half of the International Advanced Level (IAL) qualification and consists of three units: P1 and P2 (compulsory) plus one optional unit from M1, S1 or D1. This qualification may be taken on it's own or may contribute 50% towards the International Advanced Level (IAL) qualification.",
+        papers: [
+          {
+            name: "P1: Pure Mathematics 1 (Compulsory)",
+            code: "WMA11/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Compulsory unit. The paper covers Algebra and functions, Coordinate geometry in the (x, y) plane, Trigonometry, Differentiation and Integration.",
+          },
+          {
+            name: "P2: Pure Mathematics 2 (Compulsory)",
+            code: "WMA12/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Compulsory unit. The paper covers Proof, Algebra and functions, Coordinate geometry in the (x, y) plane, Sequences and series, Exponentials and logarithms, Trigonometry, Differentiation and Integration.",
+          },
+          {
+            name: "M1: Mechanics 1 (Optional)",
+            code: "WME01/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Optional unit. The paper covers Mathematical models in mechanics, Vectors in mechanics, Kinematics of a particle moving in a straight line, Dynamics of a particle moving in a straight line or plane, Statics of a particle and Moments.",
+          },
+          {
+            name: "S1: Statistics 1 (Optional)",
+            code: "WST01/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Optional unit. The paper covers Mathematical models in probability and statistics, Representation and summary of data, Probability, Correlation and regression, Discrete random variables, Discrete distributions and the Normal distribution.",
+          },
+          {
+            name: "D1: Decision Mathematics 1 (Optional)",
+            code: "WDM11/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Optional unit. The paper covers Algorithms, Algorithms on graphs, Algorithms on graphs II, Critical path analysis and Linear programming.",
+          },
+        ],
+      },
+      {
+        name: "International Advanced Level (IAL)",
+        description: "The International Advanced Level (IAL) consists of the IAS units P1 and P2 plus the IA2 units P3 and P4, together with two optional units: M1 and S1, M1 and D1, M1 and M2, S1 and D1, or S1 and S2. Candidates wishing to take the International Advanced Level must, therefore, complete all six units.",
+        papers: [
+          {
+            name: "P3: Pure Mathematics 3 (Compulsory)",
+            code: "WMA13/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Compulsory unit. The paper covers Algebra and functions, Trigonometry, Exponentials and logarithms, Differentiation, Integration and Numerical methods.",
+          },
+          {
+            name: "P4: Pure Mathematics 4 (Compulsory)",
+            code: "WMA14/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Compulsory unit. The paper covers Proof, Algebra and functions, Coordinate geometry in the (x, y) plane, Binomial expansion, Differentiation, Integration and Vectors.",
+          },
+          {
+            name: "M2: Mechanics 2 (Optional)",
+            code: "WME02/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Optional unit (taken with M1). The paper covers Kinematics of a particle moving in a straight line or plane, Centres of mass, Work and energy, Collisions and Statics of rigid bodies.",
+          },
+          {
+            name: "S2: Statistics 2 (Optional)",
+            code: "WST02/01",
+            durationMinutes: 90,
+            marks: 75,
+            weightPercentage: 16.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "Optional unit (taken with S1). The paper covers the Binomial and Poisson distributions, Continuous random variables, Continuous distributions, Samples and Hypothesis tests.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Mathematics",
+    track: "IGCSE",
+    code: "4MA1",
+    syllabus: {
+      current: {
+        label: "IGCSE Mathematics A Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-mathematics-a-2016.html"
+      },
+    },
+    routes: [
+      {
+        name: "Foundation Tier",
+        description: "The Foundation Tier consists of two papers, 1F and 2F, targeted at grades 5-1. Both papers must be taken in the same series at the end of the course.",
+        papers: [
+          {
+            name: "Paper 1F",
+            code: "4MA1/1F",
+            durationMinutes: 120,
+            marks: 100,
+            weightPercentage: 50,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper assesses the full range of Foundation Tier content, focusing on Number, Algebra, Geometry and Statistics.",
+          },
+          {
+            name: "Paper 2F",
+            code: "4MA1/2F",
+            durationMinutes: 120,
+            marks: 100,
+            weightPercentage: 50,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper assesses the full range of Foundation Tier content, focusing on Number, Algebra, Geometry and Statistics.",
+          },
+        ],
+      },
+      {
+        name: "Higher Tier",
+        description: "The Higher Tier consists of two papers, 1H and 2H, targeted at grades 9-4 (with grade 3 allowed). Both papers must be taken in the same series at the end of the course.",
+        papers: [
+          {
+            name: "Paper 1H",
+            code: "4MA1/1H",
+            durationMinutes: 120,
+            marks: 100,
+            weightPercentage: 50,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper assesses the full range of Higher Tier content, focusing on Number, Algebra, Geometry and Statistics. Questions assume knowledge of the Foundation Tier content.",
+          },
+          {
+            name: "Paper 2H",
+            code: "4MA1/2H",
+            durationMinutes: 120,
+            marks: 100,
+            weightPercentage: 50,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper assesses the full range of Higher Tier content, focusing on Number, Algebra, Geometry and Statistics. Questions assume knowledge of the Foundation Tier content.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Geography",
+    track: "IGCSE",
+    code: "4GE1",
+    syllabus: {
+      current: {
+        label: "IGCSE Geography Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-geography-2017.html"
+      },
+    },
+    routes: [
+      {
+        name: "International GCSE",
+        description: "The International GCSE in Geography is a linear qualification consisting of two papers, both taken at the end of the course of study.",
+        papers: [
+          {
+            name: "Paper 1: Physical Geography",
+            code: "4GE1/01",
+            durationMinutes: 70,
+            marks: 70,
+            weightPercentage: 40,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-answer, data-response and open-ended questions focusing on River Environments, Coastal Environments and Hazardous Environments, including fieldwork from one of these topics.",
+          },
+          {
+            name: "Paper 2: Human Geography",
+            code: "4GE1/02",
+            durationMinutes: 105,
+            marks: 105,
+            weightPercentage: 60,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper may include multiple-choice, short-answer, data-response and open-ended questions focusing on Economic Activity and Energy, Rural Environments and Urban Environments (including fieldwork from one of these topics), and Global Issues: Fragile Environments and Climate Change, Globalisation and Migration, and Development and Human Welfare.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Further Pure Mathematics",
+    track: "IGCSE",
+    code: "4PM1",
+    syllabus: {
+      current: {
+        label: "IGCSE Further Pure Mathematics Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-further-pure-mathematics-2017.html"
+      },
+    },
+    routes: [
+      {
+        name: "International GCSE",
+        description: "The International GCSE in Further Pure Mathematics is a linear qualification offered at Higher Tier only (targeted at grades 9-4, with grade 3 allowed). Both papers must be taken in the same series at the end of the course.",
+        papers: [
+          {
+            name: "Paper 1",
+            code: "4PM1/01",
+            durationMinutes: 120,
+            marks: 100,
+            weightPercentage: 50,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper contains around 11 questions drawn from any part of the specification, focusing on Number, Algebra and Calculus, and Geometry and Trigonometry.",
+          },
+          {
+            name: "Paper 2",
+            code: "4PM1/02",
+            durationMinutes: 120,
+            marks: 100,
+            weightPercentage: 50,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper contains around 11 questions drawn from any part of the specification, focusing on Number, Algebra and Calculus, and Geometry and Trigonometry.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    board: "Edexcel",
+    subject: "Accounting",
+    track: "IGCSE",
+    code: "4AC1",
+    syllabus: {
+      current: {
+        label: "IGCSE Accounting Specification",
+        url: "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-accounting-2017.html"
+      },
+    },
+    routes: [
+      {
+        name: "International GCSE",
+        description: "The International GCSE in Accounting is a linear qualification consisting of two papers, both taken at the end of the course of study.",
+        papers: [
+          {
+            name: "Paper 1: Introduction to Bookkeeping and Accounting",
+            code: "4AC1/01",
+            durationMinutes: 120,
+            marks: 100,
+            weightPercentage: 66.67,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper includes multiple-choice, short-answer and long-answer questions focusing on The Accounting Environment, Introduction to Bookkeeping and Introduction to Control Processes.",
+          },
+          {
+            name: "Paper 2: Financial Statements",
+            code: "4AC1/02",
+            durationMinutes: 75,
+            marks: 50,
+            weightPercentage: 33.33,
+            assessmentType: "written",
+            externallyAssessed: true,
+            description:
+              "The paper includes two multi-part questions focusing on The Preparation of Financial Statements and Accounting for End of Period Adjustments, and builds on the content of Paper 1.",
           },
         ],
       },
