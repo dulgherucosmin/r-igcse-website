@@ -61,8 +61,24 @@ const APPLICATION_PLACEHOLDER = socials.discord;
 
 const sections: Section[] = [
   {
+    id: "resources",
+    title: "Resources",
+    blurb: "Create or share study resources for other students.",
+    roles: [
+      {
+        id: "resource-creator",
+        title: "Resource Creator",
+        color: "#f5a04a",
+        description:
+          "A {@Resource Creator} is a member who has created custom resources for the students of r/IGCSE. They are given freedom on what subject(s) they want to create resources for and what they will cover.",
+        apply: { type: "link", url: "https://forms.r-igcse.com/f/resource-contribution" },
+      },
+      
+    ],
+  },
+  {
     id: "helpers",
-    title: "Subject Helpers",
+    title: "Community Helpers",
     blurb: "Answer questions and support students in the subject channels.",
     roles: [
       {
@@ -125,22 +141,6 @@ const sections: Section[] = [
         ],
         apply: { type: "link", url: "https://forms.r-igcse.com/f/helper-application" },
       },
-    ],
-  },
-  {
-    id: "resources",
-    title: "Resources",
-    blurb: "Create or share study resources for other students.",
-    roles: [
-      {
-        id: "resource-creator",
-        title: "Resource Creator",
-        color: "#f5a04a",
-        description:
-          "A {@Resource Creator} is a member who has created custom resources for the students of r/IGCSE. They are given freedom on what subject(s) they want to create resources for and what they will cover.",
-        apply: { type: "link", url: "https://forms.r-igcse.com/f/resource-contribution" },
-      },
-      
     ],
   },
   {
@@ -441,32 +441,66 @@ export default function Opportunities() {
         aria-labelledby="certificates-heading"
         className="mt-20 scroll-mt-24"
       >
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-3 text-brand">
-            <CertificateIcon
-              weight="bold"
-              aria-hidden="true"
-              className="size-6"
-            />
-            <span className="text-sm font-bold tracking-widest uppercase">
-              Certificates of Appreciation
-            </span>
+        <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(280px,420px)] md:gap-10 lg:gap-16">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-3 text-brand">
+              <CertificateIcon
+                weight="bold"
+                aria-hidden="true"
+                className="size-6"
+              />
+              <span className="text-sm font-bold tracking-widest uppercase">
+                Certificates of Appreciation
+              </span>
+            </div>
+            <h2
+              id="certificates-heading"
+              className="mt-3 text-3xl font-black tracking-tight md:text-5xl"
+            >
+              Request a certificate
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+              We give Certificates of Appreciation only to Subject Helpers,
+              Resource Creators, the Community Team, Developers, and Discord or
+              Reddit staff. Each certificate is signed by the Community Lead
+              and has an issuing date and certificate number.
+            </p>
           </div>
-          <h2
-            id="certificates-heading"
-            className="mt-3 text-3xl font-black tracking-tight md:text-5xl"
-          >
-            Request a certificate
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            We give Certificates of Appreciation only to Subject Helpers,
-            Resource Creators, the Community Team, Developers, and Discord or
-            Reddit staff. Each certificate is signed by the Community Lead and
-            has an issuing date and certificate number.
-          </p>
+
+          <figure className="relative mx-auto h-[280px] w-full max-w-[360px] sm:h-[340px] md:h-[360px]">
+            <figcaption className="sr-only">Certificate examples</figcaption>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Resource Creator certificate example"
+              className="absolute top-1/2 left-1/2 z-10 block aspect-[210/297] w-[48%] max-w-[190px] -translate-x-[90%] -translate-y-1/2 -rotate-6 overflow-hidden rounded-md border border-border bg-white shadow-xl shadow-black/20 outline-none transition-transform motion-safe:hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring md:-translate-x-[70%]"
+            >
+              <iframe
+                src="/certificates/resource-creator-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                title="Resource Creator certificate example"
+                loading="lazy"
+                tabIndex={-1}
+                className="pointer-events-none size-full border-0"
+              />
+            </a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Subject Helper certificate example"
+              className="absolute top-1/2 left-1/2 z-20 block aspect-[210/297] w-[48%] max-w-[190px] -translate-x-[10%] -translate-y-1/2 rotate-6 overflow-hidden rounded-md border border-border bg-white shadow-xl shadow-black/20 outline-none transition-transform motion-safe:hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring md:translate-x-[10%]"
+            >
+              <iframe
+                src="/certificates/subject-helper-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                title="Subject Helper certificate example"
+                loading="lazy"
+                tabIndex={-1}
+                className="pointer-events-none size-full border-0"
+              />
+            </a>
+          </figure>
         </div>
 
-        <div className="mt-8 max-w-3xl">
+        <div className="mt-0 max-w-3xl">
           <Separator />
           <div className="py-8">
             <p className="font-semibold">
