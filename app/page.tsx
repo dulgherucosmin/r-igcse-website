@@ -141,7 +141,7 @@ export default function Home() {
       <div className="page-container">
         <Separator />
       </div>
-      <CountdownSection />
+      <CountdownSection key="homepage-countdown" />
       <div className="page-container">
         <Separator />
       </div>
